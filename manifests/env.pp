@@ -11,6 +11,7 @@ define poudriere::env (
   $version  = '9.0-RELEASE',
   $arch     = "amd64",
   $jail     = '90amd64'
+  $pkgs     = [],
 ) {
 
   # Make sure we are prepared to run
@@ -28,6 +29,13 @@ define poudriere::env (
   file { "/usr/local/etc/poudriere.d/${jail}-make.conf":
     content => inline_template("<%= makeopts.join('\n') %>"),
     require => File["/usr/local/etc/poudriere.d"],
+  }
+
+  if $pkgs != [] {
+    file { "/usr/local/etc/poudriere.${jail}.list":
+      content => inline_template("<%= pkgs.join('\n') %>"),
+      require => File["/usr/local/etc/poudriere.d"],
+    }
   }
 
 }
