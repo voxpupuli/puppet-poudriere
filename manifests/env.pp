@@ -10,7 +10,7 @@ define poudriere::env (
   $makeopts = ["WITH_PKGNG=yes"],
   $version  = '9.0-RELEASE',
   $arch     = "amd64",
-  $jail     = '90amd64'
+  $jail     = '90amd64',
   $pkgs     = []
 ) {
 
