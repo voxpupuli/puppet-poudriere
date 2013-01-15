@@ -4,9 +4,11 @@
 # For the configuration of the build environment, see Class[poudriere::env].
 
 class poudriere (
-  $zpool        = 'tank',
-  $freebsd_host = 'http://ftp6.us.freebsd.org/',
-  $ccache_dir   = '/usr/obj/ccache'
+  $zpool          = 'tank',
+  $freebsd_host   = 'http://ftp6.us.freebsd.org/',
+  $ccache_enable  = false,
+  $ccache_dir     = '/var/cache/ccache',
+  $poudriere_data = '/usr/local/poudriere_data'
 ){
 
   Exec {
@@ -36,8 +38,10 @@ class poudriere (
     require => Exec["create default ports tree"],
   }
 
-  file { "${ccache_dir}":
-    ensure  => directory,
+  if $ccache_enable {
+    file { $ccache_dir:
+      ensure => directory,
+    }
   }
 
 }
