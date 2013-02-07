@@ -33,7 +33,7 @@ define poudriere::env (
 
   if $pkgs != [] {
     file { "/usr/local/etc/poudriere.${jail}.list":
-      content => inline_template("<%= pkgs.join('\n') %>"),
+      content => inline_template("<%= (pkgs.join('\n')+\"\n\" %>"),
       require => File["/usr/local/etc/poudriere.d"],
     }
   }
