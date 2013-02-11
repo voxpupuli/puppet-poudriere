@@ -5,6 +5,7 @@
 
 class poudriere (
   $zpool          = 'tank',
+  $zrootfs        = '/poudriere',
   $freebsd_host   = 'http://ftp6.us.freebsd.org/',
   $ccache_enable  = false,
   $ccache_dir     = '/var/cache/ccache',
