@@ -83,7 +83,7 @@ DISTFILES_CACHE=/usr/ports/distfiles
 # ccache support. Supply the path to your ccache cache directory.
 # It will be mounted into the jail and be shared among all jails.
 <% if @ccache_enable -%>
-CCACHE_DIR=<%= ccache_dir %>
+CCACHE_DIR=<%= @ccache_dir %>
 <% end -%>
 #
 
