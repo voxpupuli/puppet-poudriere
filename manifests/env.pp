@@ -27,13 +27,13 @@ define poudriere::env (
 
   # Lay down the configuration
   file { "/usr/local/etc/poudriere.d/${jail}-make.conf":
-    content => inline_template("<%= (makeopts.join('\n'))+\"\n\" %>"),
+    content => inline_template("<%= (@makeopts.join('\n'))+\"\n\" %>"),
     require => File["/usr/local/etc/poudriere.d"],
   }
 
   if $pkgs != [] {
     file { "/usr/local/etc/poudriere.${jail}.list":
-      content => inline_template("<%= (pkgs.join('\n'))+\"\n\" %>"),
+      content => inline_template("<%= (@pkgs.join('\n'))+\"\n\" %>"),
       require => File["/usr/local/etc/poudriere.d"],
     }
   }
