@@ -35,7 +35,6 @@ FREEBSD_HOST=<%= @freebsd_host %>
 RESOLV_CONF=/etc/resolv.conf
 
 # The directory where poudriere will store jails and ports
-BASEFS=/usr/local/poudriere
 BASEFS=<%= @poudriere_base %>
 
 # The directory where the jail will store the packages and logs
@@ -110,7 +109,6 @@ CHECK_CHANGED_DEPS=yes
 # by specifying the -J flag to bulk/testport.
 #
 # Example to define PARALLEL_JOBS to one single job
-# PARALLEL_JOBS=1
 PARALLEL_JOBS=<%= @parallel_jobs %>
 
 
