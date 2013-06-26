@@ -9,7 +9,8 @@ class poudriere (
   $freebsd_host   = 'http://ftp6.us.freebsd.org/',
   $ccache_enable  = false,
   $ccache_dir     = '/var/cache/ccache',
-  $poudriere_data = '/usr/local/poudriere_data'
+  $poudriere_base = '/usr/local/poudriere',
+  $parallel_jobs  = $processorcount,
 ){
 
   Exec {
