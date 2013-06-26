@@ -3,10 +3,10 @@
 #
 # You need at least 7GB of free space in this pool to have a working
 # poudriere.
-ZPOOL=<%= zpool %>
+ZPOOL=<%= @zpool %>
 
 # root of the poudriere zfs filesystem, by default /poudriere
-# ZROOTFS=/poudriere
+ZROOTFS=<%= @zrootfs %>
 
 # the host where to download sets  for the jails setup
 # You can specify here a host or an IP
@@ -16,7 +16,7 @@ ZPOOL=<%= zpool %>
 #
 # Also not that every protocols supported by fetch(1) are supported here, even
 # file:///
-FREEBSD_HOST=<%= freebsd_host %>
+FREEBSD_HOST=<%= @freebsd_host %>
 
 # By default the jails have no /etc/resolv.conf, you will need to set
 # REVOLV_CONF to a file on your hosts system that will be copied has
@@ -28,7 +28,7 @@ RESOLV_CONF=/etc/resolv.conf
 # by default a zfs filesystem will be created and set to
 # ${BASEFS}/data
 #
-POUDRIERE_DATA=<%= poudriere_data %>
+POUDRIERE_DATA=<%= @poudriere_data %>
 
 # The directory where poudriere will store jails and ports
 BASEFS=/usr/local/poudriere
