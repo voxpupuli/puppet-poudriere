@@ -31,7 +31,7 @@ class poudriere (
     command => "/usr/local/bin/poudriere ports -c",
     require => File["/usr/local/etc/poudriere.conf"],
     creates => '/usr/local/poudriere/ports/default',
-    timeout => '1800',
+    timeout => '3600',
   }
 
   file { "/usr/local/etc/poudriere.d":
@@ -44,5 +44,4 @@ class poudriere (
       ensure => directory,
     }
   }
-
 }
