@@ -18,7 +18,7 @@ define poudriere::env (
   include poudriere
 
   # Create the environment
-  exec { "create the jail":
+  exec { "create ${jail} jail":
     command => "/usr/local/bin/poudriere jail -c -j ${jail} -v ${version} -a ${arch}",
     require => Exec["create default ports tree"],
     creates => "/usr/local/poudriere/jails/${jail}/",
@@ -37,6 +37,4 @@ define poudriere::env (
       require => File["/usr/local/etc/poudriere.d"],
     }
   }
-
 }
-
