@@ -8,9 +8,9 @@
 
 define poudriere::env (
   $makeopts = ["WITH_PKGNG=yes"],
-  $version  = '9.0-RELEASE',
+  $version  = '9.1-RELEASE',
   $arch     = "amd64",
-  $jail     = '90amd64',
+  $jail     = '91amd64',
   $pkgs     = []
 ) {
 
@@ -18,7 +18,7 @@ define poudriere::env (
   include poudriere
 
   # Create the environment
-  exec { "create the jail":
+  exec { "create ${jail} jail":
     command => "/usr/local/bin/poudriere jail -c -j ${jail} -v ${version} -a ${arch}",
     require => Exec["create default ports tree"],
     creates => "/usr/local/poudriere/jails/${jail}/",
@@ -37,6 +37,4 @@ define poudriere::env (
       require => File["/usr/local/etc/poudriere.d"],
     }
   }
-
 }
-

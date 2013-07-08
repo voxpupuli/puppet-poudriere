@@ -9,7 +9,8 @@ class poudriere (
   $freebsd_host   = 'http://ftp6.us.freebsd.org/',
   $ccache_enable  = false,
   $ccache_dir     = '/var/cache/ccache',
-  $poudriere_data = '/usr/local/poudriere_data'
+  $poudriere_base = '/usr/local/poudriere',
+  $parallel_jobs  = $processorcount,
 ){
 
   Exec {
@@ -31,7 +32,7 @@ class poudriere (
     command => "/usr/local/bin/poudriere ports -c",
     require => File["/usr/local/etc/poudriere.conf"],
     creates => '/usr/local/poudriere/ports/default',
-    timeout => '1800',
+    timeout => '3600',
   }
 
   file { "/usr/local/etc/poudriere.d":
@@ -44,5 +45,4 @@ class poudriere (
       ensure => directory,
     }
   }
-
 }
