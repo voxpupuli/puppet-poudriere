@@ -20,3 +20,12 @@ Manage the FreeBSD PkgNG build system with Puppet.
       autoindex => true,
     }
 
+## Changing default settings
+
+The `poudriere` class has some default parameters for global settings, such as the ZFS pool, root filesystem, and the FreeBSD mirror site to use (see `init.pp` for details). To change these defaults, declare the `poudriere` class with your own parameters.
+
+If you do not want to use ZFS, you can use:
+
+    class { 'poudriere':
+      zpool => false,
+    }
