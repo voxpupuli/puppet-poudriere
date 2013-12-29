@@ -7,11 +7,12 @@
 # read the documentation.
 
 define poudriere::env (
-  $makeopts = ["WITH_PKGNG=yes"],
-  $version  = '9.1-RELEASE',
-  $arch     = "amd64",
-  $jail     = '91amd64',
-  $pkgs     = []
+  $makeopts     = ["WITH_PKGNG=yes"],
+  $version      = '9.1-RELEASE',
+  $arch         = "amd64",
+  $jail         = '91amd64',
+  $pkgs         = [],
+  $pkg_makeopts = []
 ) {
 
   # Make sure we are prepared to run
@@ -27,7 +28,7 @@ define poudriere::env (
 
   # Lay down the configuration
   file { "/usr/local/etc/poudriere.d/${jail}-make.conf":
-    content => inline_template("<%= (@makeopts.join('\n'))+\"\n\" %>"),
+    content => template('poudriere/make.conf.erb'),
     require => File["/usr/local/etc/poudriere.d"],
   }
 
