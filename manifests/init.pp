@@ -11,6 +11,7 @@ class poudriere (
   $ccache_dir     = '/var/cache/ccache',
   $poudriere_base = '/usr/local/poudriere',
   $parallel_jobs  = $processorcount,
+  $port_fetch_method = 'svn',
 ){
 
   Exec {
@@ -29,7 +30,7 @@ class poudriere (
   }
 
   exec { "create default ports tree":
-    command => "/usr/local/bin/poudriere ports -c",
+    command => "/usr/local/bin/poudriere ports -c -m ${port_fetch_method}",
     require => File["/usr/local/etc/poudriere.conf"],
     creates => '/usr/local/poudriere/ports/default',
     timeout => '3600',
@@ -45,4 +46,5 @@ class poudriere (
       ensure => directory,
     }
   }
+
 }
