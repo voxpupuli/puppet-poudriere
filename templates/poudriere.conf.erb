@@ -9,14 +9,23 @@
 # You need at least 7GB of free space in this pool to have a working
 # poudriere.
 #
+#ZPOOL=
+<% if @zpool and @zpool!='' -%>
 ZPOOL=<%= @zpool %>
+<% end -%>
 
 ### NO ZFS
 # To not use ZFS, define NO_ZFS=yes
 #NO_ZFS=yes
+<% if !@zpool or @zpool=='' -%>
+NO_ZFS=yes
+<% end -%>
 
 # root of the poudriere zfs filesystem, by default /poudriere
+#ZROOTFS=
+<% if @zpool and @zpool!='' -%>
 ZROOTFS=<%= @zrootfs %>
+<% end -%>
 
 # the host where to download sets  for the jails setup
 # You can specify here a host or an IP
