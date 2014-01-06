@@ -4,13 +4,13 @@
 # For the configuration of the build environment, see Class[poudriere::env].
 
 class poudriere (
-  $zpool          = 'tank',
-  $zrootfs        = '/poudriere',
-  $freebsd_host   = 'http://ftp6.us.freebsd.org/',
-  $ccache_enable  = false,
-  $ccache_dir     = '/var/cache/ccache',
-  $poudriere_base = '/usr/local/poudriere',
-  $parallel_jobs  = $processorcount,
+  $zpool             = 'tank',
+  $zrootfs           = '/poudriere',
+  $freebsd_host      = 'http://ftp6.us.freebsd.org/',
+  $ccache_enable     = false,
+  $ccache_dir        = '/var/cache/ccache',
+  $poudriere_base    = '/usr/local/poudriere',
+  $parallel_jobs     = $processorcount,
   $port_fetch_method = 'svn',
 ){
 
