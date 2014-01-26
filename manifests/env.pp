@@ -7,9 +7,9 @@
 # read the documentation.
 
 define poudriere::env (
-  $makeopts     = ["WITH_PKGNG=yes"],
+  $makeopts     = ['WITH_PKGNG=yes'],
   $version      = '9.1-RELEASE',
-  $arch         = "amd64",
+  $arch         = 'amd64',
   $jail         = '',
   $pkgs         = [],
   $pkg_makeopts = []
@@ -18,7 +18,7 @@ define poudriere::env (
   # Make sure we are prepared to run
   include poudriere
 
-  if $jail ~= ''  {
+  if $jail == ''  {
     $jail_name = $name
   } else {
     $jail_name = $jail
@@ -27,7 +27,7 @@ define poudriere::env (
   # Create the environment
   exec { "create jail ${jail_name}":
     command => "/usr/local/bin/poudriere jail -c -j ${jail_name} -v ${version} -a ${arch}",
-    require => Exec["create default ports tree"],
+    require => Exec['create default ports tree'],
     creates => "/usr/local/poudriere/jails/${jail_name}/",
     timeout => '3600',
   }
@@ -35,13 +35,13 @@ define poudriere::env (
   # Lay down the configuration
   file { "/usr/local/etc/poudriere.d/${jail_name}-make.conf":
     content => template('poudriere/make.conf.erb'),
-    require => File["/usr/local/etc/poudriere.d"],
+    require => File['/usr/local/etc/poudriere.d'],
   }
 
   if $pkgs != [] {
     file { "/usr/local/etc/poudriere.${jail_name}.list":
       content => inline_template("<%= (@pkgs.join('\n'))+\"\n\" %>"),
-      require => File["/usr/local/etc/poudriere.d"],
+      require => File['/usr/local/etc/poudriere.d'],
     }
   }
 }
