@@ -140,6 +140,14 @@ PARALLEL_JOBS=<%= @parallel_jobs %>
 # export HTTP_PROXY=bla
 # export FTP_PROXY=bla
 #
+<% if @http_proxy and @http_proxy!='' -%>
+export HTTP_PROXY=<%= @http_proxy %>
+<% end -%>
+
+<% if @ftp_proxy and @ftp_proxy!='' -%>
+export FTP_PROXY=<%= @ftp_proxy %>
+<% end -%>
+
 # Cleanout the restricted packages
 # NO_RESTRICTED=yes
 
