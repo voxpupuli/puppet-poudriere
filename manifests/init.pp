@@ -12,6 +12,8 @@ class poudriere (
   $poudriere_base    = '/usr/local/poudriere',
   $parallel_jobs     = $processorcount,
   $port_fetch_method = 'svn',
+  $http_proxy        = undefined,
+  $ftp_proxy         = undefined,
 ){
 
   Exec {
