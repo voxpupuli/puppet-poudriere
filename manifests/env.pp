@@ -22,7 +22,7 @@ define poudriere::env (
   exec { "create ${jail} jail":
     command => "/usr/local/bin/poudriere jail -c -j ${jail} -v ${version} -a ${arch}",
     require => Exec["create default ports tree"],
-    creates => "/usr/local/poudriere/jails/${jail}/",
+    creates => "${poudriere::poudriere_base}/jails/${jail}/",
     timeout => '3600',
   }
 

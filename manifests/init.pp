@@ -34,7 +34,7 @@ class poudriere (
   exec { "create default ports tree":
     command => "/usr/local/bin/poudriere ports -c -m ${port_fetch_method}",
     require => File["/usr/local/etc/poudriere.conf"],
-    creates => '/usr/local/poudriere/ports/default',
+    creates => "${poudriere_base}/ports/default",
     timeout => '3600',
   }
 
