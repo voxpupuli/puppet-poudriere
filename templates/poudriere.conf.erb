@@ -71,7 +71,9 @@ USE_PORTLINT=no
 # all       - Run the entire build in memory, including builder jails.
 # yes       - Only enables tmpfs(5) for wrkdir
 # EXAMPLE: USE_TMPFS="wrkdir data"
-USE_TMPFS=yes
+<% if @tmpfs and @tmpfs != '' -%>
+USE_TMPFS=<%= @tmpfs %>
+<% end -%>
 
 # If set the given directory will be used for the distfiles this allow the share
 # the distfiles between jails and ports tree
