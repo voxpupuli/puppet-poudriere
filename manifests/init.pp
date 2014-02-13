@@ -14,7 +14,7 @@ class poudriere (
   $port_fetch_method = 'svn',
   $http_proxy        = '',
   $ftp_proxy         = '',
-  $tmpfs             = 'YES',
+  $tmpfs             = 'yes',
 ){
 
   Exec {
