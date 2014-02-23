@@ -11,7 +11,7 @@ class poudriere (
   $ccache_dir        = '/var/cache/ccache',
   $poudriere_base    = '/usr/local/poudriere',
   $parallel_jobs     = $processorcount,
-  $port_fetch_method = 'svn',
+  $port_fetch_method = 'portsnap',
   $http_proxy        = '',
   $ftp_proxy         = '',
   $tmpfs             = 'yes',
