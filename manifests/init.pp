@@ -7,7 +7,7 @@ class poudriere (
   $zpool                  = 'tank',
   $zrootfs                = '/poudriere',
   $freebsd_host           = 'http://ftp6.us.freebsd.org/',
-  $resolv_conf_poudriere  = '/etc/resolv.conf',
+  $resolv_conf            = '/etc/resolv.conf',
   $ccache_enable          = false,
   $ccache_dir             = '/var/cache/ccache',
   $poudriere_base         = '/usr/local/poudriere',
