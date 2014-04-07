@@ -114,7 +114,7 @@ CHECK_CHANGED_DEPS=<%= @check_changed_deps %>
 
 # Path to the RSA key to sign the PKGNG repo with. See pkg-repo(8)
 #PKG_REPO_SIGNING_KEY=/etc/ssl/keys/repo.key
-<% if @pkg_repo_signing and @pkg_repo_signing != '' -%>
+<% if @pkg_repo_signing_key and @pkg_repo_signing_key != '' -%>
 PKG_REPO_SIGNING_KEY=<%= @pkg_repo_signing_key %>
 <% end -%>
 
