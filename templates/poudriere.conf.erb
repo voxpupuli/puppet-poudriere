@@ -1,7 +1,7 @@
 
 # Poudriere can optionally use ZFS for its ports/jail storage. For
 # ZFS define ZPOOL, otherwise set NO_ZFS=yes
-# 
+#
 #### ZFS
 # The pool where poudriere will create all the filesystems it needs
 # poudriere will use tank/${ZROOTFS} as its root
@@ -101,7 +101,7 @@ SVN_HOST=<%= @svn_host %>
 # will be deleted and the port will be rebuilt.
 # Valid options: yes, no, verbose
 # verbose will display the old and new options
-CHECK_CHANGED_OPTIONS=<% @check_changed_options %>
+CHECK_CHANGED_OPTIONS=<%= @check_changed_options %>
 
 # Automatic Dependency change detection
 # When bulk building packages, compare the dependencies from kept packages to
