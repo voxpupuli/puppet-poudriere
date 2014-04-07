@@ -115,7 +115,7 @@ CHECK_CHANGED_DEPS=<%= @check_changed_deps %>
 # Path to the RSA key to sign the PKGNG repo with. See pkg-repo(8)
 #PKG_REPO_SIGNING_KEY=/etc/ssl/keys/repo.key
 <% if @pkg_repo_signing and @pkg_repo_signing != '' -%>
-PKG_REPO_SIGNING_KEY=<%= @pkg_repo_signing %>
+PKG_REPO_SIGNING_KEY=<%= @pkg_repo_signing_key %>
 <% end -%>
 
 # ccache support. Supply the path to your ccache cache directory.

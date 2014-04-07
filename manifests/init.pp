@@ -20,7 +20,7 @@ class poudriere (
   $svn_host               = '',
   $check_changed_options  = 'verbose',
   $check_changed_deps     = 'yes',
-  $pkg_repo_signing       = '',
+  $pkg_repo_signing_key   = '',
   $ccache_enable          = false,
   $ccache_dir             = '/var/cache/ccache',
   $parallel_jobs          = $processorcount,
