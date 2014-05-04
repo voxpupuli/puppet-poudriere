@@ -1,7 +1,7 @@
 
 # Poudriere can optionally use ZFS for its ports/jail storage. For
 # ZFS define ZPOOL, otherwise set NO_ZFS=yes
-# 
+#
 #### ZFS
 # The pool where poudriere will create all the filesystems it needs
 # poudriere will use tank/${ZROOTFS} as its root
@@ -41,7 +41,7 @@ FREEBSD_HOST=<%= @freebsd_host %>
 # REVOLV_CONF to a file on your hosts system that will be copied has
 # /etc/resolv.conf for the jail, except if you don't need it (using an http
 # proxy for example)
-RESOLV_CONF=/etc/resolv.conf
+RESOLV_CONF=<%= @resolv_conf %>
 
 # The directory where poudriere will store jails and ports
 BASEFS=<%= @poudriere_base %>
@@ -50,10 +50,10 @@ BASEFS=<%= @poudriere_base %>
 # by default a zfs filesystem will be created and set to
 # ${BASEFS}/data
 #
-POUDRIERE_DATA=${BASEFS}/data
+POUDRIERE_DATA=<%= @poudriere_data %>
 
 # Use portlint to check ports sanity
-USE_PORTLINT=no
+USE_PORTLINT=<%= @use_portlint %>
 
 # When building packages, a memory device can be used to speedup the build.
 # Only one of MFSSIZE or USE_TMPFS is supported. TMPFS is generally faster
@@ -62,6 +62,9 @@ USE_PORTLINT=no
 
 # If set WRKDIRPREFIX will be mdmfs of the given size (mM or gG)
 #MFSSIZE=4G
+<% if @mfssize and @mfssize != '' -%>
+MFSSIZE=<%= @mfssize %>
+<% end -%>
 
 # Use tmpfs(5)
 # This can be a space-separated list of options:
@@ -77,14 +80,20 @@ USE_TMPFS=<%= @tmpfs %>
 
 # If set the given directory will be used for the distfiles this allow the share
 # the distfiles between jails and ports tree
-DISTFILES_CACHE=/usr/ports/distfiles
+DISTFILES_CACHE=<%= @distfiles_cache %>
 
 # if set the ports tree marked to use csup method will use the defined mirror
 #CSUP_HOST=cvsup._CHANGE_THIS_.freebsd.org
+<% if @csup_host and @csup_host != '' -%>
+CSUP_HOST=<%= @csup_host %>
+<% end -%>
 
 # if set the ports tree or source tree marked to use svn will use the defined
 # mirror by default svn.FreeBSD.org
 #SVN_HOST=svn.FreeBSD.org
+<% if @svn_host and @svn_host != '' -%>
+SVN_HOST=<%= @svn_host %>
+<% end -%>
 
 # Automatic OPTION change detection
 # When bulk building packages, compare the options from kept packages to
@@ -92,7 +101,7 @@ DISTFILES_CACHE=/usr/ports/distfiles
 # will be deleted and the port will be rebuilt.
 # Valid options: yes, no, verbose
 # verbose will display the old and new options
-CHECK_CHANGED_OPTIONS=verbose
+CHECK_CHANGED_OPTIONS=<%= @check_changed_options %>
 
 # Automatic Dependency change detection
 # When bulk building packages, compare the dependencies from kept packages to
@@ -101,12 +110,13 @@ CHECK_CHANGED_OPTIONS=verbose
 # as DEFAULT_RUBY_VERSION, PERL_VERSION, WITHOUT_X11 that change dependencies
 # for many ports.
 # Valid options: yes, no
-CHECK_CHANGED_DEPS=yes
-
+CHECK_CHANGED_DEPS=<%= @check_changed_deps %>
 
 # Path to the RSA key to sign the PKGNG repo with. See pkg-repo(8)
 #PKG_REPO_SIGNING_KEY=/etc/ssl/keys/repo.key
-
+<% if @pkg_repo_signing_key and @pkg_repo_signing_key != '' -%>
+PKG_REPO_SIGNING_KEY=<%= @pkg_repo_signing_key %>
+<% end -%>
 
 # ccache support. Supply the path to your ccache cache directory.
 # It will be mounted into the jail and be shared among all jails.
@@ -125,18 +135,29 @@ PARALLEL_JOBS=<%= @parallel_jobs %>
 
 # If set, failed builds will save the WRKDIR to ${POUDRIERE_DATA}/wrkdirs
 # SAVE_WRKDIR=yes
+<% if @save_wrkdir and @save_wrkdir != '' -%>
+SAVE_WRKDIR=<% @save_wkrdir %>
+<% end -%>
 
 # Choose the default format for the workdir packing: could be tar,tgz,tbz,txz
 # default is tbz
 # WRKDIR_ARCHIVE_FORMAT=tbz
+<% if @wrkdir_archive_format and @wrkdir_archive_format != '' -%>
+WRKDIR_ARCHIVE_FORMAT=<%= @wrkdir_archive_format %>
+<% end -%>
 
 # Disable linux support
 # NOLINUX=yes
-
+<% if @nolinux and @nolinux != '' -%>
+NOLINUX=<%= @nolinux %>
+<% end -%>
 
 # by default poudriere set PACKAGE_BUILDING
 # to disable it:
 # NO_PACKAGE_BUILDING=yes
+<% if @no_package_building and @no_package_building != '' -%>
+NO_PACKAGE_BUILDING=<%= @no_package_building %>
+<% end -%>
 
 # If you are using a proxy define it here:
 # export HTTP_PROXY=bla
@@ -152,22 +173,35 @@ export FTP_PROXY=<%= @ftp_proxy %>
 
 # Cleanout the restricted packages
 # NO_RESTRICTED=yes
+<% if @no_restricted and @no_restricted != '' -%>
+NO_RESTRICTED=<%= @no_restricted %>
+<% end -%>
 
 # By default MAKE_JOBS is disabled to allow only one process per cpu
 # Use the following to allow it anyway
 # ALLOW_MAKE_JOBS=yes
-
+<% if @allow_make_jobs and @allow_make_jobs != '' -%>
+ALLOW_MAKE_JOBS=<%= @allow_make_jobs %>
+<% end -%>
 
 # Define as the URL that your POUDRIERE_DATA/logs is hosted at
 # This will be used for giving URL hints to the HTML output when
 # scheduling and starting builds
 #URL_BASE=http://yourdomain.com/poudriere/
-
+<% if @url_base and @url_base != '' -%>
+URL_BASE=<%= @url_base %>
+<% end -%>
 
 # This defines the max time (in seconds) that a command may run for a build
 # before it is killed for taking too long. Default: 86400
 #MAX_EXECUTION_TIME=86400
+<% if @max_execution_time and @max_execution_time != '' -%>
+MAX_EXECUTION_TIME=<%= @max_execution_time %>
+<% end -%>
 
 # This defines the how long (in seconds) before a command is considered to
 # be in a runaway state for having no output on stdout. Default: 7200
 #NOHANG_TIME=7200
+<% if @nohang_time and @nohang_time != '' -%>
+NOHANG_TIME=<%= @nohang_time %>
+<% end -%>
