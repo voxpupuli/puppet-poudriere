@@ -60,6 +60,7 @@ Alternatively, a file containing make options for both global and port-specific 
 ## Using port-specific build options
 
 Ports often allow for enabling or disabling support for certain features. Such options can be manually set by issueing `poudriere options cat/port` but can also be defined in puppet by setting `pkg_optsdir`. This should point to a directory with files such as could be found in `/usr/local/etc/poudriere.d/${jail}-options/`:
+
     poudriere::env { "90amd64":
       pkg_optsdir => 'puppet:///path/to/dir/',
     }
