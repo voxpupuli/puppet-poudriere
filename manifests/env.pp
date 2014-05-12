@@ -82,7 +82,7 @@ define poudriere::env (
   # build new ports periodically
   if $cron_enable == true {
    cron { "poudriere-bulk-${jail}":
-     command  => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin poudriere bulk -f /usr/local/etc/poudriere.d/${jail}.list -j ${jail} -J ${paralleljobs}",
+     command  => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin poudriere bulk -f /usr/local/etc/poudriere.d/${jail}.list -j ${jail} -J ${paralleljobs}",
      user     => 'root',
      minute   => $cron_interval['minute'],
      hour     => $cron_interval['hour'],

@@ -89,7 +89,7 @@ class poudriere (
   # Update ports tree periodically
   if $cron_enable == true {
     cron { 'poudriere-update-ports':
-      command  => 'PATH=/bin:/usr/bin:/usr/sbin:/usr/local/bin poudriere ports -u',
+      command  => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin poudriere ports -u',
       user     => 'root',
       minute   => $cron_interval['minute'],
       hour     => $cron_interval['hour'],
