@@ -56,18 +56,6 @@ class poudriere (
     require => Package['poudriere'],
   }
 
-  # portsnap won't allow us to run 'portsnap fetch' from a non-TTY
-  # so we included a patched version that does
-  if $port_fetch_method == 'portsnap' {
-    file { '/usr/sbin/portsnap':
-      owner  => 'root',
-      group  => 'wheel',
-      mode   => 555,
-      source => 'puppet:///modules/poudriere/portsnap',
-      before => Exec['create default ports tree'],
-    }
-  }
-
   exec { 'create default ports tree':
     command => "/usr/local/bin/poudriere ports -c -m ${port_fetch_method}",
     require => File['/usr/local/etc/poudriere.conf'],
