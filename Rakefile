@@ -7,13 +7,13 @@ LINT_IGNORES = ['rvm']
 namespace :ci do 
   task :all do
     Rake::Task['ci:validate'].invoke
-    Rake::Task['ci:spec'].invoke
+    #Rake::Task['ci:spec'].invoke
     Rake::Task['ci:lint'].invoke
   end
 
   desc "Validate the manifests"
   task :validate do
-    FileList['**/*.pp'].each do |puppet_file|
+    FileList['manifests/*.pp'].each do |puppet_file|
       puts "Validating code parsing for #{puppet_file}"
       %x{puppet parser validate #{puppet_file}}
     end
@@ -47,7 +47,7 @@ namespace :ci do
       end
     end
 
-    FileList['**/*.pp'].each do |puppet_file|
+    FileList['manifests/*.pp'].each do |puppet_file|
       if puppet_file.start_with? 'modules'
         parts = puppet_file.split('/')
         module_name = parts[1]
