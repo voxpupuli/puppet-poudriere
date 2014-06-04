@@ -16,14 +16,8 @@ Manage the FreeBSD PkgNG build system with Puppet.
 
     nginx::vhost { "build.${domain}":
       port      => 80,
-      vhostroot => '/usr/local/poudriere/data/packages',
+      vhostroot => '/usr/local/poudriere_data/packages',
       autoindex => true,
-    }
-
-    @@pkgng::repo { "${::fqdn}-90amd64":
-      release     => '9.0-RELEASE',
-      mirror_type => 'http',
-      repopath    => '/90amd64-default/Latest/',
     }
 
 ## Changing default settings
@@ -54,14 +48,3 @@ You can pass port-specific make options as a hash in `pkg_makeopts`. For instanc
         'lang/php55' => ['OPTIONS_SET+=APACHE'],
       },
     }
-
-Alternatively, a file containing make options for both global and port-specific use could be defined by setting `makefile`.
-
-## Using port-specific build options
-
-Ports often allow for enabling or disabling support for certain features. Such options can be manually set by issueing `poudriere options cat/port` but can also be defined in puppet by setting `pkg_optsdir`. This should point to a directory with files such as could be found in `/usr/local/etc/poudriere.d/${jail}-options/`:
-
-    poudriere::env { "90amd64":
-      pkg_optsdir => 'puppet:///path/to/dir/',
-    }
-
