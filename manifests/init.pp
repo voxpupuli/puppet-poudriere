@@ -23,7 +23,7 @@ class poudriere (
   $pkg_repo_signing_key   = '',
   $ccache_enable          = false,
   $ccache_dir             = '/var/cache/ccache',
-  $parallel_jobs          = $processorcount,
+  $parallel_jobs          = $::processorcount,
   $save_workdir           = '',
   $wrkdir_archive_format  = '',
   $nolinux                = '',
@@ -36,15 +36,18 @@ class poudriere (
   $port_fetch_method      = 'svn',
   $http_proxy             = '',
   $ftp_proxy              = '',
+  $cron_enable            = false,
+  $cron_interval          = {minute => 0, hour => 22, monthday => '*', month => '*', week => '*'},
+  $environments           = {},
 ){
 
   Exec {
     path => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin',
   }
 
-  # Install poudriere
+  # Install poudriere and dialog4ports
   # make -C /usr/ports/ports-mgmt/poudriere install clean
-  package { 'poudriere':
+  package { ['poudriere', 'dialog4ports']:
     ensure => installed,
   }
 
@@ -53,16 +56,16 @@ class poudriere (
     require => Package['poudriere'],
   }
 
-  exec { "create default ports tree":
+  exec { 'create default ports tree':
     command => "/usr/local/bin/poudriere ports -c -m ${port_fetch_method}",
-    require => File["/usr/local/etc/poudriere.conf"],
+    require => File['/usr/local/etc/poudriere.conf'],
     creates => "${poudriere_base}/ports/default",
-    timeout => '3600',
+    timeout => 3600,
   }
 
-  file { "/usr/local/etc/poudriere.d":
+  file { '/usr/local/etc/poudriere.d':
     ensure  => directory,
-    require => Exec["create default ports tree"],
+    require => Exec['create default ports tree'],
   }
 
   if $ccache_enable {
@@ -71,4 +74,23 @@ class poudriere (
     }
   }
 
+  # Update ports tree periodically
+  $cron_present = $cron_enable ? {
+    true    => 'present',
+    default => 'absent',
+  }
+
+  cron { 'poudriere-update-ports':
+    ensure   => $cron_present,
+    command  => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin poudriere ports -u',
+    user     => 'root',
+    minute   => $cron_interval['minute'],
+    hour     => $cron_interval['hour'],
+    monthday => $cron_interval['monthday'],
+    month    => $cron_interval['month'],
+    weekday  => $cron_interval['weekday'],
+  }
+
+  # Create environments
+  create_resources('poudriere::env', $environments)
 }
