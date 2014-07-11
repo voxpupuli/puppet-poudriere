@@ -39,6 +39,7 @@ class poudriere (
   $cron_enable            = false,
   $cron_interval          = {minute => 0, hour => 22, monthday => '*', month => '*', week => '*'},
   $environments           = {},
+  $portstrees             = {},
 ){
 
   Exec {
@@ -56,16 +57,8 @@ class poudriere (
     require => Package['poudriere'],
   }
 
-  exec { 'create default ports tree':
-    command => "/usr/local/bin/poudriere ports -c -m ${port_fetch_method}",
-    require => File['/usr/local/etc/poudriere.conf'],
-    creates => "${poudriere_base}/ports/default",
-    timeout => 3600,
-  }
-
   file { '/usr/local/etc/poudriere.d':
     ensure  => directory,
-    require => Exec['create default ports tree'],
   }
 
   if $ccache_enable {
@@ -74,23 +67,27 @@ class poudriere (
     }
   }
 
-  # Update ports tree periodically
-  $cron_present = $cron_enable ? {
-    true    => 'present',
-    default => 'absent',
+  # NOTE: cron_enable, cron_interval and port_fetch_method
+  # are is deprecated and will eventually default to true.
+  # portstree management has moved to poudriere::portstree
+  if $cron_enable == true {
+    notice('cron_enable, cron_interval and port_fetch_method on class poudriere is deprecated, define seperately poudriere::portstree')
   }
 
   cron { 'poudriere-update-ports':
-    ensure   => $cron_present,
-    command  => 'PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin poudriere ports -u',
-    user     => 'root',
-    minute   => $cron_interval['minute'],
-    hour     => $cron_interval['hour'],
-    monthday => $cron_interval['monthday'],
-    month    => $cron_interval['month'],
-    weekday  => $cron_interval['weekday'],
+    ensure   => 'absent',
+  }
+
+  # Create default portstree
+  poudriere::portstree { 'default':
+    fetch_method  => $port_fetch_method,
+    cron_enable   => $cron_enable,
+    cron_interval => $cron_interval,
   }
 
   # Create environments
   create_resources('poudriere::env', $environments)
+
+  # Create portstrees
+  create_resources('poudriere::portstree', $portstrees)
 }

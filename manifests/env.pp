@@ -6,6 +6,7 @@
 # parameter
 
 define poudriere::env (
+  $ensure        = 'present',
   $makeopts      = [],
   $makefile      = nil,
   $version       = '10.0-RELEASE',
@@ -16,6 +17,7 @@ define poudriere::env (
   $pkg_file      = nil,
   $pkg_makeopts  = {},
   $pkg_optsdir   = nil,
+  $portstree     = 'default',
   $cron_enable   = false,
   $cron_interval = { minute => 0, hour => 0, monthday => '*', month => '*', weekday => '*' },
 ) {
@@ -23,27 +25,12 @@ define poudriere::env (
   # Make sure we are prepared to run
   include poudriere
 
-  # Create the environment
-  exec { "create ${jail} jail":
-    command => "/usr/local/bin/poudriere jail -c -j ${jail} -v ${version} -a ${arch}",
-    require => Exec['create default ports tree'],
-    creates => "${poudriere::poudriere_base}/jails/${jail}/",
-    timeout => 3600,
-  }
-
   if $makefile != nil {
     $manage_make_source = $makefile
   }
 
   if $makeopts != [] or $pkg_makeopts != {} {
     $manage_make_content = template('poudriere/make.conf.erb')
-  }
-
-  # Lay down the configuration
-  file { "/usr/local/etc/poudriere.d/${jail}-make.conf":
-    source  => $manage_make_source,
-    content => $manage_make_content,
-    require => File['/usr/local/etc/poudriere.d'],
   }
 
   if $pkg_file != nil {
@@ -54,37 +41,84 @@ define poudriere::env (
     $manage_pkgs_content = inline_template("<%= (@pkgs.join('\n'))+\"\n\" %>")
   }
 
+  $manage_file_ensure = $ensure ? {
+    'absent' => 'absent',
+    default  => 'file',
+  }
+
+  $manage_directory_ensure = $ensure ? {
+    'absent' => 'absent',
+    default  => 'directory',
+  }
+
+  # NOTE: directory cannot be defined absent
+  # with recurse => true at the sime time:
+  # https://tickets.puppetlabs.com/browse/PUP-2903
+  $manage_directory_recurse = $ensure ? {
+    'absent' => false,
+    default  => true,
+  }
+
+  $manage_cron_ensure = $ensure ? {
+    'absent' => 'absent',
+    default => $cron_enable ? {
+      true => 'present',
+      default => 'absent',
+    },
+  }
+
+  # Manage jail
+  if $ensure != 'absent' {
+    exec { "poudriere-jail-${jail}":
+      command => "/usr/local/bin/poudriere jail -c -j ${jail} -v ${version} -a ${arch} -p ${portstree}",
+      require => Poudriere::Portstree[$portstree],
+      creates => "${poudriere::poudriere_base}/jails/${jail}/",
+      timeout => 3600,
+    }
+  } else {
+    exec { "poudriere-jail-${jail}":
+      command => "/usr/local/bin/poudriere jail -d -j ${jail}",
+      onlyif  => "/usr/local/bin/poudriere jail -l | /usr/bin/grep -w '^${jail}'",
+    }
+  }
+
+  # Lay down the configuration
+  file { "/usr/local/etc/poudriere.d/${jail}-make.conf":
+    ensure  => $manage_file_ensure,
+    source  => $manage_make_source,
+    content => $manage_make_content,
+    require => Exec["poudriere-jail-${jail}"],
+  }
+
   # Define list of packages to build
   file { "/usr/local/etc/poudriere.d/${jail}.list":
+    ensure  => $manage_file_ensure,
     source  => $manage_pkgs_source,
     content => $manage_pkgs_content,
-    require => File['/usr/local/etc/poudriere.d'],
+    require => Exec["poudriere-jail-${jail}"],
   }
 
   # Define optional port building options
   if $pkg_optsdir != nil {
     file { "/usr/local/etc/poudriere.d/${jail}-options/":
-      ensure  => directory,
-      recurse => true,
+      ensure  => $manage_directory_ensure,
+      recurse => $manage_directory_recurse,
       force   => true,
       source  => $pkg_optsdir,
+      require => Exec["poudriere-jail-${jail}"],
     }
   }
 
-  # build new ports periodically
-  $cron_present = $cron_enable ? {
-    true    => 'present',
-    default => 'absent',
-  }
-
+  # Build new ports periodically
   cron { "poudriere-bulk-${jail}":
-    ensure   => $cron_present,
-    command  => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin poudriere bulk -f /usr/local/etc/poudriere.d/${jail}.list -j ${jail} -J ${paralleljobs}",
+    ensure   => $manage_cron_ensure,
+    command  => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin poudriere bulk -f /usr/local/etc/poudriere.d/${jail}.list -j ${jail} -J ${paralleljobs} -p ${portstree}",
     user     => 'root',
     minute   => $cron_interval['minute'],
     hour     => $cron_interval['hour'],
     monthday => $cron_interval['monthday'],
     month    => $cron_interval['month'],
     weekday  => $cron_interval['weekday'],
+    require  => Exec["poudriere-jail-${jail}"],
   }
 }

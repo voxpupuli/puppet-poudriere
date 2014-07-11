@@ -75,3 +75,16 @@ poudriere::env { "90amd64":
 }
 ```
 
+## Managing seperate portstrees
+
+As poudriere supports multiple seperate portstrees to build from, so does puppet-poudriere by creating `poudriere::portstree` resources. By default a `default` portstree will be created, but each build environment can be told which portstree to use:
+```Puppet
+poudriere::portstree { "custom-ports":
+  cron_enable  => false,
+  fetch_method => 'portsnap',
+}
+
+poudriere::env { "custom-build":
+  portstree => 'custom-ports',
+}
+```
