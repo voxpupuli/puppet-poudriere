@@ -1,5 +1,5 @@
 name    'zleslie-poudriere'
-version '0.0.9'
+version '0.1.0'
 source 'git://github.com/xaque208/puppet-poudriere.git'
 author 'zleslie'
 license 'Apache License Version 2.0'
