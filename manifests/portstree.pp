@@ -24,14 +24,14 @@ define poudriere::portstree (
   if $ensure != 'absent' {
     exec { "poudriere-portstree-${portstree}":
       command => "/usr/local/bin/poudriere ports -c -p ${portstree} -m ${fetch_method}",
-      require => File['/usr/local/etc/poudriere.conf'],
       creates => "${poudriere::poudriere_base}/ports/${portstree}",
       timeout => 3600,
+      require => File['/usr/local/etc/poudriere.conf'],
     }
   } else {
     exec { "poudriere-portstree-${portstree}":
       command => "/usr/local/bin/poudriere ports -d -p ${portstree}",
-      onlyif  => "/usr/local/bin/poudriere ports -l | grep -w '^${portstree}'",
+      onlyif  => "/usr/local/bin/poudriere ports -l | /usr/bin/grep -w '^${portstree}'",
     }
   }
 

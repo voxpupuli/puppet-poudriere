@@ -78,7 +78,7 @@ define poudriere::env (
   } else {
     exec { "poudriere-jail-${jail}":
       command => "/usr/local/bin/poudriere jail -d -j ${jail}",
-      onlyif  => "/usr/local/bin/poudriere jail -l | grep -w '^${jail}'",
+      onlyif  => "/usr/local/bin/poudriere jail -l | /usr/bin/grep -w '^${jail}'",
     }
   }
 
