@@ -59,6 +59,10 @@ class poudriere (
     ensure  => directory,
   }
 
+  file { $distfiles_cache:
+    ensure => directory,
+  }
+
   if $ccache_enable {
     file { $ccache_dir:
       ensure => directory,
