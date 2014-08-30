@@ -21,8 +21,6 @@ class poudriere (
   $check_changed_options  = 'verbose',
   $check_changed_deps     = 'yes',
   $pkg_repo_signing_key   = '',
-  $ccache_enable          = false,
-  $ccache_dir             = '/var/cache/ccache',
   $parallel_jobs          = $::processorcount,
   $save_workdir           = '',
   $wrkdir_archive_format  = '',
