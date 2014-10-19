@@ -1,6 +1,6 @@
 {
   "name": "zleslie-poudriere",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "zleslie",
   "summary": "A module to manage the PkgNG build system",
   "license": "Apache License Version 2.0",
