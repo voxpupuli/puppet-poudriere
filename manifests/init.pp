@@ -2,7 +2,6 @@
 # cool because it gives you the flexibility of custom port options with all the
 # awesomeness of packages.  The below class prepares the build environment.
 # For the configuration of the build environment, see Class[poudriere::env].
-
 class poudriere (
   $zpool                  = 'tank',
   $zrootfs                = '/poudriere',
@@ -38,7 +37,7 @@ class poudriere (
   $cron_interval          = {minute => 0, hour => 22, monthday => '*', month => '*', week => '*'},
   $environments           = {},
   $portstrees             = {},
-){
+) {
 
   Exec {
     path => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin',

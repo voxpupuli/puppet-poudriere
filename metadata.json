@@ -2,28 +2,18 @@
   "name": "zleslie-poudriere",
   "version": "0.1.2",
   "author": "zleslie",
+  "license": "Licensed under (Apache 2.0)",
   "summary": "A module to manage the PkgNG build system",
-  "license": "Apache License Version 2.0",
-  "source": "git://github.com/xaque208/puppet-poudriere.git",
+  "source": "https://github.com/xaque208/puppet-poudriere",
   "project_page": "https://github.com/xaque208/puppet-poudriere",
   "issues_url": "https://github.com/xaque208/puppet-poudriere/issues",
+  "tags": ["freebsd", "pkgng"],
+  "dependencies": [
+  ],
   "operatingsystem_support": [
     {
-      "operatingsystem": "FreeBSD",
-      "operatingsystemrelease": [
-        "10",
-        "9.3"
-      ]
-    }
-  ],
-  "requirements": [
-    {
-      "name": "pe",
-      "version_requirement": ">= 3.2.0 < 3.4.0"
-    },
-    {
-      "name": "puppet",
-      "version_requirement": "3.x"
+    "operatingsystem": "Freebsd",
+    "operatingsystemrelease":[ "10", "9.3" ]
     }
   ]
 }
