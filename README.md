@@ -53,7 +53,7 @@ poudriere::env { "90amd64":
     'APACHE_VERSION=24',
     'APACHE_PORT=www/apache24',
   ],
-  pkgs = [
+  pkgs => [
     'www/apache24',
     'lang/php55',
   ],
