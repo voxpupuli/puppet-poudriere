@@ -2,7 +2,7 @@
   "name": "zleslie-poudriere",
   "version": "0.1.3",
   "author": "zleslie",
-  "license": "Licensed under (Apache 2.0)",
+  "license": "Apache-2.0",
   "summary": "A module to manage the PkgNG build system",
   "source": "https://github.com/xaque208/puppet-poudriere",
   "project_page": "https://github.com/xaque208/puppet-poudriere",
