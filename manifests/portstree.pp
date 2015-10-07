@@ -3,11 +3,12 @@
 # parameter
 
 define poudriere::portstree (
-  $ensure        = 'present',
-  $portstree     = $name,
-  $fetch_method  = 'svn',
-  $cron_enable   = false,
-  $cron_interval = {minute => 0, hour => 22, monthday => '*', month => '*', week => '*'},
+  $ensure           = 'present',
+  $portstree        = $name,
+  $fetch_method     = 'svn',
+  $cron_enable      = false,
+  $cron_always_mail = false,
+  $cron_interval    = {minute => 0, hour => 22, monthday => '*', month => '*', week => '*'},
 ) {
 
   include ::poudriere
@@ -34,11 +35,15 @@ define poudriere::portstree (
       onlyif  => "/usr/local/bin/poudriere ports -l | /usr/bin/grep -w '^${portstree}'",
     }
   }
-
+  if $cron_always_mail {
+    $cron_command="poudriere ports -u -p ${portstree}"
+  } else {
+    $cron_command="OUTPUT=\$(poudriere ports -u -p ${portstree}) || echo \${OUTPUT}"
+  }
   # Update ports tree periodically
   cron { "poudriere-portstree-${portstree}":
     ensure   => $cron_present,
-    command  => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin poudriere ports -u -p ${portstree}",
+    command  => $cron_command,
     user     => 'root',
     minute   => $cron_interval['minute'],
     hour     => $cron_interval['hour'],

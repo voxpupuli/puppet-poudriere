@@ -6,20 +6,21 @@
 # parameter
 
 define poudriere::env (
-  $ensure        = 'present',
-  $makeopts      = [],
-  $makefile      = nil,
-  $version       = '10.0-RELEASE',
-  $arch          = 'amd64',
-  $jail          = $name,
-  $paralleljobs  = $::processorcount,
-  $pkgs          = [],
-  $pkg_file      = nil,
-  $pkg_makeopts  = {},
-  $pkg_optsdir   = nil,
-  $portstree     = 'default',
-  $cron_enable   = false,
-  $cron_interval = { minute => 0, hour => 0, monthday => '*', month => '*', weekday => '*' },
+  $ensure           = 'present',
+  $makeopts         = [],
+  $makefile         = nil,
+  $version          = '10.0-RELEASE',
+  $arch             = 'amd64',
+  $jail             = $name,
+  $paralleljobs     = $::processorcount,
+  $pkgs             = [],
+  $pkg_file         = nil,
+  $pkg_makeopts     = {},
+  $pkg_optsdir      = nil,
+  $portstree        = 'default',
+  $cron_enable      = false,
+  $cron_always_mail = false,
+  $cron_interval    = { minute => 0, hour => 0, monthday => '*', month => '*', weekday => '*' },
 ) {
 
   # Make sure we are prepared to run
@@ -109,10 +110,15 @@ define poudriere::env (
     }
   }
 
+  if $cron_always_mail {
+    $cron_command = "poudriere bulk -f /usr/local/etc/poudriere.d/${jail}.list -j ${jail} -J ${paralleljobs} -p ${portstree}"
+  } else {
+    $cron_command = "OUTPUT=\$(poudriere bulk -f /usr/local/etc/poudriere.d/${jail}.list -j ${jail} -J ${paralleljobs} -p ${portstree}) || echo \${OUTPUT}"
+  }
   # Build new ports periodically
   cron { "poudriere-bulk-${jail}":
     ensure   => $manage_cron_ensure,
-    command  => "PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin poudriere bulk -f /usr/local/etc/poudriere.d/${jail}.list -j ${jail} -J ${paralleljobs} -p ${portstree}",
+    command  => $cron_command,
     user     => 'root',
     minute   => $cron_interval['minute'],
     hour     => $cron_interval['hour'],
