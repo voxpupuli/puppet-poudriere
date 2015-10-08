@@ -1,6 +1,6 @@
 # Puppet-poudriere
 
-[![Build Status](https://travis-ci.org/xaque208/puppet-poudriere.png)](https://travis-ci.org/xaque208/puppet-poudriere)
+[![Build Status](https://travis-ci.org/xaque208/puppet-poudriere.svg?branch=master)](https://travis-ci.org/xaque208/puppet-poudriere)
 
 Manage the FreeBSD PkgNG build system with Puppet.
 
