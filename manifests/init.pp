@@ -34,6 +34,7 @@ class poudriere (
   $http_proxy             = '',
   $ftp_proxy              = '',
   $cron_enable            = false,
+  $cron_always_mail       = false,
   $cron_interval          = {minute => 0, hour => 22, monthday => '*', month => '*', week => '*'},
   $environments           = {},
   $portstrees             = {},
@@ -81,9 +82,10 @@ class poudriere (
 
   # Create default portstree
   poudriere::portstree { 'default':
-    fetch_method  => $port_fetch_method,
-    cron_enable   => $cron_enable,
-    cron_interval => $cron_interval,
+    fetch_method     => $port_fetch_method,
+    cron_enable      => $cron_enable,
+    cron_always_mail => $cron_always_mail,
+    cron_interval    => $cron_interval,
   }
 
   # Create environments
