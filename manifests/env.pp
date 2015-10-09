@@ -25,6 +25,13 @@ define poudriere::env (
 
   # Make sure we are prepared to run
   include poudriere
+  if ! defined(Poudriere::Portstree[$portstree]) {
+    if $portstree == 'defaut' {
+      warn('The default portstree is no longer created automatically.  Please consult the Readme file for instructions on how to create this yourself')
+    } else {
+      warn("portstree['${portstree}'] is not defined please consult the Readme for instructions on how to create this.")
+    }
+  }
 
   if $makefile != nil {
     $manage_make_source = $makefile
