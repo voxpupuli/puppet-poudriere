@@ -30,12 +30,8 @@ class poudriere (
   $url_base               = '',
   $max_execution_time     = '',
   $nohang_time            = '',
-  $port_fetch_method      = 'svn',
   $http_proxy             = '',
   $ftp_proxy              = '',
-  $cron_enable            = false,
-  $cron_always_mail       = false,
-  $cron_interval          = {minute => 0, hour => 22, monthday => '*', month => '*', week => '*'},
   $environments           = {},
   $portstrees             = {},
 ) {
@@ -69,23 +65,8 @@ class poudriere (
     }
   }
 
-  # NOTE: cron_enable, cron_interval and port_fetch_method
-  # are is deprecated and will eventually default to true.
-  # portstree management has moved to poudriere::portstree
-  if $cron_enable == true {
-    notice('cron_enable, cron_interval and port_fetch_method on class poudriere is deprecated, define seperately poudriere::portstree')
-  }
-
   cron { 'poudriere-update-ports':
     ensure   => 'absent',
-  }
-
-  # Create default portstree
-  poudriere::portstree { 'default':
-    fetch_method     => $port_fetch_method,
-    cron_enable      => $cron_enable,
-    cron_always_mail => $cron_always_mail,
-    cron_interval    => $cron_interval,
   }
 
   # Create environments
