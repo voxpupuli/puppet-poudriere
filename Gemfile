@@ -6,6 +6,8 @@ group :test do
   gem "rspec-puppet", :git => 'https://github.com/rodjek/rspec-puppet.git'
   gem "puppetlabs_spec_helper"
   gem "metadata-json-lint"
+  gem 'json', '~>1.0' if RUBY_VERSION =~ /^1\.9\.3.*$/
+  gem 'json_pure', '~>1.0' if RUBY_VERSION =~ /^1\.9\.3.*$/
 end
 
 group :development do
