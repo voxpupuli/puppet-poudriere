@@ -16,7 +16,3 @@ group :development do
   gem "guard-rake"
 end
 
-group :system_tests do
-  gem "beaker"
-  gem "beaker-rspec"
-end
