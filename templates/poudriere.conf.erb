@@ -122,6 +122,9 @@ PKG_REPO_SIGNING_KEY=<%= @pkg_repo_signing_key %>
 # It will be mounted into the jail and be shared among all jails.
 #CCACHE_DIR=/var/cache/ccache
 #
+<% if @ccache_enable and @ccache_dir != '' -%>
+CCACHE_DIR=<%= @ccache_dir %>
+<% end -%>
 
 # parallel build support.
 #
