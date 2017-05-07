@@ -12,8 +12,8 @@
   ],
   "operatingsystem_support": [
     {
-    "operatingsystem": "Freebsd",
-    "operatingsystemrelease":[ "10", "9.3" ]
+      "operatingsystem": "FreeBSD",
+      "operatingsystemrelease": [ "11", "10" ]
     }
   ]
 }

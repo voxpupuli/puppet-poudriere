@@ -24,7 +24,7 @@ define poudriere::env (
 ) {
 
   # Make sure we are prepared to run
-  include poudriere
+  include ::poudriere
   if ! defined(Poudriere::Portstree[$portstree]) {
     if $portstree == 'defaut' {
       warn('The default portstree is no longer created automatically.  Please consult the Readme file for instructions on how to create this yourself')
