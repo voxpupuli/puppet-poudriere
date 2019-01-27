@@ -208,3 +208,8 @@ MAX_EXECUTION_TIME=<%= @max_execution_time %>
 <% if @nohang_time and @nohang_time != '' -%>
 NOHANG_TIME=<%= @nohang_time %>
 <% end -%>
+
+<% if @build_as_non_root and @build_as_non_root != '' -%>
+BUILD_AS_NON_ROOT=<%= @build_as_non_root %>
+<% end -%>
+
