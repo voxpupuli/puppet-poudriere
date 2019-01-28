@@ -7,7 +7,7 @@ class poudriere (
   Stdlib::Absolutepath $zrootfs      = '/poudriere',
   String $freebsd_host               = 'http://ftp6.us.freebsd.org/',
   Stdlib::Absolutepath  $resolv_conf = '/etc/resolv.conf',
-  Bool $ccache_enable                = false,
+  Boolean $ccache_enable             = false,
   Stdlib::Absolutepath $ccache_dir   = '/var/cache/ccache',
   $poudriere_base                    = '/usr/local/poudriere',
   $poudriere_data                    = '${BASEFS}/data',
