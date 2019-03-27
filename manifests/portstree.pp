@@ -11,7 +11,7 @@ define poudriere::portstree (
   $cron_interval    = {minute => 0, hour => 22, monthday => '*', month => '*', week => '*'},
 ) {
 
-  include ::poudriere
+  include poudriere
 
   $cron_present = $ensure ? {
     'absent' => 'absent',
