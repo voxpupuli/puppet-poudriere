@@ -21,7 +21,7 @@ class poudriere (
   $check_changed_deps                = 'yes',
   String $pkg_repo_signing_key       = '',
   $parallel_jobs                     = $facts['processorcount'],
-  String $save_workdir               = '',
+  String $save_wrkdir                = '',
   String $wrkdir_archive_format      = '',
   String $nolinux                    = '',
   String $no_package_building        = '',
