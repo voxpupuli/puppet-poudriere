@@ -5,6 +5,7 @@
 define poudriere::portstree (
   $ensure           = 'present',
   $portstree        = $name,
+  $branch           = undef,
   $fetch_method     = 'svn',
   $cron_enable      = false,
   $cron_always_mail = false,
@@ -23,8 +24,14 @@ define poudriere::portstree (
 
   # Manage portstree
   if $ensure != 'absent' {
+    if $branch != undef {
+        $branch_option = "-B ${branch}"
+    }
+    else {
+        $branch_option = ''
+    }
     exec { "poudriere-portstree-${portstree}":
-      command => "/usr/local/bin/poudriere ports -c -p ${portstree} -m ${fetch_method}",
+      command => "/usr/local/bin/poudriere ports -c -p ${portstree} -m ${fetch_method} ${branch_option}",
       creates => "${poudriere::poudriere_base}/ports/${portstree}",
       timeout => 3600,
       require => File['/usr/local/etc/poudriere.conf'],
