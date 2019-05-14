@@ -80,7 +80,7 @@ define poudriere::env (
     exec { "poudriere-jail-${jail}":
       command => "/usr/local/bin/poudriere jail -c -j ${jail} -v ${version} -a ${arch} -p ${portstree}",
       require => Poudriere::Portstree[$portstree],
-      creates => "${poudriere::poudriere_base}/jails/${jail}/",
+      creates => regsubst("${poudriere::poudriere_base}/jails/${jail}/", ':', '_', 'G'),
       timeout => 3600,
     }
   } else {
