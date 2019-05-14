@@ -139,7 +139,7 @@ PARALLEL_JOBS=<%= @parallel_jobs %>
 # If set, failed builds will save the WRKDIR to ${POUDRIERE_DATA}/wrkdirs
 # SAVE_WRKDIR=yes
 <% if @save_wrkdir and @save_wrkdir != '' -%>
-SAVE_WRKDIR=<% @save_wkrdir %>
+SAVE_WRKDIR=<%= @save_wrkdir %>
 <% end -%>
 
 # Choose the default format for the workdir packing: could be tar,tgz,tbz,txz
