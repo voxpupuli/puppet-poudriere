@@ -20,7 +20,7 @@ class poudriere (
   $check_changed_options             = 'verbose',
   $check_changed_deps                = 'yes',
   String $pkg_repo_signing_key       = '',
-  $parallel_jobs                     = $facts['processorcount'],
+  $parallel_jobs                     = $facts['processors']['count'],
   String $save_wrkdir                = '',
   String $wrkdir_archive_format      = '',
   String $nolinux                    = '',
