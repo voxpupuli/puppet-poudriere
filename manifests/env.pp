@@ -12,7 +12,7 @@ define poudriere::env (
   $version          = '10.0-RELEASE',
   $arch             = 'amd64',
   $jail             = $name,
-  $paralleljobs     = $::processorcount,
+  $paralleljobs     = $facts['processors']['count'],
   $pkgs             = [],
   $pkg_file         = nil,
   $pkg_makeopts     = {},
