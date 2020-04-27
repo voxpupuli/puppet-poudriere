@@ -1,6 +1,12 @@
 # Puppet-poudriere
 
-[![Puppet Forge](https://img.shields.io/puppetforge/v/zleslie/poudriere.svg)]() [![Build Status](https://travis-ci.org/xaque208/puppet-poudriere.svg?branch=master)](https://travis-ci.org/xaque208/puppet-poudriere)
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-poudriere.svg?branch=master)](https://travis-ci.org/voxpupuli/puppet-poudriere)
+[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-poudriere/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-poudriere)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/poudriere.svg)](https://forge.puppetlabs.com/puppet/poudriere)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/poudriere.svg)](https://forge.puppetlabs.com/puppet/poudriere)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/poudriere.svg)](https://forge.puppetlabs.com/puppet/poudriere)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/poudriere.svg)](https://forge.puppetlabs.com/puppet/poudriere)
+[![License](https://img.shields.io/github/license/voxpupuli/puppet-poudriere.svg)](https://github.com/voxpupuli/puppet-poudriere/blob/master/LICENSE)
 
 Manage the FreeBSD PkgNG build system with Puppet.
 
