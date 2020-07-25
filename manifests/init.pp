@@ -36,7 +36,6 @@ class poudriere (
   $environments                      = {},
   $portstrees                        = {},
 ) {
-
   Exec {
     path => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin',
   }

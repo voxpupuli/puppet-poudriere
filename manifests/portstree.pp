@@ -9,9 +9,8 @@ define poudriere::portstree (
   $fetch_method     = 'svn',
   $cron_enable      = false,
   $cron_always_mail = false,
-  $cron_interval    = {minute => 0, hour => 22, monthday => '*', month => '*', week => '*'},
+  $cron_interval    = { minute => 0, hour => 22, monthday => '*', month => '*', week => '*' },
 ) {
-
   include poudriere
 
   $cron_present = $ensure ? {
@@ -25,10 +24,10 @@ define poudriere::portstree (
   # Manage portstree
   if $ensure != 'absent' {
     if $branch != undef {
-        $branch_option = "-B ${branch}"
+      $branch_option = "-B ${branch}"
     }
     else {
-        $branch_option = ''
+      $branch_option = ''
     }
     exec { "poudriere-portstree-${portstree}":
       command => "/usr/local/bin/poudriere ports -c -p ${portstree} -m ${fetch_method} ${branch_option}",
