@@ -22,7 +22,6 @@ define poudriere::env (
   $cron_always_mail = false,
   $cron_interval    = { minute => 0, hour => 0, monthday => '*', month => '*', weekday => '*' },
 ) {
-
   # Make sure we are prepared to run
   include poudriere
   if ! defined(Poudriere::Portstree[$portstree]) {
