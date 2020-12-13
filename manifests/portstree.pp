@@ -3,13 +3,13 @@
 # parameter
 
 define poudriere::portstree (
-  $ensure           = 'present',
-  $portstree        = $name,
-  $branch           = undef,
-  $fetch_method     = 'svn',
-  $cron_enable      = false,
-  $cron_always_mail = false,
-  $cron_interval    = { minute => 0, hour => 22, monthday => '*', month => '*', week => '*' },
+  Enum['present', 'absent'] $ensure           = 'present',
+  String[1]                 $portstree        = $name,
+  Optional[String[1]]       $branch           = undef,
+  Poudriere::Fetch_method   $fetch_method     = 'svn',
+  Boolean                   $cron_enable      = false,
+  Boolean                   $cron_always_mail = false,
+  Poudriere::Cron_interval  $cron_interval    = { minute => 0, hour => 22, monthday => '*', month => '*', week => '*' },
 ) {
   include poudriere
 
