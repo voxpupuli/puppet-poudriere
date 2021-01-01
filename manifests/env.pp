@@ -26,18 +26,10 @@ define poudriere::env (
   include poudriere
   if ! defined(Poudriere::Portstree[$portstree]) {
     if $portstree == 'defaut' {
-      warn('The default portstree is no longer created automatically.  Please consult the Readme file for instructions on how to create this yourself')
+      warning('The default portstree is no longer created automatically.  Please consult the Readme file for instructions on how to create this yourself')
     } else {
-      warn("portstree['${portstree}'] is not defined please consult the Readme for instructions on how to create this.")
+      warning("portstree['${portstree}'] is not defined please consult the Readme for instructions on how to create this.")
     }
-  }
-
-  if $makeopts != [] or $pkg_makeopts != {} {
-    $manage_make_content = template('poudriere/make.conf.erb')
-  }
-
-  if $pkgs != [] {
-    $manage_pkgs_content = inline_template("<%= (@pkgs.join('\n'))+\"\n\" %>")
   }
 
   $manage_file_ensure = $ensure ? {
@@ -85,7 +77,7 @@ define poudriere::env (
   file { "/usr/local/etc/poudriere.d/${jail}-make.conf":
     ensure  => $manage_file_ensure,
     source  => $makefile,
-    content => $manage_make_content,
+    content => template('poudriere/make.conf.erb'),
     require => Exec["poudriere-jail-${jail}"],
   }
 
@@ -93,7 +85,7 @@ define poudriere::env (
   file { "/usr/local/etc/poudriere.d/${jail}.list":
     ensure  => $manage_file_ensure,
     source  => $pkg_file,
-    content => $manage_pkgs_content,
+    content => inline_template("<%= (@pkgs.join('\n'))+\"\n\" %>"),
     require => Exec["poudriere-jail-${jail}"],
   }
 
