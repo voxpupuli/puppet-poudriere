@@ -6,46 +6,30 @@
 # parameter
 
 define poudriere::env (
-  $ensure           = 'present',
-  $makeopts         = [],
-  $makefile         = nil,
-  $version          = '10.0-RELEASE',
-  $arch             = 'amd64',
-  $jail             = $name,
-  $paralleljobs     = $facts['processors']['count'],
-  $pkgs             = [],
-  $pkg_file         = nil,
-  $pkg_makeopts     = {},
-  $pkg_optsdir      = nil,
-  $portstree        = 'default',
-  $cron_enable      = false,
-  $cron_always_mail = false,
-  $cron_interval    = { minute => 0, hour => 0, monthday => '*', month => '*', weekday => '*' },
+  Enum['present', 'absent']      $ensure           = 'present',
+  Array[String[1]]               $makeopts         = [],
+  Optional[Stdlib::Absolutepath] $makefile         = undef,
+  String[1]                      $version          = '10.0-RELEASE',
+  String[1]                      $arch             = 'amd64',
+  String[1]                      $jail             = $name,
+  Integer[1]                     $paralleljobs     = $facts['processors']['count'],
+  Array[String[1]]               $pkgs             = [],
+  Optional[Stdlib::Absolutepath] $pkg_file         = undef,
+  Hash                           $pkg_makeopts     = {},
+  Optional[Stdlib::Absolutepath] $pkg_optsdir      = undef,
+  String[1]                      $portstree        = 'default',
+  Boolean                        $cron_enable      = false,
+  Boolean                        $cron_always_mail = false,
+  Poudriere::Cron_interval       $cron_interval    = { minute => 0, hour => 0, monthday => '*', month => '*', weekday => '*' },
 ) {
   # Make sure we are prepared to run
   include poudriere
   if ! defined(Poudriere::Portstree[$portstree]) {
     if $portstree == 'defaut' {
-      warn('The default portstree is no longer created automatically.  Please consult the Readme file for instructions on how to create this yourself')
+      warning('The default portstree is no longer created automatically.  Please consult the Readme file for instructions on how to create this yourself')
     } else {
-      warn("portstree['${portstree}'] is not defined please consult the Readme for instructions on how to create this.")
+      warning("portstree['${portstree}'] is not defined please consult the Readme for instructions on how to create this.")
     }
-  }
-
-  if $makefile != nil {
-    $manage_make_source = $makefile
-  }
-
-  if $makeopts != [] or $pkg_makeopts != {} {
-    $manage_make_content = template('poudriere/make.conf.erb')
-  }
-
-  if $pkg_file != nil {
-    $manage_pkgs_source = $pkg_file
-  }
-
-  if $pkgs != [] {
-    $manage_pkgs_content = inline_template("<%= (@pkgs.join('\n'))+\"\n\" %>")
   }
 
   $manage_file_ensure = $ensure ? {
@@ -92,21 +76,21 @@ define poudriere::env (
   # Lay down the configuration
   file { "/usr/local/etc/poudriere.d/${jail}-make.conf":
     ensure  => $manage_file_ensure,
-    source  => $manage_make_source,
-    content => $manage_make_content,
+    source  => $makefile,
+    content => template('poudriere/make.conf.erb'),
     require => Exec["poudriere-jail-${jail}"],
   }
 
   # Define list of packages to build
   file { "/usr/local/etc/poudriere.d/${jail}.list":
     ensure  => $manage_file_ensure,
-    source  => $manage_pkgs_source,
-    content => $manage_pkgs_content,
+    source  => $pkg_file,
+    content => inline_template("<%= (@pkgs.join('\n'))+\"\n\" %>"),
     require => Exec["poudriere-jail-${jail}"],
   }
 
   # Define optional port building options
-  if $pkg_optsdir != nil {
+  if $pkg_optsdir {
     file { "/usr/local/etc/poudriere.d/${jail}-options/":
       ensure  => $manage_directory_ensure,
       recurse => $manage_directory_recurse,
