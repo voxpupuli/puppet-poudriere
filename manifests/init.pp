@@ -35,6 +35,7 @@ class poudriere (
   String                       $build_as_non_root     = '',
   Hash                         $environments          = {},
   Hash                         $portstrees            = {},
+  String[1]                    $xbuild_package        = 'qemu-user-static',
 ) {
   Exec {
     path => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin',

@@ -24,6 +24,11 @@ define poudriere::env (
 ) {
   # Make sure we are prepared to run
   include poudriere
+
+  if $facts['os']['architecture'] == 'amd64' and $arch and $arch !~ 'amd64' and $arch !~ 'i386' {
+    include poudriere::xbuild
+  }
+
   if ! defined(Poudriere::Portstree[$portstree]) {
     if $portstree == 'defaut' {
       warning('The default portstree is no longer created automatically.  Please consult the Readme file for instructions on how to create this yourself')
