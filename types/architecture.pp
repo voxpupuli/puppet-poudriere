@@ -1,0 +1,32 @@
+# @summary The architecture to target when building packages
+#
+# @note This list can be obtained from the FreeBSD src directory with `make targets | awk -F '( +|/)' 'NR > 1 { if ($2 == $3) { print $2 }; print $2"."$3 }'`
+type Poudriere::Architecture = Enum[
+  'amd64',
+  'amd64.amd64',
+  'arm',
+  'arm.arm',
+  'arm.armv6',
+  'arm.armv7',
+  'arm64.aarch64',
+  'i386',
+  'i386.i386',
+  'mips.mipsel',
+  'mips',
+  'mips.mips',
+  'mips.mips64el',
+  'mips.mips64',
+  'mips.mipsn32',
+  'mips.mipselhf',
+  'mips.mipshf',
+  'mips.mips64elhf',
+  'mips.mips64hf',
+  'powerpc',
+  'powerpc.powerpc',
+  'powerpc.powerpc64',
+  'powerpc.powerpcspe',
+  'riscv.riscv64',
+  'riscv.riscv64sf',
+  'sparc64',
+  'sparc64.sparc64',
+]
