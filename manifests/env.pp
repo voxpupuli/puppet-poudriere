@@ -10,7 +10,7 @@ define poudriere::env (
   Array[String[1]]               $makeopts         = [],
   Optional[Stdlib::Absolutepath] $makefile         = undef,
   String[1]                      $version          = '10.0-RELEASE',
-  String[1]                      $arch             = 'amd64',
+  Optional[Poudriere::Architecture] $arch          = undef,
   String[1]                      $jail             = $name,
   Integer[1]                     $paralleljobs     = $facts['processors']['count'],
   Array[String[1]]               $pkgs             = [],
@@ -24,6 +24,11 @@ define poudriere::env (
 ) {
   # Make sure we are prepared to run
   include poudriere
+
+  if $facts['os']['architecture'] == 'amd64' and $arch and $arch !~ 'amd64' and $arch !~ 'i386' {
+    include poudriere::xbuild
+  }
+
   if ! defined(Poudriere::Portstree[$portstree]) {
     if $portstree == 'defaut' {
       warning('The default portstree is no longer created automatically.  Please consult the Readme file for instructions on how to create this yourself')
@@ -60,8 +65,12 @@ define poudriere::env (
 
   # Manage jail
   if $ensure != 'absent' {
+    $arch_arg = $arch ? {
+      Undef   => '',
+      default => "-a ${arch}",
+    }
     exec { "poudriere-jail-${jail}":
-      command => "/usr/local/bin/poudriere jail -c -j ${jail} -v ${version} -a ${arch} -p ${portstree}",
+      command => "/usr/local/bin/poudriere jail -c -j ${jail} -v ${version} ${arch_arg} -p ${portstree}",
       require => Poudriere::Portstree[$portstree],
       creates => regsubst("${poudriere::poudriere_base}/jails/${jail}/", ':', '_', 'G'),
       timeout => 3600,
