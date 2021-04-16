@@ -3,13 +3,14 @@
 # parameter
 
 define poudriere::portstree (
-  Enum['present', 'absent'] $ensure           = 'present',
-  String[1]                 $portstree        = $name,
-  Optional[String[1]]       $branch           = undef,
-  Poudriere::Fetch_method   $fetch_method     = 'svn',
-  Boolean                   $cron_enable      = false,
-  Boolean                   $cron_always_mail = false,
-  Poudriere::Cron_interval  $cron_interval    = { minute => 0, hour => 22, monthday => '*', month => '*', week => '*' },
+  Enum['present', 'absent']      $ensure           = 'present',
+  String[1]                      $portstree        = $name,
+  Optional[String[1]]            $branch           = undef,
+  Poudriere::Fetch_method        $fetch_method     = 'svn',
+  Optional[Stdlib::Absolutepath] $mountpoint       = undef,
+  Boolean                        $cron_enable      = false,
+  Boolean                        $cron_always_mail = false,
+  Poudriere::Cron_interval       $cron_interval    = { minute => 0, hour => 22, monthday => '*', month => '*', week => '*' },
 ) {
   include poudriere
 
@@ -29,8 +30,13 @@ define poudriere::portstree (
     else {
       $branch_option = ''
     }
+    if $mountpoint != undef {
+      $mountpoint_option = "-M ${mountpoint.shell_escape}"
+    } else {
+      $mountpoint_option = ''
+    }
     exec { "poudriere-portstree-${portstree}":
-      command => "/usr/local/bin/poudriere ports -c -p ${portstree} -m ${fetch_method} ${branch_option}",
+      command => "/usr/local/bin/poudriere ports -c -p ${portstree} -m ${fetch_method} ${branch_option} ${mountpoint_option}",
       creates => "${poudriere::poudriere_base}/ports/${portstree}",
       timeout => 3600,
       require => File['/usr/local/etc/poudriere.conf'],
