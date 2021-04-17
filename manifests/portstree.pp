@@ -1,7 +1,15 @@
 # This resource creates a ports tree. You can have multiple ports trees for different
 # building purposes. Automatic periodic updating of packages is managed with the cron_enable
 # parameter
-
+#
+# @param ensure The desired state of this ports tree
+# @param portstree Name of the ports tree
+# @param branch Branch to checkout when using the svn or git methods
+# @param fetch_method Specify which method to use to create the ports tree
+# @param mountpoint Path to the source of a ports tree.
+# @param cron_enable Enable automatic updates
+# @param cron_always_mail Always send an e-mail on update
+# @param cron_interval Scheduling of automatic updates
 define poudriere::portstree (
   Enum['present', 'absent']      $ensure           = 'present',
   String[1]                      $portstree        = $name,

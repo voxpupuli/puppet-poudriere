@@ -4,7 +4,22 @@
 # make.conf, you can pass here as well.
 # Automatic periodic building of packages is managed with the cron_enable
 # parameter
-
+#
+# @param ensure The desired state of this environment
+# @param makeopts Build options
+# @param makefile Path to a Makefile
+# @param version Version of the jail
+# @param arch Architecture of the jail
+# @param jail Name of the jail
+# @param paralleljobs Override the number of builders
+# @param pkgs List of packages to build
+# @param pkg_file Puppet path to a list of packages to build
+# @param pkg_makeopts Per package build options
+# @param pkg_optsdir Path to a directory of build options
+# @param portstree The port tree to use
+# @param cron_enable Enable automatic updates
+# @param cron_always_mail Always send an e-mail on update
+# @param cron_interval Scheduling of automatic updates
 define poudriere::env (
   Enum['present', 'absent']      $ensure           = 'present',
   Array[String[1]]               $makeopts         = [],
