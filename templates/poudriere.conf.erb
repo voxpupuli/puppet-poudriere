@@ -10,20 +10,20 @@
 # poudriere.
 #
 #ZPOOL=
-<% if @zpool and @zpool!='' -%>
+<% if @zpool -%>
 ZPOOL=<%= @zpool %>
 <% end -%>
 
 ### NO ZFS
 # To not use ZFS, define NO_ZFS=yes
 #NO_ZFS=yes
-<% if !@zpool or @zpool=='' -%>
+<% if !@zpool -%>
 NO_ZFS=yes
 <% end -%>
 
 # root of the poudriere zfs filesystem, by default /poudriere
 #ZROOTFS=
-<% if @zpool and @zpool!='' -%>
+<% if @zrootfs -%>
 ZROOTFS=<%= @zrootfs %>
 <% end -%>
 
@@ -62,7 +62,7 @@ USE_PORTLINT=<%= @use_portlint %>
 
 # If set WRKDIRPREFIX will be mdmfs of the given size (mM or gG)
 #MFSSIZE=4G
-<% if @mfssize and @mfssize != '' -%>
+<% if @mfssize -%>
 MFSSIZE=<%= @mfssize %>
 <% end -%>
 
@@ -74,7 +74,7 @@ MFSSIZE=<%= @mfssize %>
 # all       - Run the entire build in memory, including builder jails.
 # yes       - Only enables tmpfs(5) for wrkdir
 # EXAMPLE: USE_TMPFS="wrkdir data"
-<% if @tmpfs and @tmpfs != '' -%>
+<% if @tmpfs -%>
 USE_TMPFS=<%= @tmpfs %>
 <% end -%>
 
@@ -84,14 +84,14 @@ DISTFILES_CACHE=<%= @distfiles_cache %>
 
 # if set the ports tree marked to use csup method will use the defined mirror
 #CSUP_HOST=cvsup._CHANGE_THIS_.freebsd.org
-<% if @csup_host and @csup_host != '' -%>
+<% if @csup_host -%>
 CSUP_HOST=<%= @csup_host %>
 <% end -%>
 
 # if set the ports tree or source tree marked to use svn will use the defined
 # mirror by default svn.FreeBSD.org
 #SVN_HOST=svn.FreeBSD.org
-<% if @svn_host and @svn_host != '' -%>
+<% if @svn_host -%>
 SVN_HOST=<%= @svn_host %>
 <% end -%>
 
@@ -114,7 +114,7 @@ CHECK_CHANGED_DEPS=<%= @check_changed_deps %>
 
 # Path to the RSA key to sign the PKGNG repo with. See pkg-repo(8)
 #PKG_REPO_SIGNING_KEY=/etc/ssl/keys/repo.key
-<% if @pkg_repo_signing_key and @pkg_repo_signing_key != '' -%>
+<% if @pkg_repo_signing_key -%>
 PKG_REPO_SIGNING_KEY=<%= @pkg_repo_signing_key %>
 <% end -%>
 
@@ -122,7 +122,7 @@ PKG_REPO_SIGNING_KEY=<%= @pkg_repo_signing_key %>
 # It will be mounted into the jail and be shared among all jails.
 #CCACHE_DIR=/var/cache/ccache
 #
-<% if @ccache_enable and @ccache_dir != '' -%>
+<% if @ccache_enable -%>
 CCACHE_DIR=<%= @ccache_dir %>
 <% end -%>
 
@@ -138,27 +138,27 @@ PARALLEL_JOBS=<%= @parallel_jobs %>
 
 # If set, failed builds will save the WRKDIR to ${POUDRIERE_DATA}/wrkdirs
 # SAVE_WRKDIR=yes
-<% if @save_wrkdir and @save_wrkdir != '' -%>
+<% if @save_wrkdir -%>
 SAVE_WRKDIR=<%= @save_wrkdir %>
 <% end -%>
 
 # Choose the default format for the workdir packing: could be tar,tgz,tbz,txz
 # default is tbz
 # WRKDIR_ARCHIVE_FORMAT=tbz
-<% if @wrkdir_archive_format and @wrkdir_archive_format != '' -%>
+<% if @wrkdir_archive_format -%>
 WRKDIR_ARCHIVE_FORMAT=<%= @wrkdir_archive_format %>
 <% end -%>
 
 # Disable linux support
 # NOLINUX=yes
-<% if @nolinux and @nolinux != '' -%>
+<% if @nolinux -%>
 NOLINUX=<%= @nolinux %>
 <% end -%>
 
 # by default poudriere set PACKAGE_BUILDING
 # to disable it:
 # NO_PACKAGE_BUILDING=yes
-<% if @no_package_building and @no_package_building != '' -%>
+<% if @no_package_building -%>
 NO_PACKAGE_BUILDING=<%= @no_package_building %>
 <% end -%>
 
@@ -166,24 +166,24 @@ NO_PACKAGE_BUILDING=<%= @no_package_building %>
 # export HTTP_PROXY=bla
 # export FTP_PROXY=bla
 #
-<% if @http_proxy and @http_proxy!='' -%>
+<% if @http_proxy -%>
 export HTTP_PROXY=<%= @http_proxy %>
 <% end -%>
 
-<% if @ftp_proxy and @ftp_proxy!='' -%>
+<% if @ftp_proxy -%>
 export FTP_PROXY=<%= @ftp_proxy %>
 <% end -%>
 
 # Cleanout the restricted packages
 # NO_RESTRICTED=yes
-<% if @no_restricted and @no_restricted != '' -%>
+<% if @no_restricted -%>
 NO_RESTRICTED=<%= @no_restricted %>
 <% end -%>
 
 # By default MAKE_JOBS is disabled to allow only one process per cpu
 # Use the following to allow it anyway
 # ALLOW_MAKE_JOBS=yes
-<% if @allow_make_jobs and @allow_make_jobs != '' -%>
+<% if @allow_make_jobs -%>
 ALLOW_MAKE_JOBS=<%= @allow_make_jobs %>
 <% end -%>
 
@@ -191,25 +191,25 @@ ALLOW_MAKE_JOBS=<%= @allow_make_jobs %>
 # This will be used for giving URL hints to the HTML output when
 # scheduling and starting builds
 #URL_BASE=http://yourdomain.com/poudriere/
-<% if @url_base and @url_base != '' -%>
+<% if @url_base -%>
 URL_BASE=<%= @url_base %>
 <% end -%>
 
 # This defines the max time (in seconds) that a command may run for a build
 # before it is killed for taking too long. Default: 86400
 #MAX_EXECUTION_TIME=86400
-<% if @max_execution_time and @max_execution_time != '' -%>
+<% if @max_execution_time -%>
 MAX_EXECUTION_TIME=<%= @max_execution_time %>
 <% end -%>
 
 # This defines the how long (in seconds) before a command is considered to
 # be in a runaway state for having no output on stdout. Default: 7200
 #NOHANG_TIME=7200
-<% if @nohang_time and @nohang_time != '' -%>
+<% if @nohang_time -%>
 NOHANG_TIME=<%= @nohang_time %>
 <% end -%>
 
-<% if @build_as_non_root and @build_as_non_root != '' -%>
+<% if @build_as_non_root -%>
 BUILD_AS_NON_ROOT=<%= @build_as_non_root %>
 <% end -%>
 
