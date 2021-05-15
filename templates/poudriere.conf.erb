@@ -82,7 +82,7 @@ USE_TMPFS=<%= @tmpfs %>
 # How much memory to limit tmpfs size to for *each builder* in GiB
 # (default: none)
 #TMPFS_LIMIT=8
-<% if @tmpfs_limnit -%>
+<% if @tmpfs_limit -%>
 TMPFS_LIMIT=<%= @tmpfs_limit %>
 <% end -%>
 
@@ -191,7 +191,7 @@ RESTRICT_NETWORKING=<%= @restrict_networking %>
 <% end -%>
 #ALLOW_NETWORKING_PACKAGES="npm-foo"
 <% if @allow_networking_packages -%>
-ALLOW_NETWORKING_PACKAGES=<%= @allow_networking_packages %>
+ALLOW_NETWORKING_PACKAGES=<%= @allow_networking_packages.shellescape() %>
 <% end -%>
 
 # parallel build support.
@@ -275,7 +275,7 @@ ALLOW_MAKE_JOBS=<%= @allow_make_jobs %>
 # which holdup the rest of the queue to build more quickly.
 #ALLOW_MAKE_JOBS_PACKAGES="pkg ccache py*"
 <% if @allow_make_jobs_packages -%>
-ALLOW_MAKE_JOBS_PACKAGES=<%= @allow_make_jobs_packages %>
+ALLOW_MAKE_JOBS_PACKAGES=<%= @allow_make_jobs_packages.shellescape() %>
 <% end -%>
 
 # Timestamp every line of build logs
@@ -441,7 +441,7 @@ TRIM_ORPHANED_BUILD_DEPS=<%= @trim_orphaned_build_deps %>
 # Default: none
 #LOCAL_MTREE_EXCLUDES="/usr/obj /var/tmp/ccache"
 <% if @local_mtree_excludes -%>
-LOCAL_MTREE_EXCLUDES=<%= @local_mtree_excludes %>
+LOCAL_MTREE_EXCLUDES=<%= @local_mtree_excludes.shellescape() %>
 <% end %>
 
 # Set to hosted to use the /data directory instead of inline style HTML
