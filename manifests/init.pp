@@ -39,7 +39,7 @@
 class poudriere (
   Optional[String[1]]          $zpool                 = undef,
   Stdlib::Absolutepath         $zrootfs               = '/poudriere',
-  String[1]                    $freebsd_host          = 'http://ftp6.us.freebsd.org/',
+  String[1]                    $freebsd_host          = 'http://ftp.freebsd.org/',
   Stdlib::Absolutepath         $resolv_conf           = '/etc/resolv.conf',
   Boolean                      $ccache_enable         = false,
   Stdlib::Absolutepath         $ccache_dir            = '/var/cache/ccache',
