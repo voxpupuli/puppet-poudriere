@@ -76,7 +76,7 @@ describe 'poudriere' do
           }
         end
 
-        it { is_expected.to compile }
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^ZPOOL=tank$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^ZROOTFS=/pdata$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^FREEBSD_HOST=https://download\.FreeBSD\.org$}) }
