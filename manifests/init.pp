@@ -106,7 +106,7 @@ class poudriere (
   Optional[Enum['yes', 'no']]        $atomic_package_repository  = undef,
   Optional[Enum['yes', 'no']]        $commit_packages_on_failure = undef,
   Optional[Enum['yes', 'no']]        $keep_old_packages          = undef,
-  Optional[Integer]                  $keep_old_packages_count    = undef,
+  Optional[Integer[1]]               $keep_old_packages_count    = undef,
   Optional[Enum['yes', 'no']]        $porttesting_fatal          = undef,
   Optional[String[1]]                $builder_hostname           = undef,
   Optional[Enum['yes', 'no']]        $preserve_timestamp         = undef,
