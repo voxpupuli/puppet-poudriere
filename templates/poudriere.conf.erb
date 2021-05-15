@@ -82,15 +82,24 @@ USE_TMPFS=<%= @tmpfs %>
 # How much memory to limit tmpfs size to for *each builder* in GiB
 # (default: none)
 #TMPFS_LIMIT=8
+<% if @tmpfs_limnit -%>
+TMPFS_LIMIT=<%= @tmpfs_limit %>
+<% end -%>
 
 # How much memory to limit jail processes to for *each builder*
 # in GiB (default: none)
 #MAX_MEMORY=8
+<% if @max_memory -%>
+MAX_MEMORY=<%= @max_memory %>
+<% end -%>
 
 # How many file descriptors to limit each jail process to (default: 1024)
 # This can also be set per PKGBASE, such as MAX_FILES_RStudio=2048.
 # Package names with hyphens (-) should be replaced with underscores (_).
 #MAX_FILES=1024
+<% if @max_files -%>
+MAX_FILES=<%= @max_files %>
+<% end -%>
 
 # If set the given directory will be used for the distfiles
 # This allows to share the distfiles between jails and ports tree
@@ -137,6 +146,9 @@ CHECK_CHANGED_DEPS=<%= @check_changed_deps %>
 # a warning but can be made fatal instead by enabling this option.
 # Default: no
 #BAD_PKGNAME_DEPS_ARE_FATAL=yes
+<% if @bad_pkgname_deps_are_fatal -%>
+BAD_PKGNAME_DEPS_ARE_FATAL=<%= @bad_pkgname_deps_are_fatal %>
+<% end -%>
 
 
 # Path to the RSA key to sign the PKG repo with. See pkg-repo(8)
@@ -164,6 +176,9 @@ CCACHE_DIR=<%= @ccache_dir %>
 # which is normally disabled.  Separately setting RESTRICT_NETWORKING=no
 # may be required for non-localhost memcached servers.
 #CCACHE_STATIC_PREFIX=/usr/local
+<% if @ccache_static_prefix -%>
+CCACHE_STATIC_PREFIX=<%= @ccache_static_prefix %>
+<% end -%>
 
 # The jails normally only allow network access during the 'make fetch'
 # phase.  This is a security restriction to prevent random things
@@ -171,7 +186,13 @@ CCACHE_DIR=<%= @ccache_dir %>
 # is not advised.  ALLOW_NETWORKING_PACKAGES may be used to allow networking
 # for a subset of packages only.
 #RESTRICT_NETWORKING=yes
+<% if @restrict_networking -%>
+RESTRICT_NETWORKING=<%= @restrict_networking %>
+<% end -%>
 #ALLOW_NETWORKING_PACKAGES="npm-foo"
+<% if @allow_networking_packages -%>
+ALLOW_NETWORKING_PACKAGES=<%= @allow_networking_packages %>
+<% end -%>
 
 # parallel build support.
 #
@@ -186,6 +207,9 @@ PARALLEL_JOBS=<%= @parallel_jobs %>
 # How many jobs should be used for preparing the build? These tend to
 # be more IO bound and may be worth tweaking. Default: PARALLEL_JOBS * 1.25
 # PREPARE_PARALLEL_JOBS=1
+<% if @prepare_parallel_jobs -%>
+PREPARE_PARALLEL_JOBS=<%= @prepare_parallel_jobs %>
+<% end -%>
 
 
 # If set, failed builds will save the WRKDIR to ${POUDRIERE_DATA}/wrkdirs
@@ -210,6 +234,9 @@ NOLINUX=<%= @nolinux %>
 # By default poudriere sets FORCE_PACKAGE
 # To disable it (useful when building public packages):
 # NO_FORCE_PACKAGE=yes
+<% if @no_force_package -%>
+NO_FORCE_PACKAGE=<%= @no_force_package %>
+<% end -%>
 
 # By default poudriere sets PACKAGE_BUILDING
 # To disable it:
@@ -247,10 +274,16 @@ ALLOW_MAKE_JOBS=<%= @allow_make_jobs %>
 # regardless of ALLOW_MAKE_JOBS. This is useful for allowing ports
 # which holdup the rest of the queue to build more quickly.
 #ALLOW_MAKE_JOBS_PACKAGES="pkg ccache py*"
+<% if @allow_make_jobs_packages -%>
+ALLOW_MAKE_JOBS_PACKAGES=<%= @allow_make_jobs_packages %>
+<% end -%>
 
 # Timestamp every line of build logs
 # Default: no
 #TIMESTAMP_LOGS=no
+<% if @timestamp_logs -%>
+TIMESTAMP_LOGS=<%= @timestamp_logs %>
+<% end -%>
 
 # URL where your POUDRIERE_DATA/logs are hosted
 # This will be used for giving URL hints to the HTML output when
@@ -283,6 +316,9 @@ NOHANG_TIME=<%= @nohang_time %>
 # Recommended to always keep on.
 # Default: yes
 #ATOMIC_PACKAGE_REPOSITORY=yes
+<% if @atomic_package_repository -%>
+ATOMIC_PACKAGE_REPOSITORY=<%= @atomic_package_repository %>
+<% end -%>
 
 # When using ATOMIC_PACKAGE_REPOSITORY, commit the packages if some
 # packages fail to build. Ignored ports are considered successful.
@@ -290,6 +326,9 @@ NOHANG_TIME=<%= @nohang_time %>
 # are encountered.
 # Default: yes
 #COMMIT_PACKAGES_ON_FAILURE=yes
+<% if @commit_packages_on_failure -%>
+COMMIT_PACKAGES_ON_FAILURE=<%= @commit_packages_on_failure %>
+<% end %>
 
 # Keep older package repositories. This can be used to rollback a system
 # or to bisect issues by changing the repository to one of the older
@@ -297,25 +336,40 @@ NOHANG_TIME=<%= @nohang_time %>
 # ATOMIC_PACKAGE_REPOSITORY is required for this.
 # Default: no
 #KEEP_OLD_PACKAGES=no
+<% if @keep_old_packages -%>
+KEEP_OLD_PACKAGES=<%= @keep_old_packages %>
+<% end %>
 
 # How many old package repositories to keep with KEEP_OLD_PACKAGES
 # Default: 5
 #KEEP_OLD_PACKAGES_COUNT=5
+<% if @keep_old_packages_count -%>
+KEEP_OLD_PACKAGES_COUNT=<%= @keep_old_packages_count %>
+<% end %>
 
 # Make testing errors fatal.
 # If set to 'no', ports with test failure will be marked as failed but still
 # packaged to permit testing dependent ports (useful for bulk -t -a)
 # Default: yes
 #PORTTESTING_FATAL=yes
+<% if @porttesting_fatal -%>
+PORTTESTING_FATAL=<%= @porttesting_fatal %>
+<% end %>
 
 # Define the building jail hostname to be used when building the packages
 # Some port/packages hardcode the hostname of the host during build time
 # This is a necessary setup for reproducible builds.
 #BUILDER_HOSTNAME=pkg.FreeBSD.org
+<% if @builder_hostname -%>
+BUILDER_HOSTNAME=<%= @builder_hostname %>
+<% end %>
 
 # Define to get a predictable timestamp on the ports tree
 # This is a necessary setup for reproducible builds.
 #PRESERVE_TIMESTAMP=yes
+<% if @preserve_timestamp -%>
+PRESERVE_TIMESTAMP=<%= @preserve_timestamp %>
+<% end %>
 
 # Define to yes to build and stage as a regular user
 # Default: yes, unless CCACHE_DIR is set and CCACHE_DIR_NON_ROOT_SAFE is not
@@ -330,34 +384,55 @@ BUILD_AS_NON_ROOT=<%= @build_as_non_root %>
 # Define to the username to build as when BUILD_AS_NON_ROOT is yes.
 # Default: nobody (uid PORTBUILD_UID)
 #PORTBUILD_USER=nobody
+<% if @portbuild_user -%>
+PORTBUILD_USER=<%= @portbuild_user %>
+<% end %>
 
 # Define to the uid to use for PORTBUILD_USER if the user does not
 # already exist in the jail.
 # Default: 65532
 #PORTBUILD_UID=65534
+<% if @portbuild_uid -%>
+PORTBUILD_UID=<%= @portbuild_uid %>
+<% end %>
 
 # Define pkgname globs to boost priority for
 # Default: none
 #PRIORITY_BOOST="pypy openoffice*"
+<% if @priority_boost -%>
+PRIORITY_BOOST=<%= @priority_boost %>
+<% end %>
 
 # Define format for buildnames
 # Default: %Y-%m-%d_%Hh%Mm%Ss
 # ISO8601:
 #BUILDNAME_FORMAT="%FT%TZ"
+<% if @buildname_format -%>
+BUILDNAME_FORMAT=<%= @buildname_format %>
+<% end %>
 
 # Define format for build duration times
 # Default: %H:%M:%S
 #DURATION_FORMAT="%H:%M:%S"
+<% if @duration_format -%>
+DURATION_FORMAT=<%= @duration_format %>
+<% end %>
 
 # Use colors when in a TTY
 # Default: yes
 #USE_COLORS=yes
+<% if @use_colors -%>
+USE_COLORS=<%= @use_colors %>
+<% end %>
 
 # Only build what is requested. Do not rebuild build deps if nothing requested
 # depends on them. This can create an inconsistent repository if you often
 # build one-off packages but expect the repository to stay consistent.
 # Defaut: yes
 #TRIM_ORPHANED_BUILD_DEPS=yes
+<% if @trim_orphaned_build_deps -%>
+TRIM_ORPHANED_BUILD_DEPS=<%= @trim_orphaned_build_deps %>
+<% end %>
 
 # A list of directories to exclude from leftover and filesystem violation
 # mtree checks.  Ccache is used here as an example but is already
@@ -365,12 +440,21 @@ BUILD_AS_NON_ROOT=<%= @build_as_non_root %>
 # special configuration is used where it is a problem.
 # Default: none
 #LOCAL_MTREE_EXCLUDES="/usr/obj /var/tmp/ccache"
+<% if @local_mtree_excludes -%>
+LOCAL_MTREE_EXCLUDES=<%= @local_mtree_excludes %>
+<% end %>
 
 # Set to hosted to use the /data directory instead of inline style HTML
 # Default: inline
 #HTML_TYPE="hosted"
+<% if @html_type -%>
+HTML_TYPE=<%= @html_type %>
+<% end %>
 
 # Set to track remaining ports in the HTML interface.  This can slow down
 # processing of the queue slightly, especially for bulk -a builds.
 # Default: no
 #HTML_TRACK_REMAINING=yes
+<% if @html_track_remaining -%>
+HTML_TRACK_REMAINING=<%= @html_track_remaining %>
+<% end %>
