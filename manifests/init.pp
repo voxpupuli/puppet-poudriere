@@ -7,8 +7,6 @@
 # @param zrootfs The root of the poudriere zfs filesystem
 # @param freebsd_host The host where to download sets for the jails setup
 # @param resolv_conf A file on your hosts system that will be copied has /etc/resolv.conf for the jail
-# @param ccache_enable Enable ccache
-# @param ccache_dir Path to the ccache cache directory
 # @param poudriere_base The directory where poudriere will store jails and ports
 # @param poudriere_data The directory where the jail will store the packages and logs
 # @param use_portlint Use portlint to check ports sanity
@@ -19,18 +17,20 @@
 # @param check_changed_options Enable automatic OPTION change detection
 # @param check_changed_deps Enable automatic dependency change detection
 # @param pkg_repo_signing_key Path to the RSA key to sign the PKG repo with
+# @param ccache_enable Enable ccache
+# @param ccache_dir Path to the ccache cache directory
 # @param parallel_jobs Override the number of builders
 # @param save_wrkdir Save the WRKDIR to ${POUDRIERE_DATA}/wrkdirs on failure
 # @param wrkdir_archive_format Format for the workdir packing
 # @param nolinux Disable Linux support
 # @param no_package_building Do not set PACKAGE_BUILDING
+# @param http_proxy HTTP proxy
+# @param ftp_proxy FTP proxy
 # @param no_restricted Cleanout the restricted packages
 # @param allow_make_jobs Do not bound the number of processes to the number of cores
 # @param url_base URL where your POUDRIERE_DATA/logs are hosted
 # @param max_execution_time Set the max time (in seconds) that a command may run for a build before it is killed for taking too long
 # @param nohang_time Set the time (in seconds) before a command is considered to be in a runaway state for having no output on stdout
-# @param http_proxy HTTP proxy
-# @param ftp_proxy FTP proxy
 # @param build_as_non_root Build and stage as a regular user
 # @param environments Build environments to manage
 # @param portstrees Port trees to manage
@@ -40,8 +40,6 @@ class poudriere (
   Stdlib::Absolutepath         $zrootfs               = '/poudriere',
   String[1]                    $freebsd_host          = 'http://ftp.freebsd.org/',
   Stdlib::Absolutepath         $resolv_conf           = '/etc/resolv.conf',
-  Boolean                      $ccache_enable         = false,
-  Stdlib::Absolutepath         $ccache_dir            = '/var/cache/ccache',
   Stdlib::Absolutepath         $poudriere_base        = '/usr/local/poudriere',
   String[1]                    $poudriere_data        = '${BASEFS}/data',
   Enum['yes', 'no']            $use_portlint          = 'no',
@@ -52,18 +50,20 @@ class poudriere (
   Enum['yes', 'no', 'verbose'] $check_changed_options = 'verbose',
   Enum['yes', 'no']            $check_changed_deps    = 'yes',
   Optional[String[1]]          $pkg_repo_signing_key  = undef,
+  Boolean                      $ccache_enable         = false,
+  Stdlib::Absolutepath         $ccache_dir            = '/var/cache/ccache',
   Integer[1]                   $parallel_jobs         = $facts['processors']['count'],
   Optional[String[1]]          $save_wrkdir           = undef,
   Optional[String[1]]          $wrkdir_archive_format = undef,
   Optional[String[1]]          $nolinux               = undef,
   Optional[String[1]]          $no_package_building   = undef,
+  Optional[String[1]]          $http_proxy            = undef,
+  Optional[String[1]]          $ftp_proxy             = undef,
   Optional[String[1]]          $no_restricted         = undef,
   Optional[String[1]]          $allow_make_jobs       = undef,
   Optional[String[1]]          $url_base              = undef,
   Optional[String[1]]          $max_execution_time    = undef,
   Optional[String[1]]          $nohang_time           = undef,
-  Optional[String[1]]          $http_proxy            = undef,
-  Optional[String[1]]          $ftp_proxy             = undef,
   Optional[String[1]]          $build_as_non_root     = undef,
   Hash                         $environments          = {},
   Hash                         $portstrees            = {},
