@@ -82,11 +82,6 @@ USE_TMPFS=<%= @tmpfs %>
 # the distfiles between jails and ports tree
 DISTFILES_CACHE=<%= @distfiles_cache %>
 
-# if set the ports tree marked to use csup method will use the defined mirror
-#CSUP_HOST=cvsup._CHANGE_THIS_.freebsd.org
-<% if @csup_host -%>
-CSUP_HOST=<%= @csup_host %>
-<% end -%>
 
 # if set the ports tree or source tree marked to use svn will use the defined
 # mirror by default svn.FreeBSD.org

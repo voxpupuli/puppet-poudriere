@@ -15,7 +15,6 @@
 # @param mfssize Size of WRKDIRPREFIX when using mdmfs
 # @param tmpfs Use tmpfs(5)
 # @param distfiles_cache Directory used for the distfiles
-# @param csup_host Mirror to use for the ports tree or source tree when using CVS
 # @param svn_host Mirror to use for the ports tree or source tree when using SVN
 # @param check_changed_options Enable automatic OPTION change detection
 # @param check_changed_deps Enable automatic dependency change detection
@@ -49,7 +48,6 @@ class poudriere (
   Optional[String[1]]          $mfssize               = undef,
   Enum['yes', 'no']            $tmpfs                 = 'yes',
   Stdlib::Absolutepath         $distfiles_cache       = '/usr/ports/distfiles',
-  Optional[String[1]]          $csup_host             = undef,
   Optional[String[1]]          $svn_host              = undef,
   Enum['yes', 'no', 'verbose'] $check_changed_options = 'verbose',
   Enum['yes', 'no']            $check_changed_deps    = 'yes',
