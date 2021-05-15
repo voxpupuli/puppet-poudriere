@@ -9,6 +9,11 @@ describe 'poudriere::env' do
 
       let(:pre_condition) { 'poudriere::portstree { "default": }' }
 
+      let(:params) do
+        {
+          'version': '10.0-RELEASE',
+        }
+      end
       it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to contain_exec('poudriere-jail-foo').with(command: '/usr/local/bin/poudriere jail -c -j foo -v 10.0-RELEASE  -p default') }
@@ -18,6 +23,7 @@ describe 'poudriere::env' do
           let(:params) do
             {
               'arch': 'arm.armv7',
+              'version': '10.0-RELEASE',
             }
           end
 
@@ -29,6 +35,7 @@ describe 'poudriere::env' do
           let(:params) do
             {
               'arch': 'i386',
+              'version': '10.0-RELEASE',
             }
           end
 

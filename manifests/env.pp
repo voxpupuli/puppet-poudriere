@@ -5,10 +5,10 @@
 # Automatic periodic building of packages is managed with the cron_enable
 # parameter
 #
+# @param version Version of the jail
 # @param ensure The desired state of this environment
 # @param makeopts Build options
 # @param makefile Path to a Makefile
-# @param version Version of the jail
 # @param arch Architecture of the jail
 # @param jail Name of the jail
 # @param paralleljobs Override the number of builders
@@ -21,10 +21,10 @@
 # @param cron_always_mail Always send an e-mail on update
 # @param cron_interval Scheduling of automatic updates
 define poudriere::env (
+  String[1]                      $version,
   Enum['present', 'absent']      $ensure           = 'present',
   Array[String[1]]               $makeopts         = [],
   Optional[Stdlib::Absolutepath] $makefile         = undef,
-  String[1]                      $version          = '10.0-RELEASE',
   Optional[Poudriere::Architecture] $arch          = undef,
   String[1]                      $jail             = $name,
   Integer[1]                     $paralleljobs     = $facts['processors']['count'],
