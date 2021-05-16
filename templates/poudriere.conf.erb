@@ -77,7 +77,7 @@ MFSSIZE=<%= @mfssize %>
 # yes       - Enables tmpfs(5) for wrkdir and data
 # no        - Disable use of tmpfs(5)
 # EXAMPLE: USE_TMPFS="wrkdir data"
-USE_TMPFS=<%= @tmpfs %>
+USE_TMPFS=<%= [@tmpfs].flatten().join(' ').shellescape() %>
 
 # How much memory to limit tmpfs size to for *each builder* in GiB
 # (default: none)

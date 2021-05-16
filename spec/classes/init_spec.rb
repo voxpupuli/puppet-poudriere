@@ -24,7 +24,10 @@ describe 'poudriere' do
             'poudriere_data'             => '/data',
             'use_portlint'               => 'yes',
             'mfssize'                    => '4G',
-            'tmpfs'                      => 'all',
+            'tmpfs'                      => [
+              'data',
+              'wrkdir',
+            ],
             'tmpfs_limit'                => 8,
             'max_memory'                 => 8,
             'max_files'                  => 1024,
@@ -85,7 +88,7 @@ describe 'poudriere' do
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^POUDRIERE_DATA=/data$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^USE_PORTLINT=yes$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^MFSSIZE=4G$}) }
-        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^USE_TMPFS=all$}) }
+        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^USE_TMPFS=data\\ wrkdir$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^TMPFS_LIMIT=8$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^MAX_MEMORY=8$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^MAX_FILES=1024$}) }

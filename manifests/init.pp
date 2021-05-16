@@ -72,7 +72,7 @@ class poudriere (
   String[1]                          $poudriere_data             = '${BASEFS}/data',
   Enum['yes', 'no']                  $use_portlint               = 'no',
   Optional[String[1]]                $mfssize                    = undef,
-  String[1]                          $tmpfs                      = 'yes',
+  Poudriere::Tmpfs                   $tmpfs                      = 'yes',
   Optional[Integer[1]]               $tmpfs_limit                = undef,
   Optional[Integer[1]]               $max_memory                 = undef,
   Optional[Integer[1]]               $max_files                  = undef,
