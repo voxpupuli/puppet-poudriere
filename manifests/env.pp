@@ -24,7 +24,7 @@ define poudriere::env (
   String[1]                      $version,
   Enum['present', 'absent']      $ensure           = 'present',
   Array[String[1]]               $makeopts         = [],
-  Optional[Stdlib::Absolutepath] $makefile         = undef,
+  Optional[String[1]]            $makefile         = undef,
   Optional[Poudriere::Architecture] $arch          = undef,
   String[1]                      $jail             = $name,
   Integer[1]                     $paralleljobs     = $facts['processors']['count'],
@@ -39,6 +39,10 @@ define poudriere::env (
 ) {
   # Make sure we are prepared to run
   include poudriere
+
+  if $makefile and ($makeopts.length() > 0 or $pkg_makeopts.length() > 0) {
+    fail("\$makefile cannot be combined with \$makeopts and \$pkg_makeopts")
+  }
 
   if $facts['os']['architecture'] == 'amd64' and $arch and $arch !~ 'amd64' and $arch !~ 'i386' {
     include poudriere::xbuild
@@ -101,7 +105,7 @@ define poudriere::env (
   file { "/usr/local/etc/poudriere.d/${jail}-make.conf":
     ensure  => $manage_file_ensure,
     source  => $makefile,
-    content => template('poudriere/make.conf.erb'),
+    content => if $makefile { undef } else { template('poudriere/make.conf.erb') },
     require => Exec["poudriere-jail-${jail}"],
   }
 
