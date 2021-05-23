@@ -88,7 +88,7 @@ describe 'poudriere' do
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^POUDRIERE_DATA=/data$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^USE_PORTLINT=yes$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^MFSSIZE=4G$}) }
-        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^USE_TMPFS=data\\ wrkdir$}) }
+        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^USE_TMPFS="data wrkdir"$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^TMPFS_LIMIT=8$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^MAX_MEMORY=8$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^MAX_FILES=1024$}) }
@@ -101,7 +101,7 @@ describe 'poudriere' do
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^CCACHE_DIR=/var/cache/ccache$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^CCACHE_STATIC_PREFIX=/usr/local$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^RESTRICT_NETWORKING=no$}) }
-        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^ALLOW_NETWORKING_PACKAGES=npm-foo\\ npm-bar$}) }
+        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^ALLOW_NETWORKING_PACKAGES="npm-foo npm-bar"$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^PARALLEL_JOBS=42$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^PREPARE_PARALLEL_JOBS=7$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^SAVE_WRKDIR=yes$}) }
@@ -113,7 +113,7 @@ describe 'poudriere' do
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^export FTP_PROXY=ftp://10\.0\.0\.2$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^NO_RESTRICTED=yes$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^ALLOW_MAKE_JOBS=yes$}) }
-        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^ALLOW_MAKE_JOBS_PACKAGES=pkg\\ ccache\\ py\\\*$}) }
+        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^ALLOW_MAKE_JOBS_PACKAGES="pkg ccache py\*"$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^TIMESTAMP_LOGS=no$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^URL_BASE=http://example\.com/poudriere/$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^MAX_EXECUTION_TIME=86400$}) }
@@ -133,7 +133,7 @@ describe 'poudriere' do
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^DURATION_FORMAT=%H:%M:%S$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^USE_COLORS=yes$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^TRIM_ORPHANED_BUILD_DEPS=yes$}) }
-        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^LOCAL_MTREE_EXCLUDES=/usr/obj\\ /var/tmp/ccache$}) }
+        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^LOCAL_MTREE_EXCLUDES="/usr/obj /var/tmp/ccache"$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^HTML_TYPE=hosted$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^HTML_TRACK_REMAINING=yes$}) }
       end
