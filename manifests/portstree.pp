@@ -45,14 +45,14 @@ define poudriere::portstree (
     }
     exec { "poudriere-portstree-${portstree}":
       command => "/usr/local/bin/poudriere ports -c -p ${portstree} -m ${fetch_method} ${branch_option} ${mountpoint_option}",
-      creates => "${poudriere::poudriere_base}/ports/${portstree}",
+      unless  => "/usr/local/bin/poudriere ports -lnq | /usr/bin/grep -w '^${portstree}'",
       timeout => 3600,
       require => File['/usr/local/etc/poudriere.conf'],
     }
   } else {
     exec { "poudriere-portstree-${portstree}":
       command => "/usr/local/bin/poudriere ports -d -p ${portstree}",
-      onlyif  => "/usr/local/bin/poudriere ports -l | /usr/bin/grep -w '^${portstree}'",
+      onlyif  => "/usr/local/bin/poudriere ports -lnq | /usr/bin/grep -w '^${portstree}'",
     }
   }
   if $cron_always_mail {
