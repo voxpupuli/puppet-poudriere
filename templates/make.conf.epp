@@ -1,0 +1,15 @@
+<%- |Array[String[1]] $makeopts, Hash $pkg_makeopts| -%>
+# makeopts
+<% $makeopts.each |$makeopt| { -%>
+<%= $makeopt %>
+<% } -%>
+
+<% $pkg_makeopts.each |$pkg, $pkg_makeopts| { -%>
+# pkg_makeopts for <%= $pkg %>
+.if ${.CURDIR}=="/usr/ports/<%= $pkg %>"
+<% $pkg_makeopts.each |$makeopt| { -%>
+<%= $makeopt %>
+<% } -%>
+.endif
+
+<% } %>

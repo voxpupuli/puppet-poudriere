@@ -105,7 +105,7 @@ define poudriere::env (
   file { "/usr/local/etc/poudriere.d/${jail}-make.conf":
     ensure  => $manage_file_ensure,
     source  => $makefile,
-    content => if $makefile { undef } else { template('poudriere/make.conf.erb') },
+    content => if $makefile { undef } else { epp('poudriere/make.conf', { makeopts => $makeopts, pkg_makeopts => $pkg_makeopts }) },
     require => Exec["poudriere-jail-${jail}"],
   }
 

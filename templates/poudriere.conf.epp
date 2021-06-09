@@ -10,22 +10,22 @@
 # poudriere.
 #
 #ZPOOL=zroot
-<% if @zpool -%>
-ZPOOL=<%= @zpool %>
-<% end -%>
+<% if $poudriere::zpool { -%>
+ZPOOL=<%= $poudriere::zpool %>
+<% } -%>
 
 ### NO ZFS
 # To not use ZFS, define NO_ZFS=yes
 #NO_ZFS=yes
-<% if !@zpool -%>
+<% if !$poudriere::zpool { -%>
 NO_ZFS=yes
-<% end -%>
+<% } -%>
 
 # root of the poudriere zfs filesystem, by default /poudriere
 # ZROOTFS=/poudriere
-<% if @zrootfs -%>
-ZROOTFS=<%= @zrootfs %>
-<% end -%>
+<% if $poudriere::zrootfs { -%>
+ZROOTFS=<%= $poudriere::zrootfs %>
+<% } -%>
 
 # the host where to download sets for the jails setup
 # You can specify here a host or an IP
@@ -36,26 +36,26 @@ ZROOTFS=<%= @zrootfs %>
 # Also note that every protocols supported by fetch(1) are supported here, even
 # file:///
 # Suggested: https://download.FreeBSD.org
-FREEBSD_HOST=<%= @freebsd_host %>
+FREEBSD_HOST=<%= $poudriere::freebsd_host %>
 
 # By default the jails have no /etc/resolv.conf, you will need to set
 # RESOLV_CONF to a file on your hosts system that will be copied has
 # /etc/resolv.conf for the jail, except if you don't need it (using an http
 # proxy for example)
-RESOLV_CONF=<%= @resolv_conf %>
+RESOLV_CONF=<%= $poudriere::resolv_conf %>
 
 # The directory where poudriere will store jails and ports
-BASEFS=<%= @poudriere_base %>
+BASEFS=<%= $poudriere::poudriere_base %>
 
 # The directory where the jail will store the packages and logs
 # by default a zfs filesystem will be created and set to
 # ${BASEFS}/data
 #
 #POUDRIERE_DATA=${BASEFS}/data
-POUDRIERE_DATA=<%= @poudriere_data %>
+POUDRIERE_DATA=<%= $poudriere::poudriere_data %>
 
 # Use portlint to check ports sanity
-USE_PORTLINT=<%= @use_portlint %>
+USE_PORTLINT=<%= $poudriere::use_portlint %>
 
 # When building packages, a memory device can be used to speedup the build.
 # Only one of MFSSIZE or USE_TMPFS is supported. TMPFS is generally faster
@@ -64,9 +64,9 @@ USE_PORTLINT=<%= @use_portlint %>
 
 # If set WRKDIRPREFIX will be mdmfs of the given size (mM or gG)
 #MFSSIZE=4G
-<% if @mfssize -%>
-MFSSIZE=<%= @mfssize %>
-<% end -%>
+<% if $poudriere::mfssize { -%>
+MFSSIZE=<%= $poudriere::mfssize %>
+<% } -%>
 
 # Use tmpfs(5)
 # This can be a space-separated list of options:
@@ -77,44 +77,44 @@ MFSSIZE=<%= @mfssize %>
 # yes       - Enables tmpfs(5) for wrkdir and data
 # no        - Disable use of tmpfs(5)
 # EXAMPLE: USE_TMPFS="wrkdir data"
-USE_TMPFS=<%= [@tmpfs].flatten().join(' ').shellescape() %>
+USE_TMPFS=<%= [$poudriere::tmpfs].flatten().join(' ').shellquote() %>
 
 # How much memory to limit tmpfs size to for *each builder* in GiB
 # (default: none)
 #TMPFS_LIMIT=8
-<% if @tmpfs_limit -%>
-TMPFS_LIMIT=<%= @tmpfs_limit %>
-<% end -%>
+<% if $poudriere::tmpfs_limit { -%>
+TMPFS_LIMIT=<%= $poudriere::tmpfs_limit %>
+<% } -%>
 
 # How much memory to limit jail processes to for *each builder*
 # in GiB (default: none)
 #MAX_MEMORY=8
-<% if @max_memory -%>
-MAX_MEMORY=<%= @max_memory %>
-<% end -%>
+<% if $poudriere::max_memory { -%>
+MAX_MEMORY=<%= $poudriere::max_memory %>
+<% } -%>
 
 # How many file descriptors to limit each jail process to (default: 1024)
 # This can also be set per PKGBASE, such as MAX_FILES_RStudio=2048.
 # Package names with hyphens (-) should be replaced with underscores (_).
 #MAX_FILES=1024
-<% if @max_files -%>
-MAX_FILES=<%= @max_files %>
-<% end -%>
+<% if $poudriere::max_files { -%>
+MAX_FILES=<%= $poudriere::max_files %>
+<% } -%>
 
 # If set the given directory will be used for the distfiles
 # This allows to share the distfiles between jails and ports tree
 # If this is "no", poudriere must be supplied a ports tree that already has
 # the required distfiles.
-DISTFILES_CACHE=<%= @distfiles_cache %>
+DISTFILES_CACHE=<%= $poudriere::distfiles_cache %>
 
 # If set the ports tree or source tree marked to use svn will use the defined
 # mirror (default: svn.FreeBSD.org)
 # The SSL fingerprints are published here:
 # https://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/svn.html#svn-mirrors
 #SVN_HOST=svn.FreeBSD.org
-<% if @svn_host -%>
-SVN_HOST=<%= @svn_host %>
-<% end -%>
+<% if $poudriere::svn_host { -%>
+SVN_HOST=<%= $poudriere::svn_host %>
+<% } -%>
 
 # Automatic OPTION change detection
 # When bulk building packages, compare the options from kept packages to
@@ -123,7 +123,7 @@ SVN_HOST=<%= @svn_host %>
 # Valid options: yes, no, verbose
 # verbose will display the old and new options
 #CHECK_CHANGED_OPTIONS=verbose
-CHECK_CHANGED_OPTIONS=<%= @check_changed_options %>
+CHECK_CHANGED_OPTIONS=<%= $poudriere::check_changed_options %>
 
 # Automatic Dependency change detection
 # When bulk building packages, compare the dependencies from kept packages to
@@ -134,7 +134,7 @@ CHECK_CHANGED_OPTIONS=<%= @check_changed_options %>
 # Valid options: yes, no
 # Default: yes
 #CHECK_CHANGED_DEPS=yes
-CHECK_CHANGED_DEPS=<%= @check_changed_deps %>
+CHECK_CHANGED_DEPS=<%= $poudriere::check_changed_deps %>
 
 # Consider bad dependency lines on the wrong PKGNAME as fatal.
 # For example:
@@ -146,16 +146,16 @@ CHECK_CHANGED_DEPS=<%= @check_changed_deps %>
 # a warning but can be made fatal instead by enabling this option.
 # Default: no
 #BAD_PKGNAME_DEPS_ARE_FATAL=yes
-<% if @bad_pkgname_deps_are_fatal -%>
-BAD_PKGNAME_DEPS_ARE_FATAL=<%= @bad_pkgname_deps_are_fatal %>
-<% end -%>
+<% if $poudriere::bad_pkgname_deps_are_fatal { -%>
+BAD_PKGNAME_DEPS_ARE_FATAL=<%= $poudriere::bad_pkgname_deps_are_fatal %>
+<% } -%>
 
 
 # Path to the RSA key to sign the PKG repo with. See pkg-repo(8)
 #PKG_REPO_SIGNING_KEY=/etc/ssl/keys/repo.key
-<% if @pkg_repo_signing_key -%>
-PKG_REPO_SIGNING_KEY=<%= @pkg_repo_signing_key %>
-<% end -%>
+<% if $poudriere::pkg_repo_signing_key { -%>
+PKG_REPO_SIGNING_KEY=<%= $poudriere::pkg_repo_signing_key %>
+<% } -%>
 
 
 # ccache support. Supply the path to your ccache cache directory.
@@ -163,9 +163,9 @@ PKG_REPO_SIGNING_KEY=<%= @pkg_repo_signing_key %>
 # It is recommended that extra ccache configuration be done with
 # ccache -o rather than from the environment.
 #CCACHE_DIR=/var/cache/ccache
-<% if @ccache_enable -%>
-CCACHE_DIR=<%= @ccache_dir %>
-<% end -%>
+<% if $poudriere::ccache_enable { -%>
+CCACHE_DIR=<%= $poudriere::ccache_dir %>
+<% } -%>
 
 # Static ccache support from host.  This uses the existing
 # ccache from the host in the build jail.  This is useful for
@@ -176,9 +176,9 @@ CCACHE_DIR=<%= @ccache_dir %>
 # which is normally disabled.  Separately setting RESTRICT_NETWORKING=no
 # may be required for non-localhost memcached servers.
 #CCACHE_STATIC_PREFIX=/usr/local
-<% if @ccache_static_prefix -%>
-CCACHE_STATIC_PREFIX=<%= @ccache_static_prefix %>
-<% end -%>
+<% if $poudriere::ccache_static_prefix { -%>
+CCACHE_STATIC_PREFIX=<%= $poudriere::ccache_static_prefix %>
+<% } -%>
 
 # The jails normally only allow network access during the 'make fetch'
 # phase.  This is a security restriction to prevent random things
@@ -186,13 +186,13 @@ CCACHE_STATIC_PREFIX=<%= @ccache_static_prefix %>
 # is not advised.  ALLOW_NETWORKING_PACKAGES may be used to allow networking
 # for a subset of packages only.
 #RESTRICT_NETWORKING=yes
-<% if @restrict_networking -%>
-RESTRICT_NETWORKING=<%= @restrict_networking %>
-<% end -%>
+<% if $poudriere::restrict_networking { -%>
+RESTRICT_NETWORKING=<%= $poudriere::restrict_networking %>
+<% } -%>
 #ALLOW_NETWORKING_PACKAGES="npm-foo"
-<% if @allow_networking_packages -%>
-ALLOW_NETWORKING_PACKAGES=<%= @allow_networking_packages.shellescape() %>
-<% end -%>
+<% if $poudriere::allow_networking_packages { -%>
+ALLOW_NETWORKING_PACKAGES=<%= $poudriere::allow_networking_packages.shellquote() %>
+<% } -%>
 
 # parallel build support.
 #
@@ -202,111 +202,111 @@ ALLOW_NETWORKING_PACKAGES=<%= @allow_networking_packages.shellescape() %>
 #
 # Example to define PARALLEL_JOBS to one single job
 # PARALLEL_JOBS=1
-PARALLEL_JOBS=<%= @parallel_jobs %>
+PARALLEL_JOBS=<%= $poudriere::parallel_jobs %>
 
 # How many jobs should be used for preparing the build? These tend to
 # be more IO bound and may be worth tweaking. Default: PARALLEL_JOBS * 1.25
 # PREPARE_PARALLEL_JOBS=1
-<% if @prepare_parallel_jobs -%>
-PREPARE_PARALLEL_JOBS=<%= @prepare_parallel_jobs %>
-<% end -%>
+<% if $poudriere::prepare_parallel_jobs { -%>
+PREPARE_PARALLEL_JOBS=<%= $poudriere::prepare_parallel_jobs %>
+<% } -%>
 
 
 # If set, failed builds will save the WRKDIR to ${POUDRIERE_DATA}/wrkdirs
 # SAVE_WRKDIR=yes
-<% if @save_wrkdir -%>
-SAVE_WRKDIR=<%= @save_wrkdir %>
-<% end -%>
+<% if $poudriere::save_wrkdir { -%>
+SAVE_WRKDIR=<%= $poudriere::save_wrkdir %>
+<% } -%>
 
 # Choose the default format for the workdir packing: could be tar,tgz,tbz,txz
 # default is tbz
 # WRKDIR_ARCHIVE_FORMAT=tbz
-<% if @wrkdir_archive_format -%>
-WRKDIR_ARCHIVE_FORMAT=<%= @wrkdir_archive_format %>
-<% end -%>
+<% if $poudriere::wrkdir_archive_format { -%>
+WRKDIR_ARCHIVE_FORMAT=<%= $poudriere::wrkdir_archive_format %>
+<% } -%>
 
 # Disable Linux support
 # NOLINUX=yes
-<% if @nolinux -%>
-NOLINUX=<%= @nolinux %>
-<% end -%>
+<% if $poudriere::nolinux { -%>
+NOLINUX=<%= $poudriere::nolinux %>
+<% } -%>
 
 # By default poudriere sets FORCE_PACKAGE
 # To disable it (useful when building public packages):
 # NO_FORCE_PACKAGE=yes
-<% if @no_force_package -%>
-NO_FORCE_PACKAGE=<%= @no_force_package %>
-<% end -%>
+<% if $poudriere::no_force_package { -%>
+NO_FORCE_PACKAGE=<%= $poudriere::no_force_package %>
+<% } -%>
 
 # By default poudriere sets PACKAGE_BUILDING
 # To disable it:
 # NO_PACKAGE_BUILDING=yes
-<% if @no_package_building -%>
-NO_PACKAGE_BUILDING=<%= @no_package_building %>
-<% end -%>
+<% if $poudriere::no_package_building { -%>
+NO_PACKAGE_BUILDING=<%= $poudriere::no_package_building %>
+<% } -%>
 
 # If you are using a proxy define it here:
 # export HTTP_PROXY=bla
 # export FTP_PROXY=bla
 #
-<% if @http_proxy -%>
-export HTTP_PROXY=<%= @http_proxy %>
-<% end -%>
+<% if $poudriere::http_proxy { -%>
+export HTTP_PROXY=<%= $poudriere::http_proxy %>
+<% } -%>
 
-<% if @ftp_proxy -%>
-export FTP_PROXY=<%= @ftp_proxy %>
-<% end -%>
+<% if $poudriere::ftp_proxy { -%>
+export FTP_PROXY=<%= $poudriere::ftp_proxy %>
+<% } -%>
 
 # Cleanout the restricted packages
 # NO_RESTRICTED=yes
-<% if @no_restricted -%>
-NO_RESTRICTED=<%= @no_restricted %>
-<% end -%>
+<% if $poudriere::no_restricted { -%>
+NO_RESTRICTED=<%= $poudriere::no_restricted %>
+<% } -%>
 
 # By default MAKE_JOBS is disabled to allow only one process per cpu
 # Use the following to allow it anyway
 # ALLOW_MAKE_JOBS=yes
-<% if @allow_make_jobs -%>
-ALLOW_MAKE_JOBS=<%= @allow_make_jobs %>
-<% end -%>
+<% if $poudriere::allow_make_jobs { -%>
+ALLOW_MAKE_JOBS=<%= $poudriere::allow_make_jobs %>
+<% } -%>
 
 # List of packages that will always be allowed to use MAKE_JOBS
 # regardless of ALLOW_MAKE_JOBS. This is useful for allowing ports
 # which holdup the rest of the queue to build more quickly.
 #ALLOW_MAKE_JOBS_PACKAGES="pkg ccache py*"
-<% if @allow_make_jobs_packages -%>
-ALLOW_MAKE_JOBS_PACKAGES=<%= @allow_make_jobs_packages.shellescape() %>
-<% end -%>
+<% if $poudriere::allow_make_jobs_packages { -%>
+ALLOW_MAKE_JOBS_PACKAGES=<%= $poudriere::allow_make_jobs_packages.shellquote() %>
+<% } -%>
 
 # Timestamp every line of build logs
 # Default: no
 #TIMESTAMP_LOGS=no
-<% if @timestamp_logs -%>
-TIMESTAMP_LOGS=<%= @timestamp_logs %>
-<% end -%>
+<% if $poudriere::timestamp_logs { -%>
+TIMESTAMP_LOGS=<%= $poudriere::timestamp_logs %>
+<% } -%>
 
 # URL where your POUDRIERE_DATA/logs are hosted
 # This will be used for giving URL hints to the HTML output when
 # scheduling and starting builds
 #URL_BASE=http://yourdomain.com/poudriere/
-<% if @url_base -%>
-URL_BASE=<%= @url_base %>
-<% end -%>
+<% if $poudriere::url_base { -%>
+URL_BASE=<%= $poudriere::url_base %>
+<% } -%>
 
 
 # This defines the max time (in seconds) that a command may run for a build
 # before it is killed for taking too long. Default: 86400
 #MAX_EXECUTION_TIME=86400
-<% if @max_execution_time -%>
-MAX_EXECUTION_TIME=<%= @max_execution_time %>
-<% end -%>
+<% if $poudriere::max_execution_time { -%>
+MAX_EXECUTION_TIME=<%= $poudriere::max_execution_time %>
+<% } -%>
 
 # This defines the time (in seconds) before a command is considered to
 # be in a runaway state for having no output on stdout. Default: 7200
 #NOHANG_TIME=7200
-<% if @nohang_time -%>
-NOHANG_TIME=<%= @nohang_time %>
-<% end -%>
+<% if $poudriere::nohang_time { -%>
+NOHANG_TIME=<%= $poudriere::nohang_time %>
+<% } -%>
 
 
 # The repository is updated atomically if set yes. This leaves the
@@ -316,9 +316,9 @@ NOHANG_TIME=<%= @nohang_time %>
 # Recommended to always keep on.
 # Default: yes
 #ATOMIC_PACKAGE_REPOSITORY=yes
-<% if @atomic_package_repository -%>
-ATOMIC_PACKAGE_REPOSITORY=<%= @atomic_package_repository %>
-<% end -%>
+<% if $poudriere::atomic_package_repository { -%>
+ATOMIC_PACKAGE_REPOSITORY=<%= $poudriere::atomic_package_repository %>
+<% } -%>
 
 # When using ATOMIC_PACKAGE_REPOSITORY, commit the packages if some
 # packages fail to build. Ignored ports are considered successful.
@@ -326,9 +326,9 @@ ATOMIC_PACKAGE_REPOSITORY=<%= @atomic_package_repository %>
 # are encountered.
 # Default: yes
 #COMMIT_PACKAGES_ON_FAILURE=yes
-<% if @commit_packages_on_failure -%>
-COMMIT_PACKAGES_ON_FAILURE=<%= @commit_packages_on_failure %>
-<% end %>
+<% if $poudriere::commit_packages_on_failure { -%>
+COMMIT_PACKAGES_ON_FAILURE=<%= $poudriere::commit_packages_on_failure %>
+<% } %>
 
 # Keep older package repositories. This can be used to rollback a system
 # or to bisect issues by changing the repository to one of the older
@@ -336,40 +336,40 @@ COMMIT_PACKAGES_ON_FAILURE=<%= @commit_packages_on_failure %>
 # ATOMIC_PACKAGE_REPOSITORY is required for this.
 # Default: no
 #KEEP_OLD_PACKAGES=no
-<% if @keep_old_packages -%>
-KEEP_OLD_PACKAGES=<%= @keep_old_packages %>
-<% end %>
+<% if $poudriere::keep_old_packages { -%>
+KEEP_OLD_PACKAGES=<%= $poudriere::keep_old_packages %>
+<% } %>
 
 # How many old package repositories to keep with KEEP_OLD_PACKAGES
 # Default: 5
 #KEEP_OLD_PACKAGES_COUNT=5
-<% if @keep_old_packages_count -%>
-KEEP_OLD_PACKAGES_COUNT=<%= @keep_old_packages_count %>
-<% end %>
+<% if $poudriere::keep_old_packages_count { -%>
+KEEP_OLD_PACKAGES_COUNT=<%= $poudriere::keep_old_packages_count %>
+<% } %>
 
 # Make testing errors fatal.
 # If set to 'no', ports with test failure will be marked as failed but still
 # packaged to permit testing dependent ports (useful for bulk -t -a)
 # Default: yes
 #PORTTESTING_FATAL=yes
-<% if @porttesting_fatal -%>
-PORTTESTING_FATAL=<%= @porttesting_fatal %>
-<% end %>
+<% if $poudriere::porttesting_fatal { -%>
+PORTTESTING_FATAL=<%= $poudriere::porttesting_fatal %>
+<% } %>
 
 # Define the building jail hostname to be used when building the packages
 # Some port/packages hardcode the hostname of the host during build time
 # This is a necessary setup for reproducible builds.
 #BUILDER_HOSTNAME=pkg.FreeBSD.org
-<% if @builder_hostname -%>
-BUILDER_HOSTNAME=<%= @builder_hostname %>
-<% end %>
+<% if $poudriere::builder_hostname { -%>
+BUILDER_HOSTNAME=<%= $poudriere::builder_hostname %>
+<% } %>
 
 # Define to get a predictable timestamp on the ports tree
 # This is a necessary setup for reproducible builds.
 #PRESERVE_TIMESTAMP=yes
-<% if @preserve_timestamp -%>
-PRESERVE_TIMESTAMP=<%= @preserve_timestamp %>
-<% end %>
+<% if $poudriere::preserve_timestamp { -%>
+PRESERVE_TIMESTAMP=<%= $poudriere::preserve_timestamp %>
+<% } %>
 
 # Define to yes to build and stage as a regular user
 # Default: yes, unless CCACHE_DIR is set and CCACHE_DIR_NON_ROOT_SAFE is not
@@ -377,62 +377,62 @@ PRESERVE_TIMESTAMP=<%= @preserve_timestamp %>
 # use a non-shared CCACHE_DIR that is only built by PORTBUILD_USER and chowned
 # to that user.  Then set CCACHE_DIR_NON_ROOT_SAFE to yes.
 #BUILD_AS_NON_ROOT=no
-<% if @build_as_non_root -%>
-BUILD_AS_NON_ROOT=<%= @build_as_non_root %>
-<% end -%>
+<% if $poudriere::build_as_non_root { -%>
+BUILD_AS_NON_ROOT=<%= $poudriere::build_as_non_root %>
+<% } -%>
 
 # Define to the username to build as when BUILD_AS_NON_ROOT is yes.
 # Default: nobody (uid PORTBUILD_UID)
 #PORTBUILD_USER=nobody
-<% if @portbuild_user -%>
-PORTBUILD_USER=<%= @portbuild_user %>
-<% end %>
+<% if $poudriere::portbuild_user { -%>
+PORTBUILD_USER=<%= $poudriere::portbuild_user %>
+<% } %>
 
 # Define to the uid to use for PORTBUILD_USER if the user does not
 # already exist in the jail.
 # Default: 65532
 #PORTBUILD_UID=65534
-<% if @portbuild_uid -%>
-PORTBUILD_UID=<%= @portbuild_uid %>
-<% end %>
+<% if $poudriere::portbuild_uid { -%>
+PORTBUILD_UID=<%= $poudriere::portbuild_uid %>
+<% } %>
 
 # Define pkgname globs to boost priority for
 # Default: none
 #PRIORITY_BOOST="pypy openoffice*"
-<% if @priority_boost -%>
-PRIORITY_BOOST=<%= @priority_boost %>
-<% end %>
+<% if $poudriere::priority_boost { -%>
+PRIORITY_BOOST=<%= $poudriere::priority_boost %>
+<% } %>
 
 # Define format for buildnames
 # Default: %Y-%m-%d_%Hh%Mm%Ss
 # ISO8601:
 #BUILDNAME_FORMAT="%FT%TZ"
-<% if @buildname_format -%>
-BUILDNAME_FORMAT=<%= @buildname_format %>
-<% end %>
+<% if $poudriere::buildname_format { -%>
+BUILDNAME_FORMAT=<%= $poudriere::buildname_format %>
+<% } %>
 
 # Define format for build duration times
 # Default: %H:%M:%S
 #DURATION_FORMAT="%H:%M:%S"
-<% if @duration_format -%>
-DURATION_FORMAT=<%= @duration_format %>
-<% end %>
+<% if $poudriere::duration_format { -%>
+DURATION_FORMAT=<%= $poudriere::duration_format %>
+<% } %>
 
 # Use colors when in a TTY
 # Default: yes
 #USE_COLORS=yes
-<% if @use_colors -%>
-USE_COLORS=<%= @use_colors %>
-<% end %>
+<% if $poudriere::use_colors { -%>
+USE_COLORS=<%= $poudriere::use_colors %>
+<% } %>
 
 # Only build what is requested. Do not rebuild build deps if nothing requested
 # depends on them. This can create an inconsistent repository if you often
 # build one-off packages but expect the repository to stay consistent.
 # Defaut: yes
 #TRIM_ORPHANED_BUILD_DEPS=yes
-<% if @trim_orphaned_build_deps -%>
-TRIM_ORPHANED_BUILD_DEPS=<%= @trim_orphaned_build_deps %>
-<% end %>
+<% if $poudriere::trim_orphaned_build_deps { -%>
+TRIM_ORPHANED_BUILD_DEPS=<%= $poudriere::trim_orphaned_build_deps %>
+<% } %>
 
 # A list of directories to exclude from leftover and filesystem violation
 # mtree checks.  Ccache is used here as an example but is already
@@ -440,21 +440,21 @@ TRIM_ORPHANED_BUILD_DEPS=<%= @trim_orphaned_build_deps %>
 # special configuration is used where it is a problem.
 # Default: none
 #LOCAL_MTREE_EXCLUDES="/usr/obj /var/tmp/ccache"
-<% if @local_mtree_excludes -%>
-LOCAL_MTREE_EXCLUDES=<%= @local_mtree_excludes.shellescape() %>
-<% end %>
+<% if $poudriere::local_mtree_excludes { -%>
+LOCAL_MTREE_EXCLUDES=<%= $poudriere::local_mtree_excludes.shellquote() %>
+<% } %>
 
 # Set to hosted to use the /data directory instead of inline style HTML
 # Default: inline
 #HTML_TYPE="hosted"
-<% if @html_type -%>
-HTML_TYPE=<%= @html_type %>
-<% end %>
+<% if $poudriere::html_type { -%>
+HTML_TYPE=<%= $poudriere::html_type %>
+<% } %>
 
 # Set to track remaining ports in the HTML interface.  This can slow down
 # processing of the queue slightly, especially for bulk -a builds.
 # Default: no
 #HTML_TRACK_REMAINING=yes
-<% if @html_track_remaining -%>
-HTML_TRACK_REMAINING=<%= @html_track_remaining %>
-<% end %>
+<% if $poudriere::html_track_remaining { -%>
+HTML_TRACK_REMAINING=<%= $poudriere::html_track_remaining %>
+<% } %>

@@ -136,7 +136,7 @@ class poudriere (
   }
 
   file { '/usr/local/etc/poudriere.conf':
-    content => template('poudriere/poudriere.conf.erb'),
+    content => epp('poudriere/poudriere.conf'),
     require => Package['poudriere'],
   }
 
