@@ -4,6 +4,38 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.0.0](https://github.com/voxpupuli/puppet-poudriere/tree/v2.0.0) (2021-06-15)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-poudriere/compare/v1.4.0...v2.0.0)
+
+**Breaking changes:**
+
+- Drop EoL Puppet 5 support; Add Puppet 7 [\#63](https://github.com/voxpupuli/puppet-poudriere/pull/63) ([smortex](https://github.com/smortex))
+- Sync poudriere.conf template with recent release [\#58](https://github.com/voxpupuli/puppet-poudriere/pull/58) ([smortex](https://github.com/smortex))
+- Do not hardcode a default version in poudriere::env [\#57](https://github.com/voxpupuli/puppet-poudriere/pull/57) ([smortex](https://github.com/smortex))
+- Use the FreeBSD "central server" for downloads [\#56](https://github.com/voxpupuli/puppet-poudriere/pull/56) ([smortex](https://github.com/smortex))
+- Prefer optional non-empty strings [\#53](https://github.com/voxpupuli/puppet-poudriere/pull/53) ([smortex](https://github.com/smortex))
+
+**Implemented enhancements:**
+
+- Switch to EPP templates [\#61](https://github.com/voxpupuli/puppet-poudriere/pull/61) ([smortex](https://github.com/smortex))
+- Allow to specify a mountpoint when creating a portstree [\#55](https://github.com/voxpupuli/puppet-poudriere/pull/55) ([smortex](https://github.com/smortex))
+
+**Fixed bugs:**
+
+- Fix portstree detection [\#60](https://github.com/voxpupuli/puppet-poudriere/pull/60) ([smortex](https://github.com/smortex))
+- Unbreak poudriere::env::makefile [\#59](https://github.com/voxpupuli/puppet-poudriere/pull/59) ([smortex](https://github.com/smortex))
+
+**Closed issues:**
+
+- Module modernization and cleanup [\#52](https://github.com/voxpupuli/puppet-poudriere/issues/52)
+
+**Merged pull requests:**
+
+- Rework $poudriere::env::arch [\#54](https://github.com/voxpupuli/puppet-poudriere/pull/54) ([smortex](https://github.com/smortex))
+- Use data types for all parameters [\#51](https://github.com/voxpupuli/puppet-poudriere/pull/51) ([smortex](https://github.com/smortex))
+- modulesync 3.0.0 & puppet-lint updates [\#45](https://github.com/voxpupuli/puppet-poudriere/pull/45) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v1.4.0](https://github.com/voxpupuli/puppet-poudriere/tree/v1.4.0) (2020-04-27)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-poudriere/compare/1.3.0...v1.4.0)
