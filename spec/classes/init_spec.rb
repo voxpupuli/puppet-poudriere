@@ -24,9 +24,9 @@ describe 'poudriere' do
             'poudriere_data'             => '/data',
             'use_portlint'               => 'yes',
             'mfssize'                    => '4G',
-            'tmpfs'                      => [
-              'data',
-              'wrkdir',
+            'tmpfs'                      => %w[
+              data
+              wrkdir
             ],
             'tmpfs_limit'                => 8,
             'max_memory'                 => 8,
@@ -56,7 +56,7 @@ describe 'poudriere' do
             'allow_make_jobs_packages'   => 'pkg ccache py*',
             'timestamp_logs'             => 'no',
             'url_base'                   => 'http://example.com/poudriere/',
-            'max_execution_time'         => 86400,
+            'max_execution_time'         => 86_400,
             'nohang_time'                => 7200,
             'atomic_package_repository'  => 'yes',
             'commit_packages_on_failure' => 'yes',
@@ -67,7 +67,7 @@ describe 'poudriere' do
             'preserve_timestamp'         => 'yes',
             'build_as_non_root'          => 'yes',
             'portbuild_user'             => 'nobody',
-            'portbuild_uid'              => 65534,
+            'portbuild_uid'              => 65_534,
             'priority_boost'             => 'pypy openoffice',
             'buildname_format'           => '%FT%TZ',
             'duration_format'            => '%H:%M:%S',
