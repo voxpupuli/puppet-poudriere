@@ -12,8 +12,8 @@ describe 'poudriere::portstree' do
       describe 'with local ports' do
         let(:params) do
           {
-            'fetch_method': 'null',
-            'mountpoint': '/home/romain/FreeBSD/ports',
+            fetch_method: 'null',
+            mountpoint: '/home/romain/FreeBSD/ports',
           }
         end
 

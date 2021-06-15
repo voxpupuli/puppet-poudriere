@@ -11,9 +11,10 @@ describe 'poudriere::env' do
 
       let(:params) do
         {
-          'version': '10.0-RELEASE',
+          version: '10.0-RELEASE',
         }
       end
+
       it { is_expected.to compile.with_all_deps }
 
       it { is_expected.to contain_exec('poudriere-jail-foo').with(command: '/usr/local/bin/poudriere jail -c -j foo -v 10.0-RELEASE  -p default') }
@@ -23,28 +24,28 @@ describe 'poudriere::env' do
 
         let(:params) do
           {
-            'version': '13.0-RELEASE',
-            'ensure': 'present',
-            'makeopts': makeopts,
-            'makefile': makefile,
-            'arch': 'amd64',
-            'jail': 'test',
-            'paralleljobs': 42,
-            'pkgs': [
+            version: '13.0-RELEASE',
+            ensure: 'present',
+            makeopts: makeopts,
+            makefile: makefile,
+            arch: 'amd64',
+            jail: 'test',
+            paralleljobs: 42,
+            pkgs: [
               'sysutils/puppet6',
               'sysutils/puppet7',
             ],
-            'pkg_makeopts': pkg_makeopts,
-            'pkg_optsdir': '/usr/local/etc/poudriere.d/optdir',
-            'portstree': 'wip',
-            'cron_enable': true,
-            'cron_always_mail': true,
-            'cron_interval': {
-              'minute': 42,
-              'hour': 7,
-              'monthday': '*',
-              'month': '*',
-              'weekday': '*',
+            pkg_makeopts: pkg_makeopts,
+            pkg_optsdir: '/usr/local/etc/poudriere.d/optdir',
+            portstree: 'wip',
+            cron_enable: true,
+            cron_always_mail: true,
+            cron_interval: {
+              minute: 42,
+              hour: 7,
+              monthday: '*',
+              month: '*',
+              weekday: '*',
             },
           }
         end
@@ -58,7 +59,7 @@ describe 'poudriere::env' do
         end
         let(:pkg_makeopts) do
           {
-            'sysutils/puppet6': [
+            'sysutils/puppet6' => [
               'OPTIONS_SET+=RFACTER',
               'OPTIONS_UNSET+=CFACTER',
             ],
@@ -66,19 +67,19 @@ describe 'poudriere::env' do
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('/usr/local/etc/poudriere.d/test-make.conf').with(content: <<~CONF, source: nil) }
-          # makeopts
-          OPTIONS_SET+=PULSEAUDIO
-          OPTIONS_UNSET+=EXAMPLES DOCS
+        it { is_expected.to contain_file('/usr/local/etc/poudriere.d/test-make.conf').with(content: <<CONF, source: nil) }
+# makeopts
+OPTIONS_SET+=PULSEAUDIO
+OPTIONS_UNSET+=EXAMPLES DOCS
 
-          # pkg_makeopts for sysutils/puppet6
-          .if ${.CURDIR}=="/usr/ports/sysutils/puppet6"
-          OPTIONS_SET+=RFACTER
-          OPTIONS_UNSET+=CFACTER
-          .endif
+# pkg_makeopts for sysutils/puppet6
+.if ${.CURDIR}=="/usr/ports/sysutils/puppet6"
+OPTIONS_SET+=RFACTER
+OPTIONS_UNSET+=CFACTER
+.endif
 
 
-          CONF
+CONF
 
         context 'with a makefile' do
           let(:makefile) { 'puppet:///moduldes/profile/poudriere/default-make.conf' }
@@ -89,11 +90,10 @@ describe 'poudriere::env' do
           it { is_expected.to contain_file('/usr/local/etc/poudriere.d/test-make.conf').with(content: nil, source: 'puppet:///moduldes/profile/poudriere/default-make.conf') }
         end
 
-
         context 'with a makefile, makeopts and pkg_makeopts' do
           let(:makefile) { 'puppet:///moduldes/profile/poudriere/default-make.conf' }
 
-          it { is_expected.to compile.and_raise_error(/\$makefile cannot be combined with \$makeopts and \$pkg_makeopts/) }
+          it { is_expected.to compile.and_raise_error(%r{\$makefile cannot be combined with \$makeopts and \$pkg_makeopts}) }
         end
       end
 
@@ -101,8 +101,8 @@ describe 'poudriere::env' do
         context 'when targeting armv7' do
           let(:params) do
             {
-              'arch': 'arm.armv7',
-              'version': '10.0-RELEASE',
+              arch: 'arm.armv7',
+              version: '10.0-RELEASE',
             }
           end
 
@@ -113,8 +113,8 @@ describe 'poudriere::env' do
         context 'when targeting i386' do
           let(:params) do
             {
-              'arch': 'i386',
-              'version': '10.0-RELEASE',
+              arch: 'i386',
+              version: '10.0-RELEASE',
             }
           end
 
