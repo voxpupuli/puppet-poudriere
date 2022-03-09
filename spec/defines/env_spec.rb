@@ -73,7 +73,7 @@ OPTIONS_SET+=PULSEAUDIO
 OPTIONS_UNSET+=EXAMPLES DOCS
 
 # pkg_makeopts for sysutils/puppet6
-.if ${.CURDIR}=="/usr/ports/sysutils/puppet6"
+.if ${.CURDIR:M*/sysutils/puppet6}
 OPTIONS_SET+=RFACTER
 OPTIONS_UNSET+=CFACTER
 .endif

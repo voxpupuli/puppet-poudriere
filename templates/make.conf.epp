@@ -6,7 +6,7 @@
 
 <% $pkg_makeopts.each |$pkg, $pkg_makeopts| { -%>
 # pkg_makeopts for <%= $pkg %>
-.if ${.CURDIR}=="/usr/ports/<%= $pkg %>"
+.if ${.CURDIR:M*/<%= $pkg %>}
 <% $pkg_makeopts.each |$makeopt| { -%>
 <%= $makeopt %>
 <% } -%>
