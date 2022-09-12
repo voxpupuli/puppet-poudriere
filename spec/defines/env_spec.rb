@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 describe 'poudriere::env' do
   on_supported_os.each do |os, facts|
     context "on #{os}" do
@@ -67,19 +70,19 @@ describe 'poudriere::env' do
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('/usr/local/etc/poudriere.d/test-make.conf').with(content: <<CONF, source: nil) }
-# makeopts
-OPTIONS_SET+=PULSEAUDIO
-OPTIONS_UNSET+=EXAMPLES DOCS
+        it { is_expected.to contain_file('/usr/local/etc/poudriere.d/test-make.conf').with(content: <<~CONF, source: nil) }
+          # makeopts
+          OPTIONS_SET+=PULSEAUDIO
+          OPTIONS_UNSET+=EXAMPLES DOCS
 
-# pkg_makeopts for sysutils/puppet6
-.if ${.CURDIR:M*/sysutils/puppet6}
-OPTIONS_SET+=RFACTER
-OPTIONS_UNSET+=CFACTER
-.endif
+          # pkg_makeopts for sysutils/puppet6
+          .if ${.CURDIR:M*/sysutils/puppet6}
+          OPTIONS_SET+=RFACTER
+          OPTIONS_UNSET+=CFACTER
+          .endif
 
 
-CONF
+        CONF
 
         context 'with a makefile' do
           let(:makefile) { 'puppet:///moduldes/profile/poudriere/default-make.conf' }
@@ -124,3 +127,4 @@ CONF
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
