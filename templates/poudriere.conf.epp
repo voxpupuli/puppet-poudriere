@@ -107,6 +107,24 @@ MAX_FILES=<%= $poudriere::max_files %>
 # the required distfiles.
 DISTFILES_CACHE=<%= $poudriere::distfiles_cache %>
 
+# If set the ports tree marked to use git will use the defined
+# mirror (default: git.FreeBSD.org/port.git)
+#
+# Example to use github mirror:
+#GIT_BASEURL=https://github.com/freebsd/freebsd-src.git
+<% if $poudriere::git_baseurl { -%>
+GIT_BASEURL=<%= $poudriere::git_baseurl %>
+<% } -%>
+
+# If set the source tree marked to use git will use the defined
+# mirror (default: git.FreeBSD.org/src.git)
+#
+# Example to use github mirror:
+#GIT_PORTSURL=https://github.com/freebsd/freebsd-ports.git
+<% if $poudriere::git_portsurl { -%>
+GIT_PORTSURL=<%= $poudriere::git_portsurl %>
+<% } -%>
+
 # If set the ports tree or source tree marked to use svn will use the defined
 # mirror (default: svn.FreeBSD.org)
 # The SSL fingerprints are published here:
@@ -152,11 +170,30 @@ BAD_PKGNAME_DEPS_ARE_FATAL=<%= $poudriere::bad_pkgname_deps_are_fatal %>
 
 
 # Path to the RSA key to sign the PKG repo with. See pkg-repo(8)
+# This produces a repo that supports SIGNATURE_TYPE=PUBKEY
+# Default: not set
 #PKG_REPO_SIGNING_KEY=/etc/ssl/keys/repo.key
 <% if $poudriere::pkg_repo_signing_key { -%>
 PKG_REPO_SIGNING_KEY=<%= $poudriere::pkg_repo_signing_key %>
 <% } -%>
 
+# Command to sign the PKG repo with. See pkg-repo(8)
+# This produces a repo that supports SIGNATURE_TYPE=FINGERPRINTS
+# Default: not set
+#SIGNING_COMMAND=ssh signing-server sign.sh
+<% if $poudriere::signing_command { -%>
+SIGNING_COMMAND=<%= $poudriere::signing_command.shellquote() %>
+<% } -%>
+
+# Repo signing command execution context
+# If SIGNING_COMMAND is set, run pkg-repo(8) on the host?
+#   no  -   Run in the jail
+#   yes -   Run on the host
+# Default: no
+#PKG_REPO_FROM_HOST=yes
+<% if $poudriere::pkg_repo_from_host { -%>
+PKG_REPO_FROM_HOST=<%= $poudriere::pkg_repo_from_host %>
+<% } -%>
 
 # ccache support. Supply the path to your ccache cache directory.
 # It will be mounted into the jail and be shared among all jails.
@@ -218,7 +255,7 @@ PREPARE_PARALLEL_JOBS=<%= $poudriere::prepare_parallel_jobs %>
 SAVE_WRKDIR=<%= $poudriere::save_wrkdir %>
 <% } -%>
 
-# Choose the default format for the workdir packing: could be tar,tgz,tbz,txz
+# Choose the default format for the workdir packing: could be tar,tgz,tbz,txz,tzst
 # default is tbz
 # WRKDIR_ARCHIVE_FORMAT=tbz
 <% if $poudriere::wrkdir_archive_format { -%>
@@ -406,7 +443,7 @@ PRIORITY_BOOST=<%= $poudriere::priority_boost %>
 # Define format for buildnames
 # Default: %Y-%m-%d_%Hh%Mm%Ss
 # ISO8601:
-#BUILDNAME_FORMAT="%FT%TZ"
+#BUILDNAME_FORMAT="%FT%T%z"
 <% if $poudriere::buildname_format { -%>
 BUILDNAME_FORMAT=<%= $poudriere::buildname_format %>
 <% } %>

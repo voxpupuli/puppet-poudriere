@@ -16,11 +16,15 @@
 # @param max_memory How much memory to limit jail processes to for each builder
 # @param max_files How many file descriptors to limit each jail process to
 # @param distfiles_cache Directory used for the distfiles
+# @param git_baseurl Git URL to use to fetch base
+# @param git_portsurl Git URL to use to fecth ports
 # @param svn_host Mirror to use for the ports tree or source tree when using SVN
 # @param check_changed_options Enable automatic OPTION change detection
 # @param check_changed_deps Enable automatic dependency change detection
 # @param bad_pkgname_deps_are_fatal Consider bad dependency lines on the wrong PKGNAME as fatal
 # @param pkg_repo_signing_key Path to the RSA key to sign the PKG repo with
+# @param signing_command Command to sign the PKG repo with
+# @param pkg_repo_from_host Sign the PKG repo from the host
 # @param ccache_enable Enable ccache
 # @param ccache_dir Path to the ccache cache directory
 # @param ccache_static_prefix Static ccache support from host
@@ -77,11 +81,15 @@ class poudriere (
   Optional[Integer[1]]               $max_memory                 = undef,
   Optional[Integer[1]]               $max_files                  = undef,
   Stdlib::Absolutepath               $distfiles_cache            = '/usr/ports/distfiles',
+  Optional[String[1]]                $git_baseurl                = undef,
+  Optional[String[1]]                $git_portsurl               = undef,
   Optional[String[1]]                $svn_host                   = undef,
   Enum['yes', 'no', 'verbose']       $check_changed_options      = 'verbose',
   Enum['yes', 'no']                  $check_changed_deps         = 'yes',
   Optional[Enum['yes', 'no']]        $bad_pkgname_deps_are_fatal = undef,
   Optional[String[1]]                $pkg_repo_signing_key       = undef,
+  Optional[String[1]]                $signing_command            = undef,
+  Optional[Enum['yes', 'no']]        $pkg_repo_from_host         = undef,
   Boolean                            $ccache_enable              = false,
   Stdlib::Absolutepath               $ccache_dir                 = '/var/cache/ccache',
   Optional[Stdlib::Absolutepath]     $ccache_static_prefix       = undef,
