@@ -7,19 +7,19 @@
 ### Classes
 
 * [`poudriere`](#poudriere): Poudriere is a tool that lets you build PkgNG packages from ports.  This is cool because it gives you the flexibility of custom port options 
-* [`poudriere::xbuild`](#poudrierexbuild): Install cross-building dependencies
+* [`poudriere::xbuild`](#poudriere--xbuild): Install cross-building dependencies
 
 ### Defined types
 
-* [`poudriere::env`](#poudriereenv): This resource creates a build environment for a given release and architecture of FreeBSD. Passing in custom options gives you the ability to
-* [`poudriere::portstree`](#poudriereportstree): This resource creates a ports tree. You can have multiple ports trees for different building purposes. Automatic periodic updating of package
+* [`poudriere::env`](#poudriere--env): This resource creates a build environment for a given release and architecture of FreeBSD. Passing in custom options gives you the ability to
+* [`poudriere::portstree`](#poudriere--portstree): This resource creates a ports tree. You can have multiple ports trees for different building purposes. Automatic periodic updating of package
 
 ### Data types
 
-* [`Poudriere::Architecture`](#poudrierearchitecture): The architecture to target when building packages
-* [`Poudriere::Cron_interval`](#poudrierecron_interval): Parameters to configure Poudriere's cron resources
-* [`Poudriere::Fetch_method`](#poudrierefetch_method): A supported fetch method for poudriere
-* [`Poudriere::Tmpfs`](#poudrieretmpfs): A supported tmpfs setting for poudriere
+* [`Poudriere::Architecture`](#Poudriere--Architecture): The architecture to target when building packages
+* [`Poudriere::Cron_interval`](#Poudriere--Cron_interval): Parameters to configure Poudriere's cron resources
+* [`Poudriere::Fetch_method`](#Poudriere--Fetch_method): A supported fetch method for poudriere
+* [`Poudriere::Tmpfs`](#Poudriere--Tmpfs): A supported tmpfs setting for poudriere
 
 ## Classes
 
@@ -34,77 +34,81 @@ For the configuration of the build environment, see Class[poudriere::env].
 
 The following parameters are available in the `poudriere` class:
 
-* [`zpool`](#zpool)
-* [`zrootfs`](#zrootfs)
-* [`freebsd_host`](#freebsd_host)
-* [`resolv_conf`](#resolv_conf)
-* [`poudriere_base`](#poudriere_base)
-* [`poudriere_data`](#poudriere_data)
-* [`use_portlint`](#use_portlint)
-* [`mfssize`](#mfssize)
-* [`tmpfs`](#tmpfs)
-* [`tmpfs_limit`](#tmpfs_limit)
-* [`max_memory`](#max_memory)
-* [`max_files`](#max_files)
-* [`distfiles_cache`](#distfiles_cache)
-* [`svn_host`](#svn_host)
-* [`check_changed_options`](#check_changed_options)
-* [`check_changed_deps`](#check_changed_deps)
-* [`bad_pkgname_deps_are_fatal`](#bad_pkgname_deps_are_fatal)
-* [`pkg_repo_signing_key`](#pkg_repo_signing_key)
-* [`ccache_enable`](#ccache_enable)
-* [`ccache_dir`](#ccache_dir)
-* [`ccache_static_prefix`](#ccache_static_prefix)
-* [`restrict_networking`](#restrict_networking)
-* [`allow_make_jobs_packages`](#allow_make_jobs_packages)
-* [`parallel_jobs`](#parallel_jobs)
-* [`prepare_parallel_jobs`](#prepare_parallel_jobs)
-* [`save_wrkdir`](#save_wrkdir)
-* [`wrkdir_archive_format`](#wrkdir_archive_format)
-* [`nolinux`](#nolinux)
-* [`no_force_package`](#no_force_package)
-* [`no_package_building`](#no_package_building)
-* [`http_proxy`](#http_proxy)
-* [`ftp_proxy`](#ftp_proxy)
-* [`no_restricted`](#no_restricted)
-* [`allow_make_jobs`](#allow_make_jobs)
-* [`allow_make_jobs_packages`](#allow_make_jobs_packages)
-* [`timestamp_logs`](#timestamp_logs)
-* [`url_base`](#url_base)
-* [`max_execution_time`](#max_execution_time)
-* [`nohang_time`](#nohang_time)
-* [`atomic_package_repository`](#atomic_package_repository)
-* [`commit_packages_on_failure`](#commit_packages_on_failure)
-* [`keep_old_packages`](#keep_old_packages)
-* [`keep_old_packages_count`](#keep_old_packages_count)
-* [`porttesting_fatal`](#porttesting_fatal)
-* [`builder_hostname`](#builder_hostname)
-* [`preserve_timestamp`](#preserve_timestamp)
-* [`build_as_non_root`](#build_as_non_root)
-* [`portbuild_user`](#portbuild_user)
-* [`portbuild_uid`](#portbuild_uid)
-* [`priority_boost`](#priority_boost)
-* [`buildname_format`](#buildname_format)
-* [`duration_format`](#duration_format)
-* [`use_colors`](#use_colors)
-* [`trim_orphaned_build_deps`](#trim_orphaned_build_deps)
-* [`local_mtree_excludes`](#local_mtree_excludes)
-* [`html_type`](#html_type)
-* [`html_track_remaining`](#html_track_remaining)
-* [`environments`](#environments)
-* [`portstrees`](#portstrees)
-* [`xbuild_package`](#xbuild_package)
-* [`allow_networking_packages`](#allow_networking_packages)
+* [`zpool`](#-poudriere--zpool)
+* [`zrootfs`](#-poudriere--zrootfs)
+* [`freebsd_host`](#-poudriere--freebsd_host)
+* [`resolv_conf`](#-poudriere--resolv_conf)
+* [`poudriere_base`](#-poudriere--poudriere_base)
+* [`poudriere_data`](#-poudriere--poudriere_data)
+* [`use_portlint`](#-poudriere--use_portlint)
+* [`mfssize`](#-poudriere--mfssize)
+* [`tmpfs`](#-poudriere--tmpfs)
+* [`tmpfs_limit`](#-poudriere--tmpfs_limit)
+* [`max_memory`](#-poudriere--max_memory)
+* [`max_files`](#-poudriere--max_files)
+* [`distfiles_cache`](#-poudriere--distfiles_cache)
+* [`git_baseurl`](#-poudriere--git_baseurl)
+* [`git_portsurl`](#-poudriere--git_portsurl)
+* [`svn_host`](#-poudriere--svn_host)
+* [`check_changed_options`](#-poudriere--check_changed_options)
+* [`check_changed_deps`](#-poudriere--check_changed_deps)
+* [`bad_pkgname_deps_are_fatal`](#-poudriere--bad_pkgname_deps_are_fatal)
+* [`pkg_repo_signing_key`](#-poudriere--pkg_repo_signing_key)
+* [`signing_command`](#-poudriere--signing_command)
+* [`pkg_repo_from_host`](#-poudriere--pkg_repo_from_host)
+* [`ccache_enable`](#-poudriere--ccache_enable)
+* [`ccache_dir`](#-poudriere--ccache_dir)
+* [`ccache_static_prefix`](#-poudriere--ccache_static_prefix)
+* [`restrict_networking`](#-poudriere--restrict_networking)
+* [`allow_make_jobs_packages`](#-poudriere--allow_make_jobs_packages)
+* [`parallel_jobs`](#-poudriere--parallel_jobs)
+* [`prepare_parallel_jobs`](#-poudriere--prepare_parallel_jobs)
+* [`save_wrkdir`](#-poudriere--save_wrkdir)
+* [`wrkdir_archive_format`](#-poudriere--wrkdir_archive_format)
+* [`nolinux`](#-poudriere--nolinux)
+* [`no_force_package`](#-poudriere--no_force_package)
+* [`no_package_building`](#-poudriere--no_package_building)
+* [`http_proxy`](#-poudriere--http_proxy)
+* [`ftp_proxy`](#-poudriere--ftp_proxy)
+* [`no_restricted`](#-poudriere--no_restricted)
+* [`allow_make_jobs`](#-poudriere--allow_make_jobs)
+* [`allow_make_jobs_packages`](#-poudriere--allow_make_jobs_packages)
+* [`timestamp_logs`](#-poudriere--timestamp_logs)
+* [`url_base`](#-poudriere--url_base)
+* [`max_execution_time`](#-poudriere--max_execution_time)
+* [`nohang_time`](#-poudriere--nohang_time)
+* [`atomic_package_repository`](#-poudriere--atomic_package_repository)
+* [`commit_packages_on_failure`](#-poudriere--commit_packages_on_failure)
+* [`keep_old_packages`](#-poudriere--keep_old_packages)
+* [`keep_old_packages_count`](#-poudriere--keep_old_packages_count)
+* [`porttesting_fatal`](#-poudriere--porttesting_fatal)
+* [`builder_hostname`](#-poudriere--builder_hostname)
+* [`preserve_timestamp`](#-poudriere--preserve_timestamp)
+* [`build_as_non_root`](#-poudriere--build_as_non_root)
+* [`portbuild_user`](#-poudriere--portbuild_user)
+* [`portbuild_uid`](#-poudriere--portbuild_uid)
+* [`priority_boost`](#-poudriere--priority_boost)
+* [`buildname_format`](#-poudriere--buildname_format)
+* [`duration_format`](#-poudriere--duration_format)
+* [`use_colors`](#-poudriere--use_colors)
+* [`trim_orphaned_build_deps`](#-poudriere--trim_orphaned_build_deps)
+* [`local_mtree_excludes`](#-poudriere--local_mtree_excludes)
+* [`html_type`](#-poudriere--html_type)
+* [`html_track_remaining`](#-poudriere--html_track_remaining)
+* [`environments`](#-poudriere--environments)
+* [`portstrees`](#-poudriere--portstrees)
+* [`xbuild_package`](#-poudriere--xbuild_package)
+* [`allow_networking_packages`](#-poudriere--allow_networking_packages)
 
-##### <a name="zpool"></a>`zpool`
+##### <a name="-poudriere--zpool"></a>`zpool`
 
 Data type: `Optional[String[1]]`
 
 The pool where poudriere will create all the filesystems
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="zrootfs"></a>`zrootfs`
+##### <a name="-poudriere--zrootfs"></a>`zrootfs`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -112,7 +116,7 @@ The root of the poudriere zfs filesystem
 
 Default value: `'/poudriere'`
 
-##### <a name="freebsd_host"></a>`freebsd_host`
+##### <a name="-poudriere--freebsd_host"></a>`freebsd_host`
 
 Data type: `String[1]`
 
@@ -120,7 +124,7 @@ The host where to download sets for the jails setup
 
 Default value: `'http://ftp.freebsd.org/'`
 
-##### <a name="resolv_conf"></a>`resolv_conf`
+##### <a name="-poudriere--resolv_conf"></a>`resolv_conf`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -128,7 +132,7 @@ A file on your hosts system that will be copied has /etc/resolv.conf for the jai
 
 Default value: `'/etc/resolv.conf'`
 
-##### <a name="poudriere_base"></a>`poudriere_base`
+##### <a name="-poudriere--poudriere_base"></a>`poudriere_base`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -136,7 +140,7 @@ The directory where poudriere will store jails and ports
 
 Default value: `'/usr/local/poudriere'`
 
-##### <a name="poudriere_data"></a>`poudriere_data`
+##### <a name="-poudriere--poudriere_data"></a>`poudriere_data`
 
 Data type: `String[1]`
 
@@ -144,7 +148,7 @@ The directory where the jail will store the packages and logs
 
 Default value: `'${BASEFS}/data'`
 
-##### <a name="use_portlint"></a>`use_portlint`
+##### <a name="-poudriere--use_portlint"></a>`use_portlint`
 
 Data type: `Enum['yes', 'no']`
 
@@ -152,15 +156,15 @@ Use portlint to check ports sanity
 
 Default value: `'no'`
 
-##### <a name="mfssize"></a>`mfssize`
+##### <a name="-poudriere--mfssize"></a>`mfssize`
 
 Data type: `Optional[String[1]]`
 
 Size of WRKDIRPREFIX when using mdmfs
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="tmpfs"></a>`tmpfs`
+##### <a name="-poudriere--tmpfs"></a>`tmpfs`
 
 Data type: `Poudriere::Tmpfs`
 
@@ -168,31 +172,31 @@ Use tmpfs(5)
 
 Default value: `'yes'`
 
-##### <a name="tmpfs_limit"></a>`tmpfs_limit`
+##### <a name="-poudriere--tmpfs_limit"></a>`tmpfs_limit`
 
 Data type: `Optional[Integer[1]]`
 
 How much memory to limit tmpfs size to for each builder in GiB
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="max_memory"></a>`max_memory`
+##### <a name="-poudriere--max_memory"></a>`max_memory`
 
 Data type: `Optional[Integer[1]]`
 
 How much memory to limit jail processes to for each builder
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="max_files"></a>`max_files`
+##### <a name="-poudriere--max_files"></a>`max_files`
 
 Data type: `Optional[Integer[1]]`
 
 How many file descriptors to limit each jail process to
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="distfiles_cache"></a>`distfiles_cache`
+##### <a name="-poudriere--distfiles_cache"></a>`distfiles_cache`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -200,15 +204,31 @@ Directory used for the distfiles
 
 Default value: `'/usr/ports/distfiles'`
 
-##### <a name="svn_host"></a>`svn_host`
+##### <a name="-poudriere--git_baseurl"></a>`git_baseurl`
+
+Data type: `Optional[String[1]]`
+
+Git URL to use to fetch base
+
+Default value: `undef`
+
+##### <a name="-poudriere--git_portsurl"></a>`git_portsurl`
+
+Data type: `Optional[String[1]]`
+
+Git URL to use to fecth ports
+
+Default value: `undef`
+
+##### <a name="-poudriere--svn_host"></a>`svn_host`
 
 Data type: `Optional[String[1]]`
 
 Mirror to use for the ports tree or source tree when using SVN
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="check_changed_options"></a>`check_changed_options`
+##### <a name="-poudriere--check_changed_options"></a>`check_changed_options`
 
 Data type: `Enum['yes', 'no', 'verbose']`
 
@@ -216,7 +236,7 @@ Enable automatic OPTION change detection
 
 Default value: `'verbose'`
 
-##### <a name="check_changed_deps"></a>`check_changed_deps`
+##### <a name="-poudriere--check_changed_deps"></a>`check_changed_deps`
 
 Data type: `Enum['yes', 'no']`
 
@@ -224,31 +244,47 @@ Enable automatic dependency change detection
 
 Default value: `'yes'`
 
-##### <a name="bad_pkgname_deps_are_fatal"></a>`bad_pkgname_deps_are_fatal`
+##### <a name="-poudriere--bad_pkgname_deps_are_fatal"></a>`bad_pkgname_deps_are_fatal`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 Consider bad dependency lines on the wrong PKGNAME as fatal
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pkg_repo_signing_key"></a>`pkg_repo_signing_key`
+##### <a name="-poudriere--pkg_repo_signing_key"></a>`pkg_repo_signing_key`
 
 Data type: `Optional[String[1]]`
 
 Path to the RSA key to sign the PKG repo with
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ccache_enable"></a>`ccache_enable`
+##### <a name="-poudriere--signing_command"></a>`signing_command`
+
+Data type: `Optional[String[1]]`
+
+Command to sign the PKG repo with
+
+Default value: `undef`
+
+##### <a name="-poudriere--pkg_repo_from_host"></a>`pkg_repo_from_host`
+
+Data type: `Optional[Enum['yes', 'no']]`
+
+Sign the PKG repo from the host
+
+Default value: `undef`
+
+##### <a name="-poudriere--ccache_enable"></a>`ccache_enable`
 
 Data type: `Boolean`
 
 Enable ccache
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="ccache_dir"></a>`ccache_dir`
+##### <a name="-poudriere--ccache_dir"></a>`ccache_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -256,31 +292,31 @@ Path to the ccache cache directory
 
 Default value: `'/var/cache/ccache'`
 
-##### <a name="ccache_static_prefix"></a>`ccache_static_prefix`
+##### <a name="-poudriere--ccache_static_prefix"></a>`ccache_static_prefix`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Static ccache support from host
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="restrict_networking"></a>`restrict_networking`
+##### <a name="-poudriere--restrict_networking"></a>`restrict_networking`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 The jails normally only allow network access during the 'make fetch' phase.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="allow_make_jobs_packages"></a>`allow_make_jobs_packages`
+##### <a name="-poudriere--allow_make_jobs_packages"></a>`allow_make_jobs_packages`
 
 Data type: `Optional[String[1]]`
 
 Allow networking for a subset of packages when building
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="parallel_jobs"></a>`parallel_jobs`
+##### <a name="-poudriere--parallel_jobs"></a>`parallel_jobs`
 
 Data type: `Integer[1]`
 
@@ -288,269 +324,269 @@ Override the number of builders
 
 Default value: `$facts['processors']['count']`
 
-##### <a name="prepare_parallel_jobs"></a>`prepare_parallel_jobs`
+##### <a name="-poudriere--prepare_parallel_jobs"></a>`prepare_parallel_jobs`
 
 Data type: `Optional[Integer[1]]`
 
 How many jobs should be used for preparing the build
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="save_wrkdir"></a>`save_wrkdir`
+##### <a name="-poudriere--save_wrkdir"></a>`save_wrkdir`
 
 Data type: `Optional[String[1]]`
 
 Save the WRKDIR to ${POUDRIERE_DATA}/wrkdirs on failure
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="wrkdir_archive_format"></a>`wrkdir_archive_format`
+##### <a name="-poudriere--wrkdir_archive_format"></a>`wrkdir_archive_format`
 
 Data type: `Optional[String[1]]`
 
 Format for the workdir packing
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="nolinux"></a>`nolinux`
+##### <a name="-poudriere--nolinux"></a>`nolinux`
 
 Data type: `Optional[String[1]]`
 
 Disable Linux support
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="no_force_package"></a>`no_force_package`
+##### <a name="-poudriere--no_force_package"></a>`no_force_package`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 Do not set FORCE_PACKAGE
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="no_package_building"></a>`no_package_building`
+##### <a name="-poudriere--no_package_building"></a>`no_package_building`
 
 Data type: `Optional[String[1]]`
 
 Do not set PACKAGE_BUILDING
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="http_proxy"></a>`http_proxy`
+##### <a name="-poudriere--http_proxy"></a>`http_proxy`
 
 Data type: `Optional[String[1]]`
 
 HTTP proxy
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="ftp_proxy"></a>`ftp_proxy`
+##### <a name="-poudriere--ftp_proxy"></a>`ftp_proxy`
 
 Data type: `Optional[String[1]]`
 
 FTP proxy
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="no_restricted"></a>`no_restricted`
+##### <a name="-poudriere--no_restricted"></a>`no_restricted`
 
 Data type: `Optional[String[1]]`
 
 Cleanout the restricted packages
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="allow_make_jobs"></a>`allow_make_jobs`
+##### <a name="-poudriere--allow_make_jobs"></a>`allow_make_jobs`
 
 Data type: `Optional[String[1]]`
 
 Do not bound the number of processes to the number of cores
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="allow_make_jobs_packages"></a>`allow_make_jobs_packages`
+##### <a name="-poudriere--allow_make_jobs_packages"></a>`allow_make_jobs_packages`
 
 List of packages that will always be allowed to use MAKE_JOBS regardless of ALLOW_MAKE_JOBS
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="timestamp_logs"></a>`timestamp_logs`
+##### <a name="-poudriere--timestamp_logs"></a>`timestamp_logs`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 Timestamp every line of build logs
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="url_base"></a>`url_base`
+##### <a name="-poudriere--url_base"></a>`url_base`
 
 Data type: `Optional[String[1]]`
 
 URL where your POUDRIERE_DATA/logs are hosted
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="max_execution_time"></a>`max_execution_time`
+##### <a name="-poudriere--max_execution_time"></a>`max_execution_time`
 
 Data type: `Optional[Integer[1]]`
 
 Set the max time (in seconds) that a command may run for a build before it is killed for taking too long
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="nohang_time"></a>`nohang_time`
+##### <a name="-poudriere--nohang_time"></a>`nohang_time`
 
 Data type: `Optional[Integer[1]]`
 
 Set the time (in seconds) before a command is considered to be in a runaway state for having no output on stdout
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="atomic_package_repository"></a>`atomic_package_repository`
+##### <a name="-poudriere--atomic_package_repository"></a>`atomic_package_repository`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 Update the repository atomically
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="commit_packages_on_failure"></a>`commit_packages_on_failure`
+##### <a name="-poudriere--commit_packages_on_failure"></a>`commit_packages_on_failure`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 When using ATOMIC_PACKAGE_REPOSITORY, commit the packages if some packages fail to build
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="keep_old_packages"></a>`keep_old_packages`
+##### <a name="-poudriere--keep_old_packages"></a>`keep_old_packages`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 Keep older package repositories
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="keep_old_packages_count"></a>`keep_old_packages_count`
+##### <a name="-poudriere--keep_old_packages_count"></a>`keep_old_packages_count`
 
 Data type: `Optional[Integer[1]]`
 
 How many old package repositories to keep with KEEP_OLD_PACKAGES
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="porttesting_fatal"></a>`porttesting_fatal`
+##### <a name="-poudriere--porttesting_fatal"></a>`porttesting_fatal`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 Make testing errors fatal
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="builder_hostname"></a>`builder_hostname`
+##### <a name="-poudriere--builder_hostname"></a>`builder_hostname`
 
 Data type: `Optional[String[1]]`
 
 Define the building jail hostname to be used when building the packages
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="preserve_timestamp"></a>`preserve_timestamp`
+##### <a name="-poudriere--preserve_timestamp"></a>`preserve_timestamp`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 Define to get a predictable timestamp on the ports tree
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="build_as_non_root"></a>`build_as_non_root`
+##### <a name="-poudriere--build_as_non_root"></a>`build_as_non_root`
 
 Data type: `Optional[String[1]]`
 
 Build and stage as a regular user
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="portbuild_user"></a>`portbuild_user`
+##### <a name="-poudriere--portbuild_user"></a>`portbuild_user`
 
 Data type: `Optional[String[1]]`
 
 Define to the username to build as when BUILD_AS_NON_ROOT is yes
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="portbuild_uid"></a>`portbuild_uid`
+##### <a name="-poudriere--portbuild_uid"></a>`portbuild_uid`
 
 Data type: `Optional[Integer[1]]`
 
 Define to the uid to use for PORTBUILD_USER if the user does not already exist in the jail
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="priority_boost"></a>`priority_boost`
+##### <a name="-poudriere--priority_boost"></a>`priority_boost`
 
 Data type: `Optional[String[1]]`
 
 Define pkgname globs to boost priority for
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="buildname_format"></a>`buildname_format`
+##### <a name="-poudriere--buildname_format"></a>`buildname_format`
 
 Data type: `Optional[String[1]]`
 
 Define format for buildnames
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="duration_format"></a>`duration_format`
+##### <a name="-poudriere--duration_format"></a>`duration_format`
 
 Data type: `Optional[String[1]]`
 
 Define format for build duration times
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="use_colors"></a>`use_colors`
+##### <a name="-poudriere--use_colors"></a>`use_colors`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 Use colors when in a TTY
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="trim_orphaned_build_deps"></a>`trim_orphaned_build_deps`
+##### <a name="-poudriere--trim_orphaned_build_deps"></a>`trim_orphaned_build_deps`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 Only build what is requested
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="local_mtree_excludes"></a>`local_mtree_excludes`
+##### <a name="-poudriere--local_mtree_excludes"></a>`local_mtree_excludes`
 
 Data type: `Optional[String[1]]`
 
 A list of directories to exclude from leftover and filesystem violation mtree checks
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="html_type"></a>`html_type`
+##### <a name="-poudriere--html_type"></a>`html_type`
 
 Data type: `Optional[Enum['hosted', 'inline']]`
 
 Set to hosted to use the /data directory instead of inline style HTML
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="html_track_remaining"></a>`html_track_remaining`
+##### <a name="-poudriere--html_track_remaining"></a>`html_track_remaining`
 
 Data type: `Optional[Enum['yes', 'no']]`
 
 Set to track remaining ports in the HTML interface
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="environments"></a>`environments`
+##### <a name="-poudriere--environments"></a>`environments`
 
 Data type: `Hash`
 
@@ -558,7 +594,7 @@ Build environments to manage
 
 Default value: `{}`
 
-##### <a name="portstrees"></a>`portstrees`
+##### <a name="-poudriere--portstrees"></a>`portstrees`
 
 Data type: `Hash`
 
@@ -566,7 +602,7 @@ Port trees to manage
 
 Default value: `{}`
 
-##### <a name="xbuild_package"></a>`xbuild_package`
+##### <a name="-poudriere--xbuild_package"></a>`xbuild_package`
 
 Data type: `String[1]`
 
@@ -574,21 +610,21 @@ Package to install for cross-building packages
 
 Default value: `'qemu-user-static'`
 
-##### <a name="allow_networking_packages"></a>`allow_networking_packages`
+##### <a name="-poudriere--allow_networking_packages"></a>`allow_networking_packages`
 
 Data type: `Optional[String[1]]`
 
 
 
-Default value: ``undef``
+Default value: `undef`
 
-### <a name="poudrierexbuild"></a>`poudriere::xbuild`
+### <a name="poudriere--xbuild"></a>`poudriere::xbuild`
 
 Install cross-building dependencies
 
 ## Defined types
 
-### <a name="poudriereenv"></a>`poudriere::env`
+### <a name="poudriere--env"></a>`poudriere::env`
 
 This resource creates a build environment for a given release and architecture
 of FreeBSD. Passing in custom options gives you the ability to turn on and
@@ -601,29 +637,29 @@ parameter
 
 The following parameters are available in the `poudriere::env` defined type:
 
-* [`version`](#version)
-* [`ensure`](#ensure)
-* [`makeopts`](#makeopts)
-* [`makefile`](#makefile)
-* [`arch`](#arch)
-* [`jail`](#jail)
-* [`paralleljobs`](#paralleljobs)
-* [`pkgs`](#pkgs)
-* [`pkg_file`](#pkg_file)
-* [`pkg_makeopts`](#pkg_makeopts)
-* [`pkg_optsdir`](#pkg_optsdir)
-* [`portstree`](#portstree)
-* [`cron_enable`](#cron_enable)
-* [`cron_always_mail`](#cron_always_mail)
-* [`cron_interval`](#cron_interval)
+* [`version`](#-poudriere--env--version)
+* [`ensure`](#-poudriere--env--ensure)
+* [`makeopts`](#-poudriere--env--makeopts)
+* [`makefile`](#-poudriere--env--makefile)
+* [`arch`](#-poudriere--env--arch)
+* [`jail`](#-poudriere--env--jail)
+* [`paralleljobs`](#-poudriere--env--paralleljobs)
+* [`pkgs`](#-poudriere--env--pkgs)
+* [`pkg_file`](#-poudriere--env--pkg_file)
+* [`pkg_makeopts`](#-poudriere--env--pkg_makeopts)
+* [`pkg_optsdir`](#-poudriere--env--pkg_optsdir)
+* [`portstree`](#-poudriere--env--portstree)
+* [`cron_enable`](#-poudriere--env--cron_enable)
+* [`cron_always_mail`](#-poudriere--env--cron_always_mail)
+* [`cron_interval`](#-poudriere--env--cron_interval)
 
-##### <a name="version"></a>`version`
+##### <a name="-poudriere--env--version"></a>`version`
 
 Data type: `String[1]`
 
 Version of the jail
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-poudriere--env--ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -631,7 +667,7 @@ The desired state of this environment
 
 Default value: `'present'`
 
-##### <a name="makeopts"></a>`makeopts`
+##### <a name="-poudriere--env--makeopts"></a>`makeopts`
 
 Data type: `Array[String[1]]`
 
@@ -639,23 +675,23 @@ Build options
 
 Default value: `[]`
 
-##### <a name="makefile"></a>`makefile`
+##### <a name="-poudriere--env--makefile"></a>`makefile`
 
 Data type: `Optional[String[1]]`
 
 Path to a Makefile
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="arch"></a>`arch`
+##### <a name="-poudriere--env--arch"></a>`arch`
 
 Data type: `Optional[Poudriere::Architecture]`
 
 Architecture of the jail
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="jail"></a>`jail`
+##### <a name="-poudriere--env--jail"></a>`jail`
 
 Data type: `String[1]`
 
@@ -663,7 +699,7 @@ Name of the jail
 
 Default value: `$name`
 
-##### <a name="paralleljobs"></a>`paralleljobs`
+##### <a name="-poudriere--env--paralleljobs"></a>`paralleljobs`
 
 Data type: `Integer[1]`
 
@@ -671,7 +707,7 @@ Override the number of builders
 
 Default value: `$facts['processors']['count']`
 
-##### <a name="pkgs"></a>`pkgs`
+##### <a name="-poudriere--env--pkgs"></a>`pkgs`
 
 Data type: `Array[String[1]]`
 
@@ -679,15 +715,15 @@ List of packages to build
 
 Default value: `[]`
 
-##### <a name="pkg_file"></a>`pkg_file`
+##### <a name="-poudriere--env--pkg_file"></a>`pkg_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Puppet path to a list of packages to build
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="pkg_makeopts"></a>`pkg_makeopts`
+##### <a name="-poudriere--env--pkg_makeopts"></a>`pkg_makeopts`
 
 Data type: `Hash`
 
@@ -695,15 +731,15 @@ Per package build options
 
 Default value: `{}`
 
-##### <a name="pkg_optsdir"></a>`pkg_optsdir`
+##### <a name="-poudriere--env--pkg_optsdir"></a>`pkg_optsdir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to a directory of build options
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="portstree"></a>`portstree`
+##### <a name="-poudriere--env--portstree"></a>`portstree`
 
 Data type: `String[1]`
 
@@ -711,23 +747,23 @@ The port tree to use
 
 Default value: `'default'`
 
-##### <a name="cron_enable"></a>`cron_enable`
+##### <a name="-poudriere--env--cron_enable"></a>`cron_enable`
 
 Data type: `Boolean`
 
 Enable automatic updates
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="cron_always_mail"></a>`cron_always_mail`
+##### <a name="-poudriere--env--cron_always_mail"></a>`cron_always_mail`
 
 Data type: `Boolean`
 
 Always send an e-mail on update
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="cron_interval"></a>`cron_interval`
+##### <a name="-poudriere--env--cron_interval"></a>`cron_interval`
 
 Data type: `Poudriere::Cron_interval`
 
@@ -735,7 +771,7 @@ Scheduling of automatic updates
 
 Default value: `{ minute => 0, hour => 0, monthday => '*', month => '*', weekday => '*' }`
 
-### <a name="poudriereportstree"></a>`poudriere::portstree`
+### <a name="poudriere--portstree"></a>`poudriere::portstree`
 
 This resource creates a ports tree. You can have multiple ports trees for different
 building purposes. Automatic periodic updating of packages is managed with the cron_enable
@@ -745,16 +781,16 @@ parameter
 
 The following parameters are available in the `poudriere::portstree` defined type:
 
-* [`ensure`](#ensure)
-* [`portstree`](#portstree)
-* [`branch`](#branch)
-* [`fetch_method`](#fetch_method)
-* [`mountpoint`](#mountpoint)
-* [`cron_enable`](#cron_enable)
-* [`cron_always_mail`](#cron_always_mail)
-* [`cron_interval`](#cron_interval)
+* [`ensure`](#-poudriere--portstree--ensure)
+* [`portstree`](#-poudriere--portstree--portstree)
+* [`branch`](#-poudriere--portstree--branch)
+* [`fetch_method`](#-poudriere--portstree--fetch_method)
+* [`mountpoint`](#-poudriere--portstree--mountpoint)
+* [`cron_enable`](#-poudriere--portstree--cron_enable)
+* [`cron_always_mail`](#-poudriere--portstree--cron_always_mail)
+* [`cron_interval`](#-poudriere--portstree--cron_interval)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-poudriere--portstree--ensure"></a>`ensure`
 
 Data type: `Enum['present', 'absent']`
 
@@ -762,7 +798,7 @@ The desired state of this ports tree
 
 Default value: `'present'`
 
-##### <a name="portstree"></a>`portstree`
+##### <a name="-poudriere--portstree--portstree"></a>`portstree`
 
 Data type: `String[1]`
 
@@ -770,15 +806,15 @@ Name of the ports tree
 
 Default value: `$name`
 
-##### <a name="branch"></a>`branch`
+##### <a name="-poudriere--portstree--branch"></a>`branch`
 
 Data type: `Optional[String[1]]`
 
 Branch to checkout when using the svn or git methods
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="fetch_method"></a>`fetch_method`
+##### <a name="-poudriere--portstree--fetch_method"></a>`fetch_method`
 
 Data type: `Poudriere::Fetch_method`
 
@@ -786,31 +822,31 @@ Specify which method to use to create the ports tree
 
 Default value: `'svn'`
 
-##### <a name="mountpoint"></a>`mountpoint`
+##### <a name="-poudriere--portstree--mountpoint"></a>`mountpoint`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 Path to the source of a ports tree.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="cron_enable"></a>`cron_enable`
+##### <a name="-poudriere--portstree--cron_enable"></a>`cron_enable`
 
 Data type: `Boolean`
 
 Enable automatic updates
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="cron_always_mail"></a>`cron_always_mail`
+##### <a name="-poudriere--portstree--cron_always_mail"></a>`cron_always_mail`
 
 Data type: `Boolean`
 
 Always send an e-mail on update
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="cron_interval"></a>`cron_interval`
+##### <a name="-poudriere--portstree--cron_interval"></a>`cron_interval`
 
 Data type: `Poudriere::Cron_interval`
 
@@ -820,19 +856,15 @@ Default value: `{ minute => 0, hour => 22, monthday => '*', month => '*', week =
 
 ## Data types
 
-### <a name="poudrierearchitecture"></a>`Poudriere::Architecture`
+### <a name="Poudriere--Architecture"></a>`Poudriere::Architecture`
 
 The architecture to target when building packages
 
 * **Note** This list can be obtained from the FreeBSD src directory with `make targets | awk -F '( +|/)' 'NR > 1 { if ($2 == $3) { print $2 }; print $2"."$3 }'`
 
-Alias of
+Alias of `Enum['amd64', 'amd64.amd64', 'arm', 'arm.arm', 'arm.armv6', 'arm.armv7', 'arm64.aarch64', 'i386', 'i386.i386', 'mips.mipsel', 'mips', 'mips.mips', 'mips.mips64el', 'mips.mips64', 'mips.mipsn32', 'mips.mipselhf', 'mips.mipshf', 'mips.mips64elhf', 'mips.mips64hf', 'powerpc', 'powerpc.powerpc', 'powerpc.powerpc64', 'powerpc.powerpcspe', 'riscv.riscv64', 'riscv.riscv64sf', 'sparc64', 'sparc64.sparc64']`
 
-```puppet
-Enum['amd64', 'amd64.amd64', 'arm', 'arm.arm', 'arm.armv6', 'arm.armv7', 'arm64.aarch64', 'i386', 'i386.i386', 'mips.mipsel', 'mips', 'mips.mips', 'mips.mips64el', 'mips.mips64', 'mips.mipsn32', 'mips.mipselhf', 'mips.mipshf', 'mips.mips64elhf', 'mips.mips64hf', 'powerpc', 'powerpc.powerpc', 'powerpc.powerpc64', 'powerpc.powerpcspe', 'riscv.riscv64', 'riscv.riscv64sf', 'sparc64', 'sparc64.sparc64']
-```
-
-### <a name="poudrierecron_interval"></a>`Poudriere::Cron_interval`
+### <a name="Poudriere--Cron_interval"></a>`Poudriere::Cron_interval`
 
 Parameters to configure Poudriere's cron resources
 
@@ -849,17 +881,13 @@ Struct[{
   }]
 ```
 
-### <a name="poudrierefetch_method"></a>`Poudriere::Fetch_method`
+### <a name="Poudriere--Fetch_method"></a>`Poudriere::Fetch_method`
 
 A supported fetch method for poudriere
 
-Alias of
+Alias of `Enum['git', 'git+http', 'git+https', 'git+ssh', 'null', 'portsnap', 'svn', 'svn+file', 'svn+http', 'svn+https', 'svn+ssh']`
 
-```puppet
-Enum['git', 'git+http', 'git+https', 'git+ssh', 'null', 'portsnap', 'svn', 'svn+file', 'svn+http', 'svn+https', 'svn+ssh']
-```
-
-### <a name="poudrieretmpfs"></a>`Poudriere::Tmpfs`
+### <a name="Poudriere--Tmpfs"></a>`Poudriere::Tmpfs`
 
 A supported tmpfs setting for poudriere
 
