@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.0.0](https://github.com/voxpupuli/puppet-poudriere/tree/v3.0.0) (2023-07-10)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-poudriere/compare/v2.0.0...v3.0.0)
+
+**Breaking changes:**
+
+- Drop Puppet 6 support [\#76](https://github.com/voxpupuli/puppet-poudriere/pull/76) ([bastelfreak](https://github.com/bastelfreak))
+- Drop support for FreeBSD 11 \(EOL\) [\#68](https://github.com/voxpupuli/puppet-poudriere/pull/68) ([smortex](https://github.com/smortex))
+
+**Implemented enhancements:**
+
+- Add support for Puppet 8 [\#79](https://github.com/voxpupuli/puppet-poudriere/pull/79) ([smortex](https://github.com/smortex))
+- Relax dependencies version requirements [\#78](https://github.com/voxpupuli/puppet-poudriere/pull/78) ([smortex](https://github.com/smortex))
+- Add support for the latest poudriere options [\#73](https://github.com/voxpupuli/puppet-poudriere/pull/73) ([smortex](https://github.com/smortex))
+- Allow to build with port outside of /usr/ports [\#71](https://github.com/voxpupuli/puppet-poudriere/pull/71) ([kapouik](https://github.com/kapouik))
+- Add support for FreeBSD 13 [\#69](https://github.com/voxpupuli/puppet-poudriere/pull/69) ([smortex](https://github.com/smortex))
+
+**Merged pull requests:**
+
+- Allow stdlib 8.0.0 [\#66](https://github.com/voxpupuli/puppet-poudriere/pull/66) ([smortex](https://github.com/smortex))
+
 ## [v2.0.0](https://github.com/voxpupuli/puppet-poudriere/tree/v2.0.0) (2021-06-15)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-poudriere/compare/v1.4.0...v2.0.0)
@@ -54,8 +75,8 @@ These should not affect the functionality of the module.
 - Add support for portstree branch [\#39](https://github.com/voxpupuli/puppet-poudriere/pull/39) ([jdmulloy](https://github.com/jdmulloy))
 - Fix detection of created jails [\#38](https://github.com/voxpupuli/puppet-poudriere/pull/38) ([jdmulloy](https://github.com/jdmulloy))
 - Fix SAVE\_WRKDIR [\#37](https://github.com/voxpupuli/puppet-poudriere/pull/37) ([jdmulloy](https://github.com/jdmulloy))
-- Update from xaque208 modulesync\_config [\#36](https://github.com/voxpupuli/puppet-poudriere/pull/36) ([xaque208](https://github.com/xaque208))
-- Update from xaque208 modulesync\_config [\#35](https://github.com/voxpupuli/puppet-poudriere/pull/35) ([xaque208](https://github.com/xaque208))
+- Update from xaque208 modulesync\_config [\#36](https://github.com/voxpupuli/puppet-poudriere/pull/36) ([zachfi](https://github.com/zachfi))
+- Update from xaque208 modulesync\_config [\#35](https://github.com/voxpupuli/puppet-poudriere/pull/35) ([zachfi](https://github.com/zachfi))
 
 ## [1.2.1](https://github.com/voxpupuli/puppet-poudriere/tree/1.2.1) (2019-02-27)
 
@@ -63,7 +84,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Update from xaque208 modulesync\_config [\#34](https://github.com/voxpupuli/puppet-poudriere/pull/34) ([xaque208](https://github.com/xaque208))
+- Update from xaque208 modulesync\_config [\#34](https://github.com/voxpupuli/puppet-poudriere/pull/34) ([zachfi](https://github.com/zachfi))
 
 ## [1.2.0](https://github.com/voxpupuli/puppet-poudriere/tree/1.2.0) (2019-02-02)
 
@@ -71,7 +92,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Updates for new build jail [\#33](https://github.com/voxpupuli/puppet-poudriere/pull/33) ([xaque208](https://github.com/xaque208))
+- Updates for new build jail [\#33](https://github.com/voxpupuli/puppet-poudriere/pull/33) ([zachfi](https://github.com/zachfi))
 
 ## [1.1.0](https://github.com/voxpupuli/puppet-poudriere/tree/1.1.0) (2018-05-27)
 
@@ -79,8 +100,8 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Update from xaque208 modulesync\_config [\#32](https://github.com/voxpupuli/puppet-poudriere/pull/32) ([xaque208](https://github.com/xaque208))
-- modulesync 1.9.0-16-gc46b42a [\#31](https://github.com/voxpupuli/puppet-poudriere/pull/31) ([xaque208](https://github.com/xaque208))
+- Update from xaque208 modulesync\_config [\#32](https://github.com/voxpupuli/puppet-poudriere/pull/32) ([zachfi](https://github.com/zachfi))
+- modulesync 1.9.0-16-gc46b42a [\#31](https://github.com/voxpupuli/puppet-poudriere/pull/31) ([zachfi](https://github.com/zachfi))
 
 ## [1.0.3](https://github.com/voxpupuli/puppet-poudriere/tree/1.0.3) (2018-02-11)
 
@@ -92,8 +113,8 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Update from xaque208 modulesync\_config [\#30](https://github.com/voxpupuli/puppet-poudriere/pull/30) ([xaque208](https://github.com/xaque208))
-- modulesync 2017-05-03 [\#29](https://github.com/voxpupuli/puppet-poudriere/pull/29) ([xaque208](https://github.com/xaque208))
+- Update from xaque208 modulesync\_config [\#30](https://github.com/voxpupuli/puppet-poudriere/pull/30) ([zachfi](https://github.com/zachfi))
+- modulesync 2017-05-03 [\#29](https://github.com/voxpupuli/puppet-poudriere/pull/29) ([zachfi](https://github.com/zachfi))
 
 ## [1.0.2](https://github.com/voxpupuli/puppet-poudriere/tree/1.0.2) (2017-01-28)
 
@@ -101,7 +122,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Drop beaker from Gemfile [\#28](https://github.com/voxpupuli/puppet-poudriere/pull/28) ([xaque208](https://github.com/xaque208))
+- Drop beaker from Gemfile [\#28](https://github.com/voxpupuli/puppet-poudriere/pull/28) ([zachfi](https://github.com/zachfi))
 - Fix ccache option [\#27](https://github.com/voxpupuli/puppet-poudriere/pull/27) ([phyber](https://github.com/phyber))
 
 ## [1.0.1](https://github.com/voxpupuli/puppet-poudriere/tree/1.0.1) (2016-04-04)
@@ -110,7 +131,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Update testing to include puppet4 [\#26](https://github.com/voxpupuli/puppet-poudriere/pull/26) ([xaque208](https://github.com/xaque208))
+- Update testing to include puppet4 [\#26](https://github.com/voxpupuli/puppet-poudriere/pull/26) ([zachfi](https://github.com/zachfi))
 
 ## [1.0.0](https://github.com/voxpupuli/puppet-poudriere/tree/1.0.0) (2015-10-19)
 
@@ -138,7 +159,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Update testing [\#22](https://github.com/voxpupuli/puppet-poudriere/pull/22) ([xaque208](https://github.com/xaque208))
+- Update testing [\#22](https://github.com/voxpupuli/puppet-poudriere/pull/22) ([zachfi](https://github.com/zachfi))
 - Syntax fix in README [\#20](https://github.com/voxpupuli/puppet-poudriere/pull/20) ([tbartelmess](https://github.com/tbartelmess))
 
 ## [0.1.3](https://github.com/voxpupuli/puppet-poudriere/tree/0.1.3) (2014-11-25)
@@ -147,7 +168,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Testing [\#19](https://github.com/voxpupuli/puppet-poudriere/pull/19) ([xaque208](https://github.com/xaque208))
+- Testing [\#19](https://github.com/voxpupuli/puppet-poudriere/pull/19) ([zachfi](https://github.com/zachfi))
 
 ## [0.1.2](https://github.com/voxpupuli/puppet-poudriere/tree/0.1.2) (2014-11-09)
 
@@ -155,7 +176,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Begin rspec-puppet tests [\#18](https://github.com/voxpupuli/puppet-poudriere/pull/18) ([xaque208](https://github.com/xaque208))
+- Begin rspec-puppet tests [\#18](https://github.com/voxpupuli/puppet-poudriere/pull/18) ([zachfi](https://github.com/zachfi))
 
 ## [0.1.1](https://github.com/voxpupuli/puppet-poudriere/tree/0.1.1) (2014-10-19)
 
@@ -163,7 +184,7 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- Import testing from skeleton [\#17](https://github.com/voxpupuli/puppet-poudriere/pull/17) ([xaque208](https://github.com/xaque208))
+- Import testing from skeleton [\#17](https://github.com/voxpupuli/puppet-poudriere/pull/17) ([zachfi](https://github.com/zachfi))
 
 ## [0.1.0](https://github.com/voxpupuli/puppet-poudriere/tree/0.1.0) (2014-07-11)
 
@@ -186,11 +207,11 @@ These should not affect the functionality of the module.
 **Merged pull requests:**
 
 - Cron support [\#15](https://github.com/voxpupuli/puppet-poudriere/pull/15) ([skoef](https://github.com/skoef))
-- Addtests [\#14](https://github.com/voxpupuli/puppet-poudriere/pull/14) ([xaque208](https://github.com/xaque208))
-- Add tests [\#13](https://github.com/voxpupuli/puppet-poudriere/pull/13) ([xaque208](https://github.com/xaque208))
+- Addtests [\#14](https://github.com/voxpupuli/puppet-poudriere/pull/14) ([zachfi](https://github.com/zachfi))
+- Add tests [\#13](https://github.com/voxpupuli/puppet-poudriere/pull/13) ([zachfi](https://github.com/zachfi))
 - Cron support, example for exporting pkgng repo and some cleaning [\#11](https://github.com/voxpupuli/puppet-poudriere/pull/11) ([skoef](https://github.com/skoef))
 - make all config file options variables so they can be edited [\#10](https://github.com/voxpupuli/puppet-poudriere/pull/10) ([sethlyons](https://github.com/sethlyons))
-- Update tmpfs setting for \#7 [\#8](https://github.com/voxpupuli/puppet-poudriere/pull/8) ([xaque208](https://github.com/xaque208))
+- Update tmpfs setting for \#7 [\#8](https://github.com/voxpupuli/puppet-poudriere/pull/8) ([zachfi](https://github.com/zachfi))
 - Base Folder/tmpfs [\#6](https://github.com/voxpupuli/puppet-poudriere/pull/6) ([DJClean](https://github.com/DJClean))
 - Add proxy ability [\#5](https://github.com/voxpupuli/puppet-poudriere/pull/5) ([DJClean](https://github.com/DJClean))
 
