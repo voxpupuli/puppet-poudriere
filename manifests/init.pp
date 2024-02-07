@@ -13,7 +13,10 @@
 # @param mfssize Size of WRKDIRPREFIX when using mdmfs
 # @param tmpfs Use tmpfs(5)
 # @param tmpfs_limit How much memory to limit tmpfs size to for each builder in GiB
+# @param tmpfs_blacklist List of package globs that are not allowed to use tmpfs
+# @param tmpfs_blacklist_tmpdir The host path where tmpfs-blacklisted packages can be built in
 # @param max_memory How much memory to limit jail processes to for each builder
+# @param max_memory_per_package Override max_memory per package
 # @param max_files How many file descriptors to limit each jail process to
 # @param distfiles_cache Directory used for the distfiles
 # @param git_baseurl Git URL to use to fetch base
@@ -29,6 +32,8 @@
 # @param ccache_dir Path to the ccache cache directory
 # @param ccache_static_prefix Static ccache support from host
 # @param restrict_networking The jails normally only allow network access during the 'make fetch' phase.
+# @param allow_networking_packages Allow networking for a subset of packages
+# @param disallow_networking Fully disabled networking
 # @param allow_make_jobs_packages Allow networking for a subset of packages when building
 # @param parallel_jobs Override the number of builders
 # @param prepare_parallel_jobs How many jobs should be used for preparing the build
@@ -43,7 +48,6 @@
 # @param allow_make_jobs Do not bound the number of processes to the number of cores
 # @param allow_make_jobs_packages List of packages that will always be allowed to use MAKE_JOBS regardless of ALLOW_MAKE_JOBS
 # @param timestamp_logs Timestamp every line of build logs
-# @param url_base URL where your POUDRIERE_DATA/logs are hosted
 # @param max_execution_time Set the max time (in seconds) that a command may run for a build before it is killed for taking too long
 # @param nohang_time Set the time (in seconds) before a command is considered to be in a runaway state for having no output on stdout
 # @param atomic_package_repository Update the repository atomically
@@ -55,15 +59,26 @@
 # @param preserve_timestamp Define to get a predictable timestamp on the ports tree
 # @param build_as_non_root Build and stage as a regular user
 # @param portbuild_user Define to the username to build as when BUILD_AS_NON_ROOT is yes
+# @param portbuild_group Define to the groupname to build as when BUILD_AS_NON_ROOT is yes
 # @param portbuild_uid Define to the uid to use for PORTBUILD_USER if the user does not already exist in the jail
+# @param portbuild_gid Define to the gid to use for PORTBUILD_USER if the group does not already exist in the jail
 # @param priority_boost Define pkgname globs to boost priority for
 # @param buildname_format Define format for buildnames
 # @param duration_format Define format for build duration times
 # @param use_colors Use colors when in a TTY
 # @param trim_orphaned_build_deps Only build what is requested
+# @param delete_unknown_files Whether or not bulk/testport should delete unknown files in the repository
+# @param delete_unqueued_packages Whether or not bulk/testport should automatically "pkgclean"
 # @param local_mtree_excludes A list of directories to exclude from leftover and filesystem violation mtree checks
+# @param url_base URL where your POUDRIERE_DATA/logs are hosted
 # @param html_type Set to hosted to use the /data directory instead of inline style HTML
 # @param html_track_remaining Set to track remaining ports in the HTML interface
+# @param determine_build_failure_reason Grep build logs to determine a possible build failure reason
+# @param makeworldargs Pass arguments to buildworld
+# @param package_fetch_branch Set to always attempt to fetch packages or dependencies before building
+# @param package_fetch_url The fetch URL
+# @param package_fetch_blacklist Packages which should never be fetched
+# @param package_fetch_whitelist Allow only specific packages to be fetched
 # @param environments Build environments to manage
 # @param portstrees Port trees to manage
 # @param xbuild_package Package to install for cross-building packages
@@ -78,7 +93,10 @@ class poudriere (
   Optional[String[1]]                $mfssize                    = undef,
   Poudriere::Tmpfs                   $tmpfs                      = 'yes',
   Optional[Integer[1]]               $tmpfs_limit                = undef,
+  Optional[Array[String[1]]]         $tmpfs_blacklist            = undef,
+  Optional[String[1]]                $tmpfs_blacklist_tmpdir     = undef,
   Optional[Integer[1]]               $max_memory                 = undef,
+  Hash[String[1], Integer[1]]        $max_memory_per_package     = {},
   Optional[Integer[1]]               $max_files                  = undef,
   Stdlib::Absolutepath               $distfiles_cache            = '/usr/ports/distfiles',
   Optional[String[1]]                $git_baseurl                = undef,
@@ -95,6 +113,7 @@ class poudriere (
   Optional[Stdlib::Absolutepath]     $ccache_static_prefix       = undef,
   Optional[Enum['yes', 'no']]        $restrict_networking        = undef,
   Optional[String[1]]                $allow_networking_packages  = undef,
+  Optional[Enum['yes', 'no']]        $disallow_networking        = undef,
   Integer[1]                         $parallel_jobs              = $facts['processors']['count'],
   Optional[Integer[1]]               $prepare_parallel_jobs      = undef,
   Optional[String[1]]                $save_wrkdir                = undef,
@@ -108,7 +127,6 @@ class poudriere (
   Optional[String[1]]                $allow_make_jobs            = undef,
   Optional[String[1]]                $allow_make_jobs_packages   = undef,
   Optional[Enum['yes', 'no']]        $timestamp_logs             = undef,
-  Optional[String[1]]                $url_base                   = undef,
   Optional[Integer[1]]               $max_execution_time         = undef,
   Optional[Integer[1]]               $nohang_time                = undef,
   Optional[Enum['yes', 'no']]        $atomic_package_repository  = undef,
@@ -120,19 +138,32 @@ class poudriere (
   Optional[Enum['yes', 'no']]        $preserve_timestamp         = undef,
   Optional[String[1]]                $build_as_non_root          = undef,
   Optional[String[1]]                $portbuild_user             = undef,
+  Optional[String[1]]                $portbuild_group            = undef,
   Optional[Integer[1]]               $portbuild_uid              = undef,
+  Optional[Integer[1]]               $portbuild_gid              = undef,
   Optional[String[1]]                $priority_boost             = undef,
   Optional[String[1]]                $buildname_format           = undef,
   Optional[String[1]]                $duration_format            = undef,
   Optional[Enum['yes', 'no']]        $use_colors                 = undef,
   Optional[Enum['yes', 'no']]        $trim_orphaned_build_deps   = undef,
+  Optional[Enum['yes', 'no']]        $delete_unknown_files       = undef,
+  Optional[Enum['yes', 'always', 'no']] $delete_unqueued_packages = undef,
   Optional[String[1]]                $local_mtree_excludes       = undef,
+  Optional[String[1]]                $url_base                   = undef,
   Optional[Enum['hosted', 'inline']] $html_type                  = undef,
   Optional[Enum['yes', 'no']]        $html_track_remaining       = undef,
+  Optional[Enum['yes', 'no']]        $determine_build_failure_reason = undef,
+  Optional[String[1]]                $makeworldargs              = undef,
+  Optional[String[1]]                $package_fetch_branch       = undef,
+  Optional[String[1]]                $package_fetch_url          = undef,
+  Optional[Array[String[1]]]         $package_fetch_blacklist    = undef,
+  Optional[Array[String[1]]]         $package_fetch_whitelist    = undef,
   Hash                               $environments               = {},
   Hash                               $portstrees                 = {},
   String[1]                          $xbuild_package             = 'qemu-user-static',
 ) {
+  if $mfssize { deprecation('mfssize', 'This parameter is deprecated and has no effect.') }
+
   Exec {
     path => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin',
   }
