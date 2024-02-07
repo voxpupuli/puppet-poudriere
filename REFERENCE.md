@@ -41,7 +41,6 @@ The following parameters are available in the `poudriere` class:
 * [`poudriere_base`](#-poudriere--poudriere_base)
 * [`poudriere_data`](#-poudriere--poudriere_data)
 * [`use_portlint`](#-poudriere--use_portlint)
-* [`mfssize`](#-poudriere--mfssize)
 * [`tmpfs`](#-poudriere--tmpfs)
 * [`tmpfs_limit`](#-poudriere--tmpfs_limit)
 * [`tmpfs_blacklist`](#-poudriere--tmpfs_blacklist)
@@ -169,14 +168,6 @@ Data type: `Enum['yes', 'no']`
 Use portlint to check ports sanity
 
 Default value: `'no'`
-
-##### <a name="-poudriere--mfssize"></a>`mfssize`
-
-Data type: `Optional[String[1]]`
-
-Size of WRKDIRPREFIX when using mdmfs
-
-Default value: `undef`
 
 ##### <a name="-poudriere--tmpfs"></a>`tmpfs`
 
