@@ -44,7 +44,10 @@ The following parameters are available in the `poudriere` class:
 * [`mfssize`](#-poudriere--mfssize)
 * [`tmpfs`](#-poudriere--tmpfs)
 * [`tmpfs_limit`](#-poudriere--tmpfs_limit)
+* [`tmpfs_blacklist`](#-poudriere--tmpfs_blacklist)
+* [`tmpfs_blacklist_tmpdir`](#-poudriere--tmpfs_blacklist_tmpdir)
 * [`max_memory`](#-poudriere--max_memory)
+* [`max_memory_per_package`](#-poudriere--max_memory_per_package)
 * [`max_files`](#-poudriere--max_files)
 * [`distfiles_cache`](#-poudriere--distfiles_cache)
 * [`git_baseurl`](#-poudriere--git_baseurl)
@@ -60,6 +63,8 @@ The following parameters are available in the `poudriere` class:
 * [`ccache_dir`](#-poudriere--ccache_dir)
 * [`ccache_static_prefix`](#-poudriere--ccache_static_prefix)
 * [`restrict_networking`](#-poudriere--restrict_networking)
+* [`allow_networking_packages`](#-poudriere--allow_networking_packages)
+* [`disallow_networking`](#-poudriere--disallow_networking)
 * [`allow_make_jobs_packages`](#-poudriere--allow_make_jobs_packages)
 * [`parallel_jobs`](#-poudriere--parallel_jobs)
 * [`prepare_parallel_jobs`](#-poudriere--prepare_parallel_jobs)
@@ -74,7 +79,6 @@ The following parameters are available in the `poudriere` class:
 * [`allow_make_jobs`](#-poudriere--allow_make_jobs)
 * [`allow_make_jobs_packages`](#-poudriere--allow_make_jobs_packages)
 * [`timestamp_logs`](#-poudriere--timestamp_logs)
-* [`url_base`](#-poudriere--url_base)
 * [`max_execution_time`](#-poudriere--max_execution_time)
 * [`nohang_time`](#-poudriere--nohang_time)
 * [`atomic_package_repository`](#-poudriere--atomic_package_repository)
@@ -86,19 +90,29 @@ The following parameters are available in the `poudriere` class:
 * [`preserve_timestamp`](#-poudriere--preserve_timestamp)
 * [`build_as_non_root`](#-poudriere--build_as_non_root)
 * [`portbuild_user`](#-poudriere--portbuild_user)
+* [`portbuild_group`](#-poudriere--portbuild_group)
 * [`portbuild_uid`](#-poudriere--portbuild_uid)
+* [`portbuild_gid`](#-poudriere--portbuild_gid)
 * [`priority_boost`](#-poudriere--priority_boost)
 * [`buildname_format`](#-poudriere--buildname_format)
 * [`duration_format`](#-poudriere--duration_format)
 * [`use_colors`](#-poudriere--use_colors)
 * [`trim_orphaned_build_deps`](#-poudriere--trim_orphaned_build_deps)
+* [`delete_unknown_files`](#-poudriere--delete_unknown_files)
+* [`delete_unqueued_packages`](#-poudriere--delete_unqueued_packages)
 * [`local_mtree_excludes`](#-poudriere--local_mtree_excludes)
+* [`url_base`](#-poudriere--url_base)
 * [`html_type`](#-poudriere--html_type)
 * [`html_track_remaining`](#-poudriere--html_track_remaining)
+* [`determine_build_failure_reason`](#-poudriere--determine_build_failure_reason)
+* [`makeworldargs`](#-poudriere--makeworldargs)
+* [`package_fetch_branch`](#-poudriere--package_fetch_branch)
+* [`package_fetch_url`](#-poudriere--package_fetch_url)
+* [`package_fetch_blacklist`](#-poudriere--package_fetch_blacklist)
+* [`package_fetch_whitelist`](#-poudriere--package_fetch_whitelist)
 * [`environments`](#-poudriere--environments)
 * [`portstrees`](#-poudriere--portstrees)
 * [`xbuild_package`](#-poudriere--xbuild_package)
-* [`allow_networking_packages`](#-poudriere--allow_networking_packages)
 
 ##### <a name="-poudriere--zpool"></a>`zpool`
 
@@ -180,6 +194,22 @@ How much memory to limit tmpfs size to for each builder in GiB
 
 Default value: `undef`
 
+##### <a name="-poudriere--tmpfs_blacklist"></a>`tmpfs_blacklist`
+
+Data type: `Optional[Array[String[1]]]`
+
+List of package globs that are not allowed to use tmpfs
+
+Default value: `undef`
+
+##### <a name="-poudriere--tmpfs_blacklist_tmpdir"></a>`tmpfs_blacklist_tmpdir`
+
+Data type: `Optional[String[1]]`
+
+The host path where tmpfs-blacklisted packages can be built in
+
+Default value: `undef`
+
 ##### <a name="-poudriere--max_memory"></a>`max_memory`
 
 Data type: `Optional[Integer[1]]`
@@ -187,6 +217,14 @@ Data type: `Optional[Integer[1]]`
 How much memory to limit jail processes to for each builder
 
 Default value: `undef`
+
+##### <a name="-poudriere--max_memory_per_package"></a>`max_memory_per_package`
+
+Data type: `Hash[String[1], Integer[1]]`
+
+Override max_memory per package
+
+Default value: `{}`
 
 ##### <a name="-poudriere--max_files"></a>`max_files`
 
@@ -308,6 +346,22 @@ The jails normally only allow network access during the 'make fetch' phase.
 
 Default value: `undef`
 
+##### <a name="-poudriere--allow_networking_packages"></a>`allow_networking_packages`
+
+Data type: `Optional[String[1]]`
+
+Allow networking for a subset of packages
+
+Default value: `undef`
+
+##### <a name="-poudriere--disallow_networking"></a>`disallow_networking`
+
+Data type: `Optional[Enum['yes', 'no']]`
+
+Fully disabled networking
+
+Default value: `undef`
+
 ##### <a name="-poudriere--allow_make_jobs_packages"></a>`allow_make_jobs_packages`
 
 Data type: `Optional[String[1]]`
@@ -418,14 +472,6 @@ Timestamp every line of build logs
 
 Default value: `undef`
 
-##### <a name="-poudriere--url_base"></a>`url_base`
-
-Data type: `Optional[String[1]]`
-
-URL where your POUDRIERE_DATA/logs are hosted
-
-Default value: `undef`
-
 ##### <a name="-poudriere--max_execution_time"></a>`max_execution_time`
 
 Data type: `Optional[Integer[1]]`
@@ -514,11 +560,27 @@ Define to the username to build as when BUILD_AS_NON_ROOT is yes
 
 Default value: `undef`
 
+##### <a name="-poudriere--portbuild_group"></a>`portbuild_group`
+
+Data type: `Optional[String[1]]`
+
+Define to the groupname to build as when BUILD_AS_NON_ROOT is yes
+
+Default value: `undef`
+
 ##### <a name="-poudriere--portbuild_uid"></a>`portbuild_uid`
 
 Data type: `Optional[Integer[1]]`
 
 Define to the uid to use for PORTBUILD_USER if the user does not already exist in the jail
+
+Default value: `undef`
+
+##### <a name="-poudriere--portbuild_gid"></a>`portbuild_gid`
+
+Data type: `Optional[Integer[1]]`
+
+Define to the gid to use for PORTBUILD_USER if the group does not already exist in the jail
 
 Default value: `undef`
 
@@ -562,11 +624,35 @@ Only build what is requested
 
 Default value: `undef`
 
+##### <a name="-poudriere--delete_unknown_files"></a>`delete_unknown_files`
+
+Data type: `Optional[Enum['yes', 'no']]`
+
+Whether or not bulk/testport should delete unknown files in the repository
+
+Default value: `undef`
+
+##### <a name="-poudriere--delete_unqueued_packages"></a>`delete_unqueued_packages`
+
+Data type: `Optional[Enum['yes', 'always', 'no']]`
+
+Whether or not bulk/testport should automatically "pkgclean"
+
+Default value: `undef`
+
 ##### <a name="-poudriere--local_mtree_excludes"></a>`local_mtree_excludes`
 
 Data type: `Optional[String[1]]`
 
 A list of directories to exclude from leftover and filesystem violation mtree checks
+
+Default value: `undef`
+
+##### <a name="-poudriere--url_base"></a>`url_base`
+
+Data type: `Optional[String[1]]`
+
+URL where your POUDRIERE_DATA/logs are hosted
 
 Default value: `undef`
 
@@ -583,6 +669,54 @@ Default value: `undef`
 Data type: `Optional[Enum['yes', 'no']]`
 
 Set to track remaining ports in the HTML interface
+
+Default value: `undef`
+
+##### <a name="-poudriere--determine_build_failure_reason"></a>`determine_build_failure_reason`
+
+Data type: `Optional[Enum['yes', 'no']]`
+
+Grep build logs to determine a possible build failure reason
+
+Default value: `undef`
+
+##### <a name="-poudriere--makeworldargs"></a>`makeworldargs`
+
+Data type: `Optional[String[1]]`
+
+Pass arguments to buildworld
+
+Default value: `undef`
+
+##### <a name="-poudriere--package_fetch_branch"></a>`package_fetch_branch`
+
+Data type: `Optional[String[1]]`
+
+Set to always attempt to fetch packages or dependencies before building
+
+Default value: `undef`
+
+##### <a name="-poudriere--package_fetch_url"></a>`package_fetch_url`
+
+Data type: `Optional[String[1]]`
+
+The fetch URL
+
+Default value: `undef`
+
+##### <a name="-poudriere--package_fetch_blacklist"></a>`package_fetch_blacklist`
+
+Data type: `Optional[Array[String[1]]]`
+
+Packages which should never be fetched
+
+Default value: `undef`
+
+##### <a name="-poudriere--package_fetch_whitelist"></a>`package_fetch_whitelist`
+
+Data type: `Optional[Array[String[1]]]`
+
+Allow only specific packages to be fetched
 
 Default value: `undef`
 
@@ -609,14 +743,6 @@ Data type: `String[1]`
 Package to install for cross-building packages
 
 Default value: `'qemu-user-static'`
-
-##### <a name="-poudriere--allow_networking_packages"></a>`allow_networking_packages`
-
-Data type: `Optional[String[1]]`
-
-
-
-Default value: `undef`
 
 ### <a name="poudriere--xbuild"></a>`poudriere::xbuild`
 
