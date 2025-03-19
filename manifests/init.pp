@@ -180,7 +180,7 @@ class poudriere (
   }
 
   file { '/usr/local/etc/poudriere.d':
-    ensure  => directory,
+    ensure => directory,
   }
 
   file { $distfiles_cache:
@@ -194,7 +194,7 @@ class poudriere (
   }
 
   cron { 'poudriere-update-ports':
-    ensure   => 'absent',
+    ensure => 'absent',
   }
 
   # Create environments
