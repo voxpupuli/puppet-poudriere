@@ -1,4 +1,5 @@
+---
 fixtures:
   repositories:
-    cron: "https://github.com/puppetlabs/puppetlabs-cron_core.git"
-    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
+    cron: https://github.com/puppetlabs/puppetlabs-cron_core.git
+    stdlib: https://github.com/puppetlabs/puppetlabs-stdlib.git
