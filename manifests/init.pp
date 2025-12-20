@@ -10,7 +10,6 @@
 # @param poudriere_base The directory where poudriere will store jails and ports
 # @param poudriere_data The directory where the jail will store the packages and logs
 # @param use_portlint Use portlint to check ports sanity
-# @param mfssize Size of WRKDIRPREFIX when using mdmfs
 # @param tmpfs Use tmpfs(5)
 # @param tmpfs_limit How much memory to limit tmpfs size to for each builder in GiB
 # @param tmpfs_blacklist List of package globs that are not allowed to use tmpfs
@@ -90,7 +89,6 @@ class poudriere (
   Stdlib::Absolutepath               $poudriere_base             = '/usr/local/poudriere',
   String[1]                          $poudriere_data             = '${BASEFS}/data',
   Enum['yes', 'no']                  $use_portlint               = 'no',
-  Optional[String[1]]                $mfssize                    = undef,
   Poudriere::Tmpfs                   $tmpfs                      = 'yes',
   Optional[Integer[1]]               $tmpfs_limit                = undef,
   Optional[Array[String[1]]]         $tmpfs_blacklist            = undef,
@@ -162,8 +160,6 @@ class poudriere (
   Hash                               $portstrees                 = {},
   String[1]                          $xbuild_package             = 'qemu-user-static',
 ) {
-  if $mfssize { deprecation('mfssize', 'This parameter is deprecated and has no effect.') }
-
   Exec {
     path => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin',
   }
