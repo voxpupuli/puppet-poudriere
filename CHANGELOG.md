@@ -4,7 +4,21 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v3.1.0](https://github.com/voxpupuli/puppet-poudriere/tree/v3.1.0) (2024-02-07)
+## [v4.0.0](https://github.com/voxpupuli/puppet-poudriere/tree/v4.0.0) (2025-12-20)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-poudriere/compare/v3.1.0...v4.0.0)
+
+**Breaking changes:**
+
+- Drop puppet, update openvox minimum version to 8.19 [\#101](https://github.com/voxpupuli/puppet-poudriere/pull/101) ([TheMeier](https://github.com/TheMeier))
+- Remove deprecated `mfssize` parameter [\#85](https://github.com/voxpupuli/puppet-poudriere/pull/85) ([smortex](https://github.com/smortex))
+
+**Implemented enhancements:**
+
+- metadata.json: Add OpenVox [\#97](https://github.com/voxpupuli/puppet-poudriere/pull/97) ([jstraw](https://github.com/jstraw))
+- Add support for FreeBSD 14 [\#91](https://github.com/voxpupuli/puppet-poudriere/pull/91) ([smortex](https://github.com/smortex))
+
+## [v3.1.0](https://github.com/voxpupuli/puppet-poudriere/tree/v3.1.0) (2024-02-08)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-poudriere/compare/v3.0.0...v3.1.0)
 
