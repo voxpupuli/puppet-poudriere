@@ -1,6 +1,6 @@
 # Puppet-poudriere
 
-[![Build Status](https://travis-ci.org/voxpupuli/puppet-poudriere.svg?branch=master)](https://travis-ci.org/voxpupuli/puppet-poudriere)
+![Build Status](https://github.com/voxpupuli/puppet-poudriere/actions/workflows/ci.yml/badge.svg?branch=master)
 [![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-poudriere/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-poudriere)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/poudriere.svg)](https://forge.puppetlabs.com/puppet/poudriere)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/poudriere.svg)](https://forge.puppetlabs.com/puppet/poudriere)
