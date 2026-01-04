@@ -39,7 +39,7 @@ define poudriere::portstree (
       $branch_option = ''
     }
     if $mountpoint != undef {
-      $mountpoint_option = "-M ${mountpoint.shell_escape}"
+      $mountpoint_option = "-M ${mountpoint.stdlib::shell_escape}"
     } else {
       $mountpoint_option = ''
     }
