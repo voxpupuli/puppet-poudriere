@@ -6,7 +6,7 @@
 
 ### Classes
 
-* [`poudriere`](#poudriere): Poudriere is a tool that lets you build PkgNG packages from ports.  This is cool because it gives you the flexibility of custom port options 
+* [`poudriere`](#poudriere): Poudriere is a tool that lets you build PkgNG packages from ports.  This is cool because it gives you the flexibility of custom port options
 * [`poudriere::xbuild`](#poudriere--xbuild): Install cross-building dependencies
 
 ### Defined types
@@ -1023,4 +1023,3 @@ Variant[Enum[
     ],
   ]]
 ```
-
