@@ -116,8 +116,8 @@ MAX_FILES=<%= $poudriere::max_files %>
 # the required distfiles.
 DISTFILES_CACHE=<%= $poudriere::distfiles_cache %>
 
-# If set the ports tree marked to use git will use the defined
-# mirror (default: git.FreeBSD.org/port.git)
+# If set the source tree marked to use git will use the defined
+# mirror (default: git.FreeBSD.org/src.git)
 #
 # Example to use github mirror:
 #GIT_BASEURL=github.com/freebsd/freebsd-src.git
@@ -125,8 +125,8 @@ DISTFILES_CACHE=<%= $poudriere::distfiles_cache %>
 GIT_BASEURL=<%= $poudriere::git_baseurl %>
 <% } -%>
 
-# If set the source tree marked to use git will use the defined
-# mirror (default: git.FreeBSD.org/src.git)
+# If set the ports tree marked to use git will use the defined
+# mirror (default: git.FreeBSD.org/ports.git)
 #
 # Example to use github mirror:
 #GIT_PORTSURL=github.com/freebsd/freebsd-ports.git
