@@ -97,6 +97,7 @@ describe 'poudriere' do
             'package_fetch_url'              => 'pkg+http://pkg.FreeBSD.org/\\${ABI}',
             'package_fetch_blacklist'        => [],
             'package_fetch_whitelist'        => ['gcc*', 'rust', 'llvm*'],
+            'pkg_hash'                       => 'yes',
           }
         end
 
@@ -174,6 +175,7 @@ describe 'poudriere' do
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^PACKAGE_FETCH_URL=pkg\+http://pkg.FreeBSD.org/\\\${ABI}$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^PACKAGE_FETCH_BLACKLIST=""$}) }
         it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^PACKAGE_FETCH_WHITELIST="gcc\* rust llvm\*"$}) }
+        it { is_expected.to contain_file('/usr/local/etc/poudriere.conf').with(content: %r{^PKG_HASH=yes$}) }
       end
     end
   end

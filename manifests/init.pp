@@ -78,6 +78,7 @@
 # @param package_fetch_url The fetch URL
 # @param package_fetch_blacklist Packages which should never be fetched
 # @param package_fetch_whitelist Allow only specific packages to be fetched
+# @param pkg_hash Name packages with the short hash of their content
 # @param environments Build environments to manage
 # @param portstrees Port trees to manage
 # @param xbuild_package Package to install for cross-building packages
@@ -156,6 +157,7 @@ class poudriere (
   Optional[String[1]]                $package_fetch_url          = undef,
   Optional[Array[String[1]]]         $package_fetch_blacklist    = undef,
   Optional[Array[String[1]]]         $package_fetch_whitelist    = undef,
+  Optional[Enum['yes', 'no']]        $pkg_hash                   = undef,
   Hash                               $environments               = {},
   Hash                               $portstrees                 = {},
   String[1]                          $xbuild_package             = 'qemu-user-static',
