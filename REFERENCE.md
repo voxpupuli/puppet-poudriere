@@ -109,6 +109,7 @@ The following parameters are available in the `poudriere` class:
 * [`package_fetch_url`](#-poudriere--package_fetch_url)
 * [`package_fetch_blacklist`](#-poudriere--package_fetch_blacklist)
 * [`package_fetch_whitelist`](#-poudriere--package_fetch_whitelist)
+* [`pkg_hash`](#-poudriere--pkg_hash)
 * [`environments`](#-poudriere--environments)
 * [`portstrees`](#-poudriere--portstrees)
 * [`xbuild_package`](#-poudriere--xbuild_package)
@@ -708,6 +709,14 @@ Default value: `undef`
 Data type: `Optional[Array[String[1]]]`
 
 Allow only specific packages to be fetched
+
+Default value: `undef`
+
+##### <a name="-poudriere--pkg_hash"></a>`pkg_hash`
+
+Data type: `Optional[Enum['yes', 'no']]`
+
+Name packages with the short hash of their content
 
 Default value: `undef`
 
