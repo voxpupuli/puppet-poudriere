@@ -166,9 +166,7 @@ class poudriere (
     path => '/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin',
   }
 
-  # Install poudriere and dialog4ports
-  # make -C /usr/ports/ports-mgmt/poudriere install clean
-  package { ['poudriere', 'dialog4ports']:
+  package { 'poudriere':
     ensure => installed,
   }
 

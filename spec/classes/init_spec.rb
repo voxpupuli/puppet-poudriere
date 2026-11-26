@@ -10,7 +10,6 @@ describe 'poudriere' do
       it { is_expected.to compile }
       it { is_expected.to contain_class('poudriere') }
       it { is_expected.to contain_package('poudriere') }
-      it { is_expected.to contain_package('dialog4ports') }
       it { is_expected.to contain_file('/usr/ports/distfiles') }
       it { is_expected.to contain_file('/usr/local/etc/poudriere.d') }
       it { is_expected.to contain_file('/usr/local/etc/poudriere.conf') }
